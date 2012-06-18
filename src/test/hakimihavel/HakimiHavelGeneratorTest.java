@@ -39,6 +39,12 @@ public class HakimiHavelGeneratorTest {
     }
     
     @Test
+    public void graphicalSeqFailTest2() {
+        int[] ds = new int[] { 3, 2, 1 };
+        Assert.assertFalse(HakimiHavelGenerator.isGraphical(ds));
+    }
+    
+    @Test
     public void partitionTest() {
         int m = 14;
         for (int parts = 1; parts < m; parts++) {

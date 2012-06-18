@@ -16,8 +16,6 @@ public class RandomHHGenerator extends BaseHHGenerator {
 
 	private Random random;
 	
-	public int TMP_COUNT = 0;
-
 	public RandomHHGenerator() {
 		this.random = new Random();
 	}
@@ -33,13 +31,11 @@ public class RandomHHGenerator extends BaseHHGenerator {
 	}
 	
 	private void generate(int[] degreeSequence, Graph g) {
-	    TMP_COUNT++;
-	    if (TMP_COUNT > 100) return;
-	    System.out.println(g);
+//	    System.out.println(g + "\t" + HakimiHavelGenerator.isGraphical(reduce(degreeSequence, g)));
 	    if (isComplete(degreeSequence, g)) return;
 	    
 		int i = getRandomVertex(degreeSequence, g, 0);
-		int j = getRandomVertex(degreeSequence, g, i + 1);
+		int j = getRandomVertex(degreeSequence, g, 0);
 		if (i == j || i == -1 || j == -1) {
 			generate(degreeSequence, g);
 		} else {
@@ -47,8 +43,7 @@ public class RandomHHGenerator extends BaseHHGenerator {
 		    if (X == null) {
 		        X = new ArrayList<Integer>();
 		    }
-		    X.add(j);
-			if (isGraphicalWithConstraint(degreeSequence, i, X)) {
+			if (isGraphicalWithConstraint(reduce(reduce(degreeSequence, g), i, j), i, X)) {
 			    g.makeEdge(i, j);
 			    generate(degreeSequence, g);
 			} else {
