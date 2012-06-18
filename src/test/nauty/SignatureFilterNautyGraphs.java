@@ -1,0 +1,54 @@
+package test.nauty;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Graph;
+import model.GraphFileReader;
+
+import org.junit.Test;
+
+import filter.SignatureFilter;
+
+public class SignatureFilterNautyGraphs {
+    
+    public void signaturesFromY(List<String> sigStrings, int height, String filename) throws FileNotFoundException {
+        SignatureFilter filter = new SignatureFilter(sigStrings, height);
+        GraphFileReader graphs = new GraphFileReader(new FileReader(filename));
+        for (Graph graph : graphs) {
+            if (filter.filter(graph)) {
+                System.out.println(graph);
+            }
+        }
+    }
+    
+    @Test
+    public void testA() throws FileNotFoundException {
+        List<String> signatures = new ArrayList<String>();
+        signatures.add("[.]([.][.][.])");
+        signatures.add("[.]([.][.][.])");
+        signatures.add("[.]([.][.])");
+        signatures.add("[.]([.][.])");
+        signatures.add("[.]([.])");
+        signatures.add("[.]([.])");
+        signaturesFromY(signatures, 1, "sixes_nauty.txt");
+    }
+    
+    @Test
+    public void testB() throws FileNotFoundException {
+        List<String> signatures = new ArrayList<String>();
+        signatures.add("[.]([.][.][.])");
+        signatures.add("[.]([.][.][.])");
+        signatures.add("[.]([.][.][.])");
+        signatures.add("[.]([.][.])");
+        signatures.add("[.]([.][.])");
+        signatures.add("[.]([.][.])");
+        signatures.add("[.]([.])");
+        signatures.add("[.]([.])");
+        signatures.add("[.]([.])");
+        signaturesFromY(signatures, 1, "nines_nauty.txt");
+    }
+
+}

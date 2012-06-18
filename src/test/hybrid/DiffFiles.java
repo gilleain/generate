@@ -1,0 +1,24 @@
+package test.hybrid;
+
+import java.io.IOException;
+import java.util.List;
+
+import model.Graph;
+
+import org.junit.Test;
+
+import tools.GraphFileDiff;
+
+public class DiffFiles {
+	
+	@Test
+	public void diffSixes() throws IOException {
+		List<Graph> diff = GraphFileDiff.diff("output/hybrid/six_x.txt", "output/nauty/sixes_nauty.txt");
+		int count = 0;
+		for (Graph graph : diff) {
+			System.out.println(count + "\t" + graph);
+			count++;
+		}
+	}
+
+}
