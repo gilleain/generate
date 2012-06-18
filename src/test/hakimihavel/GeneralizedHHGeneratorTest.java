@@ -1,8 +1,8 @@
-package test.generate;
+package test.hakimihavel;
 
 import filter.DegreeSequenceFilter;
-import generate.GeneralizedHakimiHavelGenerator;
 import generate.handler.IsomorphCountingHandler;
+import hakimihavel.GeneralizedHakimiHavelGenerator;
 
 import java.util.Map;
 

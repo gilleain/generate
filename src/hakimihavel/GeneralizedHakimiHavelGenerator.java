@@ -1,4 +1,4 @@
-package generate;
+package hakimihavel;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;

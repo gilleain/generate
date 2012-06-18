@@ -1,9 +1,9 @@
-package test.generate;
+package test.hakimihavel;
 
 import java.util.Arrays;
 
-import generate.HakimiHavelGenerator;
 import group.Partition;
+import hakimihavel.HakimiHavelGenerator;
 import junit.framework.Assert;
 import model.Graph;
 
