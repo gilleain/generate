@@ -38,9 +38,9 @@ public class RandomHHGenerator extends BaseHHGenerator {
 	    System.out.println(g);
 	    if (isComplete(degreeSequence, g)) return;
 	    
-		int i = getRandomVertex(degreeSequence, g);
-		int j = getRandomVertex(degreeSequence, g);
-		if (i == j) {
+		int i = getRandomVertex(degreeSequence, g, 0);
+		int j = getRandomVertex(degreeSequence, g, i + 1);
+		if (i == j || i == -1 || j == -1) {
 			generate(degreeSequence, g);
 		} else {
 		    List<Integer> X = g.getConnected(i);
@@ -67,10 +67,10 @@ public class RandomHHGenerator extends BaseHHGenerator {
 	    return true;
 	}
 
-	private int getRandomVertex(int[] degreeSequence, Graph g) {
+	private int getRandomVertex(int[] degreeSequence, Graph g, int from) {
 	    int n = degreeSequence.length;
 	    List<Integer> candidates = new ArrayList<Integer>();
-	    for (int i = 0; i < n; i++) {
+	    for (int i = from; i < n; i++) {
 	        if (g.degree(i) < degreeSequence[i]) {
 	            candidates.add(i);
 	        }
