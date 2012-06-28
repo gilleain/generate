@@ -1,10 +1,14 @@
 package hakimihavel;
 
+import group.Partition;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import model.Graph;
+
+import combinatorics.PartitionCalculator;
 
 /**
  * Generates a random graph with a particular degree sequence.
@@ -18,6 +22,16 @@ public class RandomHHGenerator extends BaseHHGenerator {
 	
 	public RandomHHGenerator() {
 		this.random = new Random();
+	}
+	
+	public Graph generate(int degreeSum, int numberOfVertices) {
+	    int[][] counts = PartitionCalculator.countPartitions(degreeSum, numberOfVertices);
+        int numberOfPartitions = counts[degreeSum][numberOfVertices];
+	    int rank = random.nextInt(numberOfPartitions);
+	    Partition p = 
+	        PartitionCalculator.lexicographicallyUnrank(degreeSum, numberOfVertices, rank);
+	    System.out.println(p);
+	    return generate(p.toPermutation().getValues());
 	}
 	
 	public Graph generate(int[] degreeSequence) {

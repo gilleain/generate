@@ -22,6 +22,18 @@ public class RandomHHTest {
         }
     }
     
+    public void test(int degreeSum, int numberOfVertices) {
+        RandomHHGenerator generator = new RandomHHGenerator();
+        Graph g = generator.generate(degreeSum, numberOfVertices);
+        if (g != null) {
+            Collections.sort(g.edges);
+            System.out.println(g.vsize() 
+                               + "\t" + g.esize() 
+                               + "\t" + g.getSortedEdgeString()
+                               + "\t" + g.isConnected());
+        }
+    }
+    
     @Test
     public void test332211() {
         test(new int[] {3, 3, 2, 2, 1, 1});
@@ -40,6 +52,11 @@ public class RandomHHTest {
     @Test
     public void test333333333333() {
         test(new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
+    }
+    
+    @Test
+    public void test_28_18() {
+        test(28, 16);
     }
 
     

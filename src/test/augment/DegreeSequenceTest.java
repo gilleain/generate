@@ -64,8 +64,8 @@ public class DegreeSequenceTest {
         for (List<Integer> key : keys) {
             List<Graph> set = degSeqMap.get(key);
             int size = set.size();
-//            System.out.println(counter + "\t" + size + "\t" + sum(key) + "\t" + key + "\t" +  set);
-            System.out.println(counter + "\t" + size + "\t" + sum(key) + "\t" + key);
+            System.out.println(counter + "\t" + size + "\t" + sum(key) + "\t" + key + "\t" +  set);
+//            System.out.println(counter + "\t" + size + "\t" + sum(key) + "\t" + key);
             counter++;
         }
     }
