@@ -3,10 +3,13 @@ package hakimihavel;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.List;
 
 import model.Graph;
+import model.Graph.Edge;
 
 public class KiralyHHGenerator {
     
@@ -132,7 +135,7 @@ public class KiralyHHGenerator {
     
     private void connectRemaining(int[] degreeSequence, Graph g) {
         // XXX - there must be a better way...
-//        System.out.println(Arrays.toString(degreeSequence));
+//        System.out.println(Arrays.toString(degreeSequence) + "\t" + g.getEdgeStringWithEdgeOrder());
         boolean complete = false;
         if (degreeSequence[2] == 2) {
             if (degreeSequence[0] == 1 && degreeSequence[1] == 1) { // [1, 1, 2]
@@ -160,7 +163,11 @@ public class KiralyHHGenerator {
     
     private void setEdges(Graph g, BitSet chiP, int n) {
         for (int i = chiP.nextSetBit(0); i >= 0; i = chiP.nextSetBit(i+1)) {
-            g.makeEdge(i, n);
+            if (g.hasEdge(i, n)) {
+                continue;
+            } else {
+                g.makeEdge(i, n);
+            }
         }
     }
     
@@ -204,7 +211,7 @@ public class KiralyHHGenerator {
 
     private void upFromLeft(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
         chiP.clear(current.r);
-        g.edges = g.edges.subList(0, Math.max(g.esize() - 1, 0));
+        removeLast(g);
 //        System.out.println("UFL " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
         if (chiP.cardinality() < degree) {    // extension is possible
             traverseTreeDown(degreeSequence, tree, current.rightChild, chiP, g, n, degree);
@@ -215,6 +222,14 @@ public class KiralyHHGenerator {
                 upFromRight(degreeSequence, tree, current.parent, chiP, g, n, degree);
             }
         }
+    }
+    
+    private void removeLast(Graph g) {
+        List<Edge> edges = new ArrayList<Edge>();
+        for (int i = 0; i < g.esize() - 1; i++) {
+            edges.add(g.edges.get(i));
+        }
+        g.edges = edges;
     }
     
     private void upFromRight(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {

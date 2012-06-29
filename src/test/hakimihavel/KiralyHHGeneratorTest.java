@@ -18,9 +18,13 @@ public class KiralyHHGeneratorTest {
         IsomorphCountingHandler duplicateHandler = new IsomorphCountingHandler();
         KiralyHHGenerator generator = new KiralyHHGenerator(duplicateHandler);
         generator.generate(degSeq);
+//        Map<String, Graph> sigMap = duplicateHandler.getSignatureMap(); 
+//        for (String sig : sigMap.keySet()) {
+//            System.out.println(sig + " " + sigMap.get(sig));
+//        }
         Map<Graph, Integer> dups = duplicateHandler.getNonIsomorphicGraphCount();
         for (Graph g : dups.keySet()) {
-            System.out.println(g + "\t" + dups.get(g) + "\t" + toDegreeSeq(g));
+            System.out.println(dups.get(g) + "\t" + toDegreeSeq(g) + g + "\t" + g.esize());
         }
     }
     

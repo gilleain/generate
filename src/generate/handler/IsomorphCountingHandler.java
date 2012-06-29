@@ -35,6 +35,10 @@ public class IsomorphCountingHandler implements GeneratorHandler {
         }
     }
     
+    public Map<String, Graph> getSignatureMap() {
+        return signatures;
+    }
+    
     public List<Graph> getNonIsomorphicGraphs() {
         return new ArrayList<Graph>(signatures.values());
     }
