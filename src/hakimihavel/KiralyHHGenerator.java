@@ -3,6 +3,7 @@ package hakimihavel;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 
+import java.util.Arrays;
 import java.util.BitSet;
 
 import model.Graph;
@@ -106,8 +107,6 @@ public class KiralyHHGenerator {
     
     private GeneratorHandler handler;
     
-    private int[] degreeSequence;
-    
     public KiralyHHGenerator() {
         this(new SystemOutHandler());
     }
@@ -121,15 +120,42 @@ public class KiralyHHGenerator {
     }
     
     public void generate(int[] degreeSequence, int n, Graph g) {
-//        System.out.println("recursing " + n + " " + degreeSequence[n - 1] + " " + g);
-        if (n == 2) {
-            handler.handle(null, g);
+//        System.out.println("recursing " + n + " " + Arrays.toString(degreeSequence) + " " + g);
+        if (n == 3) {
+            connectRemaining(degreeSequence, g);
             return;
         }
-        this.degreeSequence = degreeSequence;
         int dN = degreeSequence[n - 1];
         RedBlackTree tree = new RedBlackTree(n - 1);
-        traverse(tree, g, n, dN);
+        traverse(degreeSequence, tree, g, n, dN);
+    }
+    
+    private void connectRemaining(int[] degreeSequence, Graph g) {
+        // XXX - there must be a better way...
+//        System.out.println(Arrays.toString(degreeSequence));
+        boolean complete = false;
+        if (degreeSequence[2] == 2) {
+            if (degreeSequence[0] == 1 && degreeSequence[1] == 1) { // [1, 1, 2]
+                g.makeEdge(0, 2);
+                g.makeEdge(1, 2);
+                complete = true;
+            }
+        } else if (degreeSequence[1] == 2) {
+            if (degreeSequence[0] == 1 && degreeSequence[2] == 1) { // [1, 2, 1]
+                g.makeEdge(0, 1);
+                g.makeEdge(1, 2);
+                complete = true;
+            }
+        } else if (degreeSequence[0] == 2) {
+            if (degreeSequence[1] == 1 && degreeSequence[2] == 1) { // [2, 1, 1]
+                g.makeEdge(0, 1);
+                g.makeEdge(0, 2);
+                complete = true;
+            }
+        }
+        if (complete) { 
+            handler.handle(null, g);
+        }
     }
     
     private void setEdges(Graph g, BitSet chiP, int n) {
@@ -138,82 +164,89 @@ public class KiralyHHGenerator {
         }
     }
     
-    private void handleLeaf(RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
+    private void handleLeaf(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
         if (chiP.cardinality() == degree) {
             setEdges(g, chiP, n - 1);
 //            System.out.println("Leaf " + n + ":" + current + "\t" + chiP + "\t" + g.getSortedEdgeString());
 //            System.out.println("Leaf " + n + ":" + current + "\t" + chiP + "\t" + g);
 //        handler.handle(null, g);
-            generate(degreeSequence, n - 1, new Graph(g));
+            generate(reduce(degreeSequence, chiP, n - 1), n - 1, new Graph(g));
         } 
         if (current.isLeftChild) {
-            upFromLeft(tree, current.parent, chiP, g, n, degree);
+            upFromLeft(degreeSequence, tree, current.parent, chiP, g, n, degree);
         } else {
-            upFromRight(tree, current.parent, chiP, g, n, degree);
+            upFromRight(degreeSequence, tree, current.parent, chiP, g, n, degree);
         }
     }
     
-    private void traverse(RedBlackTree tree, Graph g, int n, int degree) {
+    private void traverse(int[] degreeSequence, RedBlackTree tree, Graph g, int n, int degree) {
         TreeNode startLeaf = tree.getLeftmostLeaf(degree);
         BitSet chiP = new BitSet();
         for (int i = 0; i < degree; i++) { chiP.set(i); }
 //        System.out.println("traversing from current " + startLeaf + " n= " + n + " degree = " + degree + " chiP " + chiP);
-        handleLeaf(tree, startLeaf, chiP, g, n, degree);
+        handleLeaf(degreeSequence, tree, startLeaf, chiP, g, n, degree);
     }
 
-    private void traverseTreeDown(RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
-//        System.out.println("D " + current.id + " " + chiP + " " + n + " " + degree);
+    private void traverseTreeDown(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
+//        System.out.println("DDD " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP  + " " + g);
         if (current.isLeaf()) {
-           handleLeaf(tree, current, chiP, g, n, degree);
+           handleLeaf(degreeSequence, tree, current, chiP, g, n, degree);
         } else {
-//            if (chiP.cardinality() < degree && isGraphical(chiP)) {    // left is red
-            if (chiP.cardinality() < degree) {
+            if (chiP.cardinality() < degree && isGraphical(degreeSequence, chiP, n - 1)) {    // left is red
+//            if (chiP.cardinality() < degree) {
                 chiP.set(current.r);
-                traverseTreeDown(tree, current.leftChild, chiP, g, n, degree);
+                traverseTreeDown(degreeSequence, tree, current.leftChild, chiP, g, n, degree);
             } else {
-                traverseTreeDown(tree, current.rightChild, chiP, g, n, degree);
+                traverseTreeDown(degreeSequence, tree, current.rightChild, chiP, g, n, degree);
             }
         }
     }
 
-    private void upFromLeft(RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
+    private void upFromLeft(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
         chiP.clear(current.r);
-        g.edges = g.edges.subList(0, g.esize());
-//        System.out.println("UFL " + current.id + " " + chiP);
+        g.edges = g.edges.subList(0, Math.max(g.esize() - 1, 0));
+//        System.out.println("UFL " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
         if (chiP.cardinality() < degree) {    // extension is possible
-            traverseTreeDown(tree, current.rightChild, chiP, g, n, degree);
+            traverseTreeDown(degreeSequence, tree, current.rightChild, chiP, g, n, degree);
         } else {
             if (current.isLeftChild) {
-                upFromLeft(tree, current.parent, chiP, g, n, degree);
+                upFromLeft(degreeSequence, tree, current.parent, chiP, g, n, degree);
             } else {
-                upFromRight(tree, current.parent, chiP, g, n, degree);
+                upFromRight(degreeSequence, tree, current.parent, chiP, g, n, degree);
             }
         }
     }
     
-    private void upFromRight(RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
-//        System.out.println("UFR " + current.id + " " + chiP);
+    private void upFromRight(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
+//        System.out.println("UFR " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
         if (current.parent == null) {
+//            System.out.println("At root" + g);
             return;    // reached the root
         } else {
             if (current.isLeftChild) {
-                upFromLeft(tree, current.parent, chiP, g, n, degree);
+                upFromLeft(degreeSequence, tree, current.parent, chiP, g, n, degree);
             } else {
-                upFromRight(tree, current.parent, chiP, g, n, degree);
+                upFromRight(degreeSequence, tree, current.parent, chiP, g, n, degree);
             }
         }
     }
     
-    private boolean isGraphical(BitSet chiP) {
+    private int[] reduce(int[] degreeSequence, BitSet chiP, int n) {
         int[] reducedDegreeSeq = new int[degreeSequence.length];
         for (int i = 0; i < degreeSequence.length; i++) {
             if (chiP.get(i)) {
                 reducedDegreeSeq[i] = degreeSequence[i] - 1;
+            } else if (i == n) {
+                reducedDegreeSeq[i] = degreeSequence[i] - chiP.cardinality();
             } else {
                 reducedDegreeSeq[i] = degreeSequence[i];
             }
         }
-        return HakimiHavelGenerator.isGraphical(reducedDegreeSeq);  // TODO : replace with linear HH
+        return reducedDegreeSeq;
+    }
+    
+    private boolean isGraphical(int[] degreeSequence, BitSet chiP, int n) {
+        return HakimiHavelGenerator.isGraphical(reduce(degreeSequence, chiP, n));  // TODO : replace with linear HH
     }
     
 }
