@@ -52,6 +52,11 @@ public class KiralyHHGeneratorTest {
     }
     
     @Test
+    public void seq_332211_Test() {
+        test(new int[] { 3, 3, 2, 2, 1, 1 });
+    }
+    
+    @Test
     public void three_To_Six_Test() {
         test(new int[] { 3, 3, 3, 3, 3, 3 });
     }
