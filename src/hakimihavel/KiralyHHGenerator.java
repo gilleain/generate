@@ -135,9 +135,11 @@ public class KiralyHHGenerator {
     
     private void connectRemaining(int[] degreeSequence, Graph g) {
         // XXX - there must be a better way...
-        System.out.print("LEAF " + Arrays.toString(degreeSequence));
+//        System.out.print("LEAF " + Arrays.toString(degreeSequence));
         boolean complete = false;
-        if (hasPattern(degreeSequence, 1, 1, 2)) {
+        if (hasPattern(degreeSequence, 0, 0, 0)) {
+            complete = true;
+        } else if (hasPattern(degreeSequence, 1, 1, 2)) {
             g.makeEdge(0, 2);
             g.makeEdge(1, 2);
             complete = true;
@@ -158,13 +160,18 @@ public class KiralyHHGenerator {
         } else if (hasPattern(degreeSequence, 1, 1, 0)) {
             g.makeEdge(0, 1);
             complete = true;
+        } else if (hasPattern(degreeSequence, 2, 2, 2)) {
+            g.makeEdge(0, 1);
+            g.makeEdge(0, 2);
+            g.makeEdge(1, 2);
+            complete = true;
         }
         
         if (complete) {
-            System.out.println("\t" + g.getEdgeStringWithEdgeOrder() + " COMPLETE");
+//            System.out.println("\t" + g.getEdgeStringWithEdgeOrder() + " COMPLETE");
             handler.handle(null, g);
         } else {
-            System.out.println("\t" + g.getEdgeStringWithEdgeOrder() + " INCOMPLETE");
+//            System.out.println("\t" + g.getEdgeStringWithEdgeOrder() + " INCOMPLETE");
         }
     }
     
@@ -202,12 +209,12 @@ public class KiralyHHGenerator {
         BitSet chiP = new BitSet();
         for (int i = 0; i < degree; i++) { chiP.set(i); }
         setEdges(g, chiP, n - 1);
-        System.out.println("traversing from current " + startLeaf + " n= " + n + " degree = " + degree + " chiP " + chiP);
+//        System.out.println("traversing from current " + startLeaf + " n= " + n + " degree = " + degree + " chiP " + chiP);
         handleLeaf(degreeSequence, tree, startLeaf, chiP, g, n, degree);
     }
 
     private void traverseTreeDown(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
-        System.out.println("DDD " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP  + " " + g);
+//        System.out.println("DDD " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP  + " " + g);
         if (current.isLeaf()) {
            handleLeaf(degreeSequence, tree, current, chiP, g, n, degree);
         } else {
@@ -225,7 +232,7 @@ public class KiralyHHGenerator {
     private void upFromLeft(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
         chiP.clear(current.r);
         removeLast(g);
-        System.out.println("UFL " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
+//        System.out.println("UFL " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
         if (chiP.cardinality() < degree) {    // extension is possible
             traverseTreeDown(degreeSequence, tree, current.rightChild, chiP, g, n, degree);
         } else {
@@ -246,7 +253,7 @@ public class KiralyHHGenerator {
     }
     
     private void upFromRight(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
-        System.out.println("UFR " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
+//        System.out.println("UFR " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
         if (current.parent == null) {
 //            System.out.println("At root" + g);
             return;    // reached the root
