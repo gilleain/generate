@@ -135,30 +135,41 @@ public class KiralyHHGenerator {
     
     private void connectRemaining(int[] degreeSequence, Graph g) {
         // XXX - there must be a better way...
-//        System.out.println(Arrays.toString(degreeSequence) + "\t" + g.getEdgeStringWithEdgeOrder());
+        System.out.print("LEAF " + Arrays.toString(degreeSequence));
         boolean complete = false;
-        if (degreeSequence[2] == 2) {
-            if (degreeSequence[0] == 1 && degreeSequence[1] == 1) { // [1, 1, 2]
-                g.makeEdge(0, 2);
-                g.makeEdge(1, 2);
-                complete = true;
-            }
-        } else if (degreeSequence[1] == 2) {
-            if (degreeSequence[0] == 1 && degreeSequence[2] == 1) { // [1, 2, 1]
-                g.makeEdge(0, 1);
-                g.makeEdge(1, 2);
-                complete = true;
-            }
-        } else if (degreeSequence[0] == 2) {
-            if (degreeSequence[1] == 1 && degreeSequence[2] == 1) { // [2, 1, 1]
-                g.makeEdge(0, 1);
-                g.makeEdge(0, 2);
-                complete = true;
-            }
+        if (hasPattern(degreeSequence, 1, 1, 2)) {
+            g.makeEdge(0, 2);
+            g.makeEdge(1, 2);
+            complete = true;
+        } else if (hasPattern(degreeSequence, 1, 2, 1)) {
+            g.makeEdge(0, 1);
+            g.makeEdge(1, 2);
+            complete = true;
+        } else if (hasPattern(degreeSequence, 2, 1, 1)) {
+            g.makeEdge(0, 1);
+            g.makeEdge(0, 2);
+            complete = true;
+        } else if (hasPattern(degreeSequence, 0, 1, 1)) {
+            g.makeEdge(1, 2);
+            complete = true;
+        } else if (hasPattern(degreeSequence, 1, 0, 1)) {
+            g.makeEdge(0, 2);
+            complete = true;
+        } else if (hasPattern(degreeSequence, 1, 1, 0)) {
+            g.makeEdge(0, 1);
+            complete = true;
         }
-        if (complete) { 
+        
+        if (complete) {
+            System.out.println("\t" + g.getEdgeStringWithEdgeOrder() + " COMPLETE");
             handler.handle(null, g);
+        } else {
+            System.out.println("\t" + g.getEdgeStringWithEdgeOrder() + " INCOMPLETE");
         }
+    }
+    
+    private boolean hasPattern(int[] degreeSequence, int i0, int i1, int i2) {
+        return degreeSequence[0] == i0 && degreeSequence[1] == i1 && degreeSequence[2] == i2;
     }
     
     private void setEdges(Graph g, BitSet chiP, int n) {
@@ -173,7 +184,7 @@ public class KiralyHHGenerator {
     
     private void handleLeaf(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
         if (chiP.cardinality() == degree) {
-            setEdges(g, chiP, n - 1);
+//            setEdges(g, chiP, n - 1);
 //            System.out.println("Leaf " + n + ":" + current + "\t" + chiP + "\t" + g.getSortedEdgeString());
 //            System.out.println("Leaf " + n + ":" + current + "\t" + chiP + "\t" + g);
 //        handler.handle(null, g);
@@ -190,17 +201,19 @@ public class KiralyHHGenerator {
         TreeNode startLeaf = tree.getLeftmostLeaf(degree);
         BitSet chiP = new BitSet();
         for (int i = 0; i < degree; i++) { chiP.set(i); }
-//        System.out.println("traversing from current " + startLeaf + " n= " + n + " degree = " + degree + " chiP " + chiP);
+        setEdges(g, chiP, n - 1);
+        System.out.println("traversing from current " + startLeaf + " n= " + n + " degree = " + degree + " chiP " + chiP);
         handleLeaf(degreeSequence, tree, startLeaf, chiP, g, n, degree);
     }
 
     private void traverseTreeDown(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
-//        System.out.println("DDD " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP  + " " + g);
+        System.out.println("DDD " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP  + " " + g);
         if (current.isLeaf()) {
            handleLeaf(degreeSequence, tree, current, chiP, g, n, degree);
         } else {
             if (chiP.cardinality() < degree && isGraphical(degreeSequence, chiP, n - 1)) {    // left is red
 //            if (chiP.cardinality() < degree) {
+                g.makeEdge(current.r, n - 1);
                 chiP.set(current.r);
                 traverseTreeDown(degreeSequence, tree, current.leftChild, chiP, g, n, degree);
             } else {
@@ -212,7 +225,7 @@ public class KiralyHHGenerator {
     private void upFromLeft(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
         chiP.clear(current.r);
         removeLast(g);
-//        System.out.println("UFL " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
+        System.out.println("UFL " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
         if (chiP.cardinality() < degree) {    // extension is possible
             traverseTreeDown(degreeSequence, tree, current.rightChild, chiP, g, n, degree);
         } else {
@@ -233,7 +246,7 @@ public class KiralyHHGenerator {
     }
     
     private void upFromRight(int[] degreeSequence, RedBlackTree tree, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
-//        System.out.println("UFR " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
+        System.out.println("UFR " + String.format("%5s", n + ":" + current.id) + " " + Arrays.toString(degreeSequence) + " " + degree + " " + chiP + " " + g);
         if (current.parent == null) {
 //            System.out.println("At root" + g);
             return;    // reached the root
@@ -260,8 +273,16 @@ public class KiralyHHGenerator {
         return reducedDegreeSeq;
     }
     
+    private int[] sort(int[] arr) {
+        int[] sortedArr = new int[arr.length]; 
+        System.arraycopy(arr, 0, sortedArr, 0, arr.length);
+        Arrays.sort(sortedArr);
+        return sortedArr;
+    }
+    
     private boolean isGraphical(int[] degreeSequence, BitSet chiP, int n) {
-        return HakimiHavelGenerator.isGraphical(reduce(degreeSequence, chiP, n));  // TODO : replace with linear HH
+        // TODO : replace with linear HH
+        return HakimiHavelGenerator.isGraphical(sort(reduce(degreeSequence, chiP, n)));  
     }
     
 }
