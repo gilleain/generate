@@ -50,6 +50,14 @@ public class ScanTest {
 	}
 	
 	@Test
+    public void sevenGraphsFromEmpty() {
+        Graph initial = new Graph();
+        AugmentingGenerator generator = new AugmentingGenerator(
+                new FileOutputHandler("output/mckay/seven_x.txt", -1, 7, true));
+        generator.scan(initial, 7);
+    }
+	
+	@Test
 	public void fiveGraphsFromSingleEdge() {
 		Graph initial = new Graph("0:1");
 		AugmentingGenerator generator = new AugmentingGenerator(new DegreeFilterHandler(5, 5));

@@ -14,17 +14,28 @@ public class IsomorphCountingHandler implements GeneratorHandler {
     
     private Map<String, Integer> counts;
     
+    private boolean ignoreDisconnected;
+    
     private boolean reset;
     
     public IsomorphCountingHandler() {
+        this(false);
+    }
+        
+    public IsomorphCountingHandler(boolean ignoreDisconnected) {
         this.signatures = new HashMap<String, Graph>();
         this.counts = new HashMap<String, Integer>();
+        this.ignoreDisconnected = ignoreDisconnected;
     }
     
     public void handle(Graph parent, Graph graph) {
         if (reset) {
             signatures.clear();
             counts.clear();
+            reset = false;
+        }
+        if (ignoreDisconnected && !graph.isConnected()) {
+            return;
         }
         String signature = new GraphSignature(graph).toCanonicalString();
         if (signatures.containsKey(signature)) {

@@ -120,6 +120,7 @@ public class KiralyHHGenerator {
     
     public void generate(int[] degreeSequence) {
         generate(degreeSequence, degreeSequence.length, new Graph());
+        handler.finish();
     }
     
     public void generate(int[] degreeSequence, int n, Graph g) {
