@@ -1,7 +1,6 @@
 package test.hakimihavel;
 
 import generate.handler.IsomorphCountingHandler;
-import hakimihavel.KiralyHHGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.Map;
 import model.Graph;
 
 import org.junit.Test;
+
+import degreeseq.KiralyHHGenerator;
 
 public class KiralyHHGeneratorTest {
     

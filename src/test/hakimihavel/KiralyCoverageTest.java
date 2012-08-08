@@ -1,7 +1,6 @@
 package test.hakimihavel;
 
 import generate.handler.IsomorphCountingHandler;
-import hakimihavel.KiralyHHGenerator;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,6 +15,8 @@ import model.GraphFileReader;
 import model.GraphSignature;
 
 import org.junit.Test;
+
+import degreeseq.KiralyHHGenerator;
 
 public class KiralyCoverageTest {
     

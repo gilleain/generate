@@ -1,4 +1,4 @@
-package hakimihavel;
+package degreeseq;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;

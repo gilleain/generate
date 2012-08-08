@@ -2,13 +2,14 @@ package test.hakimihavel;
 
 import filter.DegreeSequenceFilter;
 import generate.handler.IsomorphCountingHandler;
-import hakimihavel.GeneralizedHakimiHavelGenerator;
 
 import java.util.Map;
 
 import model.Graph;
 
 import org.junit.Test;
+
+import degreeseq.GeneralizedHakimiHavelGenerator;
 
 public class GeneralizedHHGeneratorTest {
     

@@ -1,13 +1,13 @@
 package test.hakimihavel;
 
 import group.Partition;
-import hakimihavel.GraphicalChecker;
-import hakimihavel.GraphicalChecker.Graphicality;
-import hakimihavel.HakimiHavelGenerator;
 
 import org.junit.Test;
 
 import combinatorics.PartitionCalculator;
+import degreeseq.GraphicalChecker;
+import degreeseq.HakimiHavelGenerator;
+import degreeseq.GraphicalChecker.Graphicality;
 
 public class GraphicalCheckerTest {
     

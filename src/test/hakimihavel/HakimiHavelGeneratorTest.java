@@ -3,13 +3,13 @@ package test.hakimihavel;
 import java.util.Arrays;
 
 import group.Partition;
-import hakimihavel.HakimiHavelGenerator;
 import junit.framework.Assert;
 import model.Graph;
 
 import org.junit.Test;
 
 import combinatorics.PartitionCalculator;
+import degreeseq.HakimiHavelGenerator;
 
 public class HakimiHavelGeneratorTest {
     

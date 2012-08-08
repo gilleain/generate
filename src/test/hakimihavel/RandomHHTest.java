@@ -2,11 +2,12 @@ package test.hakimihavel;
 
 import java.util.Collections;
 
-import hakimihavel.RandomHHGenerator;
 
 import model.Graph;
 
 import org.junit.Test;
+
+import degreeseq.RandomHHGenerator;
 
 public class RandomHHTest {
     

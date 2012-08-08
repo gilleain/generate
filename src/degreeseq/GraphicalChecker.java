@@ -1,4 +1,4 @@
-package hakimihavel;
+package degreeseq;
 
 /**
  * Based on JK Senior's 1951 paper in American Journal of Mathematics.

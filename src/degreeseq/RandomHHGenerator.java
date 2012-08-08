@@ -1,4 +1,4 @@
-package hakimihavel;
+package degreeseq;
 
 import group.Partition;
 

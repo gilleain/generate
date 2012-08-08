@@ -1,4 +1,4 @@
-package hakimihavel;
+package degreeseq;
 
 import java.util.ArrayList;
 import java.util.Arrays;
