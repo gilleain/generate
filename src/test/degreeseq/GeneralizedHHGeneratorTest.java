@@ -1,4 +1,4 @@
-package test.hakimihavel;
+package test.degreeseq;
 
 import filter.DegreeSequenceFilter;
 import generate.handler.IsomorphCountingHandler;
