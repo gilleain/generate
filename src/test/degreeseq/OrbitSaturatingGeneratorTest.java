@@ -7,7 +7,21 @@ import degreeseq.OrbitSaturatingGenerator;
 public class OrbitSaturatingGeneratorTest {
     
     @Test
-    public void test_333333() {
+    public void test_3ToThe8() {
+        int[] degSeq = new int[] { 3, 3, 3, 3, 3, 3, 3, 3 };
+        OrbitSaturatingGenerator generator = new OrbitSaturatingGenerator();
+        generator.generate(degSeq);
+    }
+    
+    @Test
+    public void test_3Squared_2ToThe6() {
+        int[] degSeq = new int[] { 3, 3, 2, 2, 2, 2, 2, 2 };
+        OrbitSaturatingGenerator generator = new OrbitSaturatingGenerator();
+        generator.generate(degSeq);
+    }
+    
+    @Test
+    public void test_3ToThe6() {
         int[] degSeq = new int[] { 3, 3, 3, 3, 3, 3 };
         OrbitSaturatingGenerator generator = new OrbitSaturatingGenerator();
         generator.generate(degSeq);

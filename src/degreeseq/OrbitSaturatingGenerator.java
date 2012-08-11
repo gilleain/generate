@@ -1,5 +1,6 @@
 package degreeseq;
 
+import group.Partition;
 import group.Permutation;
 import group.SSPermutationGroup;
 
@@ -10,9 +11,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import java.util.Stack;
+import java.util.TreeSet;
 
 import model.Graph;
+import model.GraphDiscretePartitionRefiner;
 
 public class OrbitSaturatingGenerator {
     
@@ -39,12 +43,14 @@ public class OrbitSaturatingGenerator {
             boolean isSSG = isSSG(component, child, degSeq); 
             if (isSSG) {
                 if (component.cardinality() == degSeq.length) {
-                    if (isCanonical(child, degreeOrbits)) {
+//                    if (isCanonical(child, degreeOrbits)) {
+                    if (isPartitionCanonical(child, degreeOrbits)) {
                     System.out.println("complete " + child 
                                     + "\t" + child.esize()
                                     + "\t" + getCert(child, new Permutation(child.vsize()))
-                                    );
-//                                    + "\t" + isCanonical(child, degreeOrbits));
+//                                    + "\t" + isCanonical(child, degreeOrbits)
+                                    + "\t" + isPartitionCanonical(child, degreeOrbits)
+                    );
                     }
                 } else {
 //                    System.out.println("SSG " + child);
@@ -88,6 +94,17 @@ public class OrbitSaturatingGenerator {
                 }
             }
         }
+    }
+    
+    private boolean isPartitionCanonical(Graph g, List<Stack<Integer>> orbits) {
+        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
+        Partition p  = new Partition();
+        for (Stack<Integer> orbit : orbits) {
+            SortedSet<Integer> cell = new TreeSet<Integer>(orbit);
+            p.addCell(cell);
+        }
+        refiner.getAutomorphismGroup(g, p);
+        return refiner.firstIsIdentity();
     }
     
     private boolean isCanonical(Graph g, List<Stack<Integer>> orbits) {
