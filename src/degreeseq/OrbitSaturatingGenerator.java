@@ -1,7 +1,8 @@
 package degreeseq;
 
+import generate.handler.GeneratorHandler;
+import generate.handler.SystemOutHandler;
 import group.Partition;
-import group.Permutation;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -21,9 +22,20 @@ public class OrbitSaturatingGenerator {
     
     private List<Stack<Integer>> degreeOrbits;
     
+    private GeneratorHandler handler;
+    
+    public OrbitSaturatingGenerator() {
+        this(new SystemOutHandler());
+    }
+    
+    public OrbitSaturatingGenerator(GeneratorHandler handler) {
+        this.handler = handler;
+    }
+    
     public void generate(int[] degSeq) {
         degreeOrbits = getOrbits(degSeq);
         generate(0, getOrbits(degSeq), new Graph(), degSeq);
+        handler.finish();
     }
     
     public void generate(
@@ -42,12 +54,13 @@ public class OrbitSaturatingGenerator {
                 if (component.cardinality() == degSeq.length) {
 //                    if (isCanonical(child, degreeOrbits)) {
                     if (isPartitionCanonical(child, degreeOrbits)) {
-                    System.out.println("complete " + child 
-                                    + "\t" + child.esize()
-                                    + "\t" + getCert(child, new Permutation(child.vsize()))
-//                                    + "\t" + isCanonical(child, degreeOrbits)
-                                    + "\t" + isPartitionCanonical(child, degreeOrbits)
-                    );
+//                    System.out.println("complete " + child 
+//                                    + "\t" + child.esize()
+//                                    + "\t" + getCert(child, new Permutation(child.vsize()))
+////                                    + "\t" + isCanonical(child, degreeOrbits)
+//                                    + "\t" + isPartitionCanonical(child, degreeOrbits)
+//                    );
+                        handler.handle(parent, child);
                     }
                 } else {
 //                    System.out.println("SSG " + child + "\t" + child.esize());
@@ -103,20 +116,21 @@ public class OrbitSaturatingGenerator {
         return refiner.firstIsIdentity();
     }
     
-    private String getCert(Graph g, Permutation p) {
-        StringBuffer cert = new StringBuffer();
-        int n = g.vsize();
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (g.hasEdge(p.get(i), p.get(j))) {
-                    cert.append("1");
-                } else {
-                    cert.append("0");
-                }
-            }
-        }
-        return cert.toString();
-    }
+    // TODO : remove (curently used for debugging)
+//    private String getCert(Graph g, Permutation p) {
+//        StringBuffer cert = new StringBuffer();
+//        int n = g.vsize();
+//        for (int i = 0; i < n; i++) {
+//            for (int j = i + 1; j < n; j++) {
+//                if (g.hasEdge(p.get(i), p.get(j))) {
+//                    cert.append("1");
+//                } else {
+//                    cert.append("0");
+//                }
+//            }
+//        }
+//        return cert.toString();
+//    }
 
     private boolean isSSG(BitSet component, Graph g, int[] degSeq) {
         for (int i = 0; i < degSeq.length; i++) {
