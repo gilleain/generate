@@ -53,7 +53,7 @@ public class OrbitSaturatingGenerator {
                     );
                     }
                 } else {
-//                    System.out.println("SSG " + child);
+//                    System.out.println("SSG " + child + "\t" + child.esize());
                 }
             } else {
                 generate(unsaturatedOrbit, nextOrbits, child, degSeq);
