@@ -2,7 +2,6 @@ package degreeseq;
 
 import group.Partition;
 import group.Permutation;
-import group.SSPermutationGroup;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -19,8 +18,6 @@ import model.Graph;
 import model.GraphDiscretePartitionRefiner;
 
 public class OrbitSaturatingGenerator {
-    
-    private int TMP_COUNT = 0;
     
     private List<Stack<Integer>> degreeOrbits;
     
@@ -84,7 +81,6 @@ public class OrbitSaturatingGenerator {
         int degree = g.degree(v);
         if (degSeq[v] == degree) {
             children.add(g);
-//            System.out.println(TMP_COUNT + "\t" + g); TMP_COUNT++;
             return;
         } else {
             for (int w = start; w < degSeq.length; w++) {
@@ -105,32 +101,6 @@ public class OrbitSaturatingGenerator {
         }
         refiner.getAutomorphismGroup(g, p);
         return refiner.firstIsIdentity();
-    }
-    
-    private boolean isCanonical(Graph g, List<Stack<Integer>> orbits) {
-        int n = g.vsize();
-        if (n < 3) return true;
-        String originalCert = getCert(g, new Permutation(n));
-        for (Stack<Integer> orbit : orbits) {
-            int oN = orbit.size();
-            if (oN > 1) {
-                SSPermutationGroup permutations = SSPermutationGroup.makeSymN(oN);
-                for (Permutation p : permutations.all()) {
-                    Permutation fullP = new Permutation(n);
-                    for (int i = 0; i < oN; i++) {
-                        int x = orbit.get(i);
-                        int y = orbit.get(p.get(i));
-                        fullP.set(x, y);
-                    }
-                    String pCert = getCert(g, fullP);
-//                    System.out.println(pCert);
-                    if (originalCert.compareTo(pCert) < 0) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
     }
     
     private String getCert(Graph g, Permutation p) {
