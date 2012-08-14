@@ -20,9 +20,11 @@ import model.GraphDiscretePartitionRefiner;
 
 public class OrbitSaturatingGenerator {
     
-    private List<Stack<Integer>> degreeOrbits;
+    private Partition degreeOrbits;
     
     private GeneratorHandler handler;
+    
+    private OrbitPartitioner partitioner;
     
     public OrbitSaturatingGenerator() {
         this(new SystemOutHandler());
@@ -30,6 +32,7 @@ public class OrbitSaturatingGenerator {
     
     public OrbitSaturatingGenerator(GeneratorHandler handler) {
         this.handler = handler;
+        this.partitioner = new MorganNumberPartitioner();
     }
     
     public void generate(int[] degSeq) {
@@ -38,13 +41,12 @@ public class OrbitSaturatingGenerator {
         handler.finish();
     }
     
-    public void generate(
-            int orbit, List<Stack<Integer>> orbits, Graph parent, int[] degSeq) {
+    public void generate(int orbit, Partition orbits, Graph parent, int[] degSeq) {
 //        System.out.println("Orbit " + orbit + " of " + orbits + "\t" + parent);
         List<Graph> children = new ArrayList<Graph>();
         saturateOrbit(orbit, orbits, parent, children, degSeq);
         for (Graph child : children) {
-            List<Stack<Integer>> nextOrbits = getOrbits(child, degSeq);
+            Partition nextOrbits = partitioner.getOrbitPartition(child, degSeq);
             int unsaturatedOrbit = getFirstUnsaturatedOrbit(child, nextOrbits, degSeq);
 //            System.out.println(child + "\t" + nextOrbits + "\t" + unsaturatedOrbit);
             BitSet component = new BitSet();
@@ -53,13 +55,13 @@ public class OrbitSaturatingGenerator {
             if (isSSG) {
                 if (component.cardinality() == degSeq.length) {
 //                    if (isCanonical(child, degreeOrbits)) {
-                    if (isPartitionCanonical(child, degreeOrbits)) {
 //                    System.out.println("complete " + child 
 //                                    + "\t" + child.esize()
 //                                    + "\t" + getCert(child, new Permutation(child.vsize()))
-////                                    + "\t" + isCanonical(child, degreeOrbits)
+//                                    + "\t" + isCanonical(child, degreeOrbits)
 //                                    + "\t" + isPartitionCanonical(child, degreeOrbits)
 //                    );
+                    if (isPartitionCanonical(child, degreeOrbits)) {
                         handler.handle(parent, child);
                     }
                 } else {
@@ -71,14 +73,13 @@ public class OrbitSaturatingGenerator {
         }
     }
     
-    public void saturateOrbit(
-            int orbitIndex, List<Stack<Integer>> orbits, Graph g, List<Graph> children, int[] degSeq) {
-        Stack<Integer> orbit = orbits.get(orbitIndex); 
+    public void saturateOrbit(int orbitIndex, Partition orbits, Graph g, List<Graph> children, int[] degSeq) {
+        SortedSet<Integer> orbit = orbits.getCell(orbitIndex); 
         if (orbit.isEmpty()) {
             children.add(g);
         } else {
 //            System.out.println("Orbit " + orbitIndex + " now " + orbit);
-            int v = orbit.pop();
+            int v = pop(orbit);
             List<Graph> vchildren = new ArrayList<Graph>();
 //            System.out.println("saturating vertex " + v);
             saturateVertex(v, v + 1, g, vchildren, orbits, degSeq);
@@ -87,9 +88,14 @@ public class OrbitSaturatingGenerator {
             }
         }
     }
+    
+    private int pop(SortedSet<Integer> orbit) {
+        int item = orbit.first();
+        orbit.remove(item);
+        return item;
+    }
 
-    public void saturateVertex(int v, int start, Graph g, 
-            List<Graph> children, List<Stack<Integer>> orbits, int[] degSeq) {
+    public void saturateVertex(int v, int start, Graph g, List<Graph> children, Partition orbits, int[] degSeq) {
 //        if (!isCanonical(g, orbits)) return;
         int degree = g.degree(v);
         if (degSeq[v] == degree) {
@@ -105,33 +111,24 @@ public class OrbitSaturatingGenerator {
         }
     }
     
-    private boolean isPartitionCanonical(Graph g, List<Stack<Integer>> orbits) {
+    private boolean isPartitionCanonical(Graph g, Partition p) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-        Partition p  = new Partition();
-        for (Stack<Integer> orbit : orbits) {
-            SortedSet<Integer> cell = new TreeSet<Integer>(orbit);
-            p.addCell(cell);
-        }
-        refiner.getAutomorphismGroup(g, p);
+//        refiner.getAutomorphismGroup(g, p);
+//        return refiner.firstIsIdentity();
+        refiner.setup(g);
+        refiner.refine(p);
+//        return refiner.getFirst().isIdentity() || 
+//        System.out.println(g.getSortedEdgeString() + "\t" + refiner.firstIsIdentity());
+//        System.out.println(g + "\t" + refiner.firstIsIdentity());
         return refiner.firstIsIdentity();
+//        if (refiner.isCanonical(g, p)) {
+////            System.out.println("T " + g + "\t" + p);
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
     
-    // TODO : remove (curently used for debugging)
-//    private String getCert(Graph g, Permutation p) {
-//        StringBuffer cert = new StringBuffer();
-//        int n = g.vsize();
-//        for (int i = 0; i < n; i++) {
-//            for (int j = i + 1; j < n; j++) {
-//                if (g.hasEdge(p.get(i), p.get(j))) {
-//                    cert.append("1");
-//                } else {
-//                    cert.append("0");
-//                }
-//            }
-//        }
-//        return cert.toString();
-//    }
-
     private boolean isSSG(BitSet component, Graph g, int[] degSeq) {
         for (int i = 0; i < degSeq.length; i++) {
             if (component.get(i) && g.degree(i) < degSeq[i]) {
@@ -152,11 +149,11 @@ public class OrbitSaturatingGenerator {
         }
     }
     
-    private int getFirstUnsaturatedOrbit(Graph g, List<Stack<Integer>> orbits, int[] degSeq) {
+    private int getFirstUnsaturatedOrbit(Graph g, Partition orbits, int[] degSeq) {
         int orbitIndex = 0;
         while (orbitIndex < orbits.size()) {
-            Stack<Integer> orbit = orbits.get(orbitIndex);
-            int rep = orbit.get(0);
+            SortedSet<Integer> orbit = orbits.getCell(orbitIndex);
+            int rep = orbit.first();
             if (g.degree(rep) < degSeq[rep]) {
                 return orbitIndex;
             }
@@ -165,85 +162,19 @@ public class OrbitSaturatingGenerator {
         return orbitIndex;
     }
     
-    private List<Stack<Integer>> getOrbits(Graph g, int[] degSeq) {
-        int n = g.getVertexCount();
-        
-        // use Morgan numbers to partition vertices
-        int[] labels = new int[n];
-        for (int i = 0; i < n; i++) {
-            int d = g.degree(i);
-            labels[i] = d;
-        }
-        for (int round = 0; round < n; round++) {
-            int[] newLabels = new int[n];
-            for (int i = 0; i < n; i++) {
-                for (int j : g.getConnected(i)) {
-                    newLabels[i] += labels[j];
-                }
-            }
-            labels = newLabels;
-        }
-//        System.out.println("labels for " + g + " = " + Arrays.toString(labels));
-        
-        // convert these labels into orbits
-        Map<Integer, Stack<Integer>> orbitMap = new HashMap<Integer, Stack<Integer>>();
-        for (int i = 0; i < n; i++) {
-            int l = labels[i];
-            Stack<Integer> orbit;
-            if (orbitMap.containsKey(l)) {
-                orbit = orbitMap.get(l);
-            } else {
-                orbit = new Stack<Integer>();
-                orbitMap.put(l, orbit);
-            }
-            orbit.add(0, new Integer(i));
-        }
-        
-        // split the orbits using the target degree sequence
-        List<Stack<Integer>> orbits = new ArrayList<Stack<Integer>>();
-        for (Stack<Integer> orbit : orbitMap.values()) {
-            // UGH!
-            Map<Integer, Stack<Integer>> degreeMap = new HashMap<Integer, Stack<Integer>>();
-            for (int i : orbit) {
-                int d = degSeq[i];
-                Stack<Integer> subOrbit;
-                if (degreeMap.containsKey(d)) {
-                    subOrbit = degreeMap.get(d);
-                } else {
-                    subOrbit = new Stack<Integer>();
-                    degreeMap.put(d, subOrbit);
-                }
-                subOrbit.add(i);
-            }
-            orbits.addAll(degreeMap.values());
-        }
-        
-        Collections.sort(orbits, new Comparator<Stack<Integer>>() {
-
-            @Override
-            public int compare(Stack<Integer> a, Stack<Integer> b) {
-                return a.get(a.size() - 1).compareTo(b.get(b.size() - 1));
-            }
-            
-        });
-        
-        return orbits;
-    }
-
-    private List<Stack<Integer>> getOrbits(int[] degSeq) {
-        List<Stack<Integer>> orbits = new ArrayList<Stack<Integer>>();
-        Stack<Integer> currentOrbit = null;
+    private Partition getOrbits(int[] degSeq) {
+        Partition orbits = new Partition();
+        int currentOrbitIndex = 0;
         for (int i = 0; i < degSeq.length; i++) {
             if (i == 0) {
-                currentOrbit = new Stack<Integer>();
-                currentOrbit.add(0);
-                orbits.add(currentOrbit);
+                orbits.addSingletonCell(i);
             } else {
                 if (degSeq[i] != degSeq[i - 1]) {
-                    currentOrbit = new Stack<Integer>();
-                    orbits.add(currentOrbit);
+                    currentOrbitIndex++;
+                    orbits.addSingletonCell(i);
+                } else {
+                    orbits.addToCell(currentOrbitIndex, i);
                 }
-                currentOrbit.add(0, new Integer(i));
             }
         }
         return orbits;
