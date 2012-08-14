@@ -15,7 +15,7 @@ public class MorganNumberPartitioner implements OrbitPartitioner {
     
     @Override
     public Partition getOrbitPartition(Graph g, int[] degSeq) {
-        int n = g.getVertexCount();
+        int n = g.vsize();
         
         // use Morgan numbers to partition vertices
         int[] labels = new int[n];
@@ -26,13 +26,14 @@ public class MorganNumberPartitioner implements OrbitPartitioner {
         for (int round = 0; round < n; round++) {
             int[] newLabels = new int[n];
             for (int i = 0; i < n; i++) {
+                newLabels[i] = labels[i];
                 for (int j : g.getConnected(i)) {
                     newLabels[i] += labels[j];
                 }
             }
             labels = newLabels;
         }
-        //        System.out.println("labels for " + g + " = " + Arrays.toString(labels));
+//        System.out.println("labels for " + g + " = " + java.util.Arrays.toString(labels));
         
         // convert these labels into orbits
         Map<Integer, List<Integer>> orbitMap = new HashMap<Integer, List<Integer>>();
