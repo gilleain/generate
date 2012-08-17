@@ -63,6 +63,13 @@ public class OrbitSaturatingGeneratorTest {
     }
     
     @Test
+    public void test_33_222_11() {
+        int[] degSeq = new int[] { 3, 3, 2, 2, 2, 1, 1 };
+        OrbitSaturatingGenerator generator = new OrbitSaturatingGenerator();
+        generator.generate(degSeq);
+    }
+    
+    @Test
     public void test_33_22_11() {
         int[] degSeq = new int[] { 3, 3, 2, 2, 1, 1 };
         OrbitSaturatingGenerator generator = new OrbitSaturatingGenerator();

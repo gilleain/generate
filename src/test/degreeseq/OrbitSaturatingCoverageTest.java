@@ -61,7 +61,7 @@ public class OrbitSaturatingCoverageTest {
         for (int[] degSeq : missingDegreeSeqABMap.keySet()) {
             List<Graph> diff = missingDegreeSeqABMap.get(degSeq);
             for (Graph g : diff) {
-                System.out.println(count + "\tMISSING : " + Arrays.toString(degSeq) + "\t" + g);
+                System.out.println(count + "\tADDED : " + Arrays.toString(degSeq) + "\t" + g);
                 count++;
             }
         }
@@ -111,6 +111,11 @@ public class OrbitSaturatingCoverageTest {
             }
         }
         return diffAB;
+    }
+    
+    @Test
+    public void testEights() throws FileNotFoundException {
+        testFile("output/mckay/eight_x.txt");
     }
     
     @Test
