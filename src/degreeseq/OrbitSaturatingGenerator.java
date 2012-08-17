@@ -29,7 +29,8 @@ public class OrbitSaturatingGenerator {
     
     public OrbitSaturatingGenerator(GeneratorHandler handler) {
         this.handler = handler;
-        this.partitioner = new MorganNumberPartitioner();
+//        this.partitioner = new MorganNumberPartitioner();
+        this.partitioner = new SignatureOrbitPartitioner();
     }
     
     public void generate(int[] degSeq) {
