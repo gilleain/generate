@@ -139,11 +139,12 @@ public class OrbitSaturatingGenerator {
             }
         }
 //        System.out.println(java.util.Arrays.toString(deg));
-        Partition q = getOrbits(deg);
+//        Partition q = getOrbits(deg);
         Graph h = new Graph();
         for (Edge e : g.edges) {
             h.makeEdge(vertexMap[e.a], vertexMap[e.b]);
         }
+        Partition q = partitioner.getOrbitPartition(g, deg);
 //        System.out.println("Red " + h + "\t" + q);
         
         boolean useColorsInEq = false;
