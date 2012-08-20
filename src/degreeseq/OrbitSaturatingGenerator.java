@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.SortedSet;
 
 import model.Graph;
-import model.Graph.Edge;
-import model.GraphDiscretePartitionRefiner;
 
 public class OrbitSaturatingGenerator {
     
@@ -60,14 +58,14 @@ public class OrbitSaturatingGenerator {
 //                                    + "\t" + isCanonical(child, degreeOrbits)
 //                                    + "\t" + isPartitionCanonical(child, degreeOrbits)
 //                    );
-                    if (isPartitionCanonical(child, degreeOrbits)) {
+                    if (CanonicalChecker.isPartitionCanonical(child, degreeOrbits, originalDegSeq)) {
                         handler.handle(parent, child);
                     }
                 } else {
 //                    System.out.println("SSG " + child + "\t" + child.esize());
                 }
             } else {
-                if (!isPartitionCanonical(child, degreeOrbits)) continue;
+                if (!CanonicalChecker.isPartitionCanonical(child, degreeOrbits, originalDegSeq)) continue;
                 generate(unsaturatedOrbit, nextOrbits, child, degSeq);
             }
         }
@@ -109,70 +107,6 @@ public class OrbitSaturatingGenerator {
                 }
             }
         }
-    }
-    
-    private boolean isPartitionCanonical(Graph g, Partition p) {
-        if (g.vsize() < 3) return true;
-        
-//        System.out.println(g + "\t" + p);
-        int n = originalDegSeq.length;
-        int[] vertexMap = new int[n];
-        int counter = 0;
-        for (int i = 0; i < n; i++) {
-            int d = g.degree(i);
-            if (d == 0) {
-                vertexMap[i] = -1;
-            } else {
-                vertexMap[i] = counter;
-                counter++;
-            }
-        }
-//        System.out.println(java.util.Arrays.toString(vertexMap));
-        int[] deg = new int[counter];
-        counter = 0;
-        for (int i = 0; i < n; i++) {
-            if (vertexMap[i] == -1) {
-                continue;
-            } else {
-                deg[counter] = originalDegSeq[i];
-                counter++;
-            }
-        }
-//        System.out.println(java.util.Arrays.toString(deg));
-//        Partition q = getOrbits(deg);
-        Graph h = new Graph();
-        for (Edge e : g.edges) {
-            h.makeEdge(vertexMap[e.a], vertexMap[e.b]);
-        }
-        Partition q = partitioner.getOrbitPartition(g, deg);
-//        System.out.println("Red " + h + "\t" + q);
-        
-        boolean useColorsInEq = false;
-        boolean checkDiscon = false;
-        GraphDiscretePartitionRefiner refiner = 
-            new GraphDiscretePartitionRefiner(useColorsInEq, checkDiscon);
-        
-//        refiner.getAutomorphismGroup(g, p);
-//        return refiner.firstIsIdentity();
-//        System.out.print("checking " + g + "\t" + p);
-        try {
-            refiner.setup(h);
-            refiner.refine(q);
-        } catch (Exception e) {
-            System.out.println("Error");
-            return true;
-        }
-//        return refiner.getFirst().isIdentity() || 
-//        System.out.println(g.getSortedEdgeString() + "\t" + refiner.firstIsIdentity());
-//        System.out.println(g + "\t" + refiner.firstIsIdentity());
-//        System.out.println("\t" + refiner.firstIsIdentity());
-        return refiner.firstIsIdentity();
-//        if (refiner.isCanonical(g, p)) {
-////            System.out.println("T " + g + "\t" + p);
-//            return true;
-//        } else {
-//            return false;
-//        }
     }
     
     private boolean isSSG(BitSet component, Graph g, int[] degSeq) {

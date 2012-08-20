@@ -65,5 +65,13 @@ public class IsomorphCountingHandler implements GeneratorHandler {
     public void finish() {
         reset = true;
     }
+
+    public int getTotalGraphCount() {
+        int count = 0;
+        for (Integer value : counts.values()) {
+            count += value;
+        }
+        return count;
+    }
     
 }

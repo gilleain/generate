@@ -48,10 +48,15 @@ public class OrbitSaturatingCoverageTest {
             generator.generate(degreeSequence);
             List<Graph> mySet = duplicateHandler.getNonIsomorphicGraphs();
             List<Graph> mckaySet = degreeSeqMap.get(degreeSequenceString);
+            int allCount = duplicateHandler.getTotalGraphCount();
+            String details = Arrays.toString(degreeSequence) 
+                           + "\t" + mySet.size() 
+                           + "\t" + mckaySet.size() 
+                           + "\t" + allCount;
             if (mySet.size() == mckaySet.size()) {
-                System.out.println(Arrays.toString(degreeSequence) + " PASS " + mySet.size() + "\t" + mckaySet.size());
+                System.out.println("PASS\t" + details);
             } else {
-                System.out.println(Arrays.toString(degreeSequence) + " FAIL " + mySet.size() + "\t" + mckaySet.size());
+                System.out.println("FAIL\t" + details);
                 missingDegreeSeqABMap.put(degreeSequence, diff(mySet, mckaySet));
                 missingDegreeSeqBAMap.put(degreeSequence, diff(mckaySet, mySet));
             }
