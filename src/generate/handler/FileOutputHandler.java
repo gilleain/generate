@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Graph;
-import model.Graph.Edge;
+import model.Edge;
 
 public class FileOutputHandler implements GeneratorHandler {
 

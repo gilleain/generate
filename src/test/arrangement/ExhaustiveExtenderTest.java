@@ -1,5 +1,6 @@
 package test.arrangement;
 
+import model.Edge;
 import model.Graph;
 
 import org.junit.Test;
@@ -28,9 +29,9 @@ public class ExhaustiveExtenderTest {
 	
 	public boolean noncrossing(Graph graph) {
 		for (int i = 0; i < graph.edges.size(); i++) {
-			Graph.Edge eI = graph.edges.get(i);
+			Edge eI = graph.edges.get(i);
 			for (int j = i + 1; j < graph.edges.size(); j++) {
-				Graph.Edge eJ = graph.edges.get(j);
+				Edge eJ = graph.edges.get(j);
 //				System.out.println("testing " + eI + " " + eJ);
 				if (eI.a < eJ.a && eI.b < eJ.a) {
 //					System.out.println("abAB " + eI + " " + eJ);

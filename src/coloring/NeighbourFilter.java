@@ -1,7 +1,7 @@
 package coloring;
 
+import model.Edge;
 import model.Graph;
-import model.Graph.Edge;
 import filter.Filter;
 
 public class NeighbourFilter implements Filter {

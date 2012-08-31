@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 
+import model.Edge;
 import model.Graph;
-import model.Graph.Edge;
 
 public class KiralyHHGenerator {
     

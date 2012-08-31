@@ -1,9 +1,9 @@
 package degreeseq;
 
 import group.Partition;
+import model.Edge;
 import model.Graph;
 import model.GraphDiscretePartitionRefiner;
-import model.Graph.Edge;
 
 public class CanonicalChecker {
     

@@ -3,6 +3,7 @@ package arrangement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Edge;
 import model.Graph;
 
 /**
@@ -25,7 +26,7 @@ public class ExhaustiveExtender {
 		return children;
 	}
 	
-	public static Graph makeGraphWithLongEdge(Graph parent, Graph.Edge edge, int eindexB) {
+	public static Graph makeGraphWithLongEdge(Graph parent, Edge edge, int eindexB) {
 		Graph child = new Graph();
 		
 		return child;
@@ -39,7 +40,7 @@ public class ExhaustiveExtender {
 		int lastIndex = -1;
 		int eSize = parent.edges.size();
 		for (int i = 0; i < eSize; i++) {
-			Graph.Edge edge = parent.edges.get(i);
+			Edge edge = parent.edges.get(i);
 			if (edge.a > start) {
 				child.makeEdge(edge.a + 2, edge.b);
 			} else if (edge.b > start) {
@@ -63,7 +64,7 @@ public class ExhaustiveExtender {
 		
 		// make new edges, two on from parent
 		for (int i = lastIndex + 1; i < eSize; i++) {
-			Graph.Edge edge = parent.edges.get(i);
+			Edge edge = parent.edges.get(i);
 			child.makeEdge(edge.a + 2, edge.b + 2);
 		}
 		

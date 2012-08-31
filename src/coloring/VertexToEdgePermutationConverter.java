@@ -2,8 +2,8 @@ package coloring;
 
 import group.Permutation;
 import group.SSPermutationGroup;
+import model.Edge;
 import model.Graph;
-import model.Graph.Edge;
 
 /**
  * Convert a permutation group of a graphs vertices into a permutation group of its edges.

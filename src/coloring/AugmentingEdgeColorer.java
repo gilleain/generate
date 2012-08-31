@@ -6,9 +6,9 @@ import group.SSPermutationGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Edge;
 import model.Graph;
 import model.GraphDiscretePartitionRefiner;
-import model.Graph.Edge;
 
 public class AugmentingEdgeColorer implements EdgeColorer {
     

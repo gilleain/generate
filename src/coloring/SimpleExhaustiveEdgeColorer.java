@@ -3,8 +3,8 @@ package coloring;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Edge;
 import model.Graph;
-import model.Graph.Edge;
 
 import combinatorics.SubsetLister;
 

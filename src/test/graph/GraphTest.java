@@ -1,8 +1,8 @@
 package test.graph;
 
 import generate.CanonicalChecker;
+import model.Edge;
 import model.Graph;
-import model.Graph.Edge;
 import model.GraphDiscretePartitionRefiner;
 import model.GraphPermutor;
 

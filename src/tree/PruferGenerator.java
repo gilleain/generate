@@ -1,5 +1,6 @@
 package tree;
 
+import model.Edge;
 import model.Graph;
 
 /**
@@ -44,7 +45,7 @@ public class PruferGenerator {
 		for (int i = 1; i <= n; i++) {
 			degrees[i] = 0;
 		}
-		for (Graph.Edge edge : tree.edges) {
+		for (Edge edge : tree.edges) {
 			degrees[edge.a + 1]++;
 			degrees[edge.b + 1]++;
 		}

@@ -1,7 +1,7 @@
 package generate.handler;
 
+import model.Edge;
 import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 public class DegreeFilterHandler implements GeneratorHandler {
 	
@@ -36,7 +36,7 @@ public class DegreeFilterHandler implements GeneratorHandler {
 			}
 		}
 		if (rejectDisconnected) {
-			for (Graph.Edge e : graph.edges) {
+			for (Edge e : graph.edges) {
 				if (e.a == e.b) return;
 			}
 			if (!graph.isConnected()) {
