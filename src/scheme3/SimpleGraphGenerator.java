@@ -4,10 +4,9 @@ import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
+import model.Edge;
 import model.Graph;
 import model.GraphBuilder;
 import model.GraphSignature;
@@ -28,40 +27,81 @@ public class SimpleGraphGenerator {
 		this.handler = handler;
 	}
 	
-	public void orderlyGenerationMcKay(Graph g, int n) {
-		orderlyGenerationMcKay(null, g, n);
-	}
-	
-	public void orderlyGenerationMcKay(Graph parent, Graph g, int n) {
+	public void extend(Graph g, int n) {
 		int l = g.getVertexCount(); 
-		if (l == n) {
-			handler.handle(parent, g);
-			count++;
-		} 
+
 		GraphSignature gSignature = new GraphSignature(g);
 		String gCanonicalLabel = gSignature.toCanonicalString();
-		Set<Graph> s = new HashSet<Graph>();
-		int max = Math.min(l, n);
+		Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
+		int max = Math.min(l, n - 1);
 		for (int start = 0; start < l; start++) {
 			for (int end = start + 1; end <= max; end++) {
 				if (g.isConnected(start, end)) {
 					continue;
 				} else {
-					s.add(g.makeNew(start, end));
+				    Graph h = g.makeNew(start, end);
+				    GraphSignature signature = new GraphSignature(h);
+		            String canonicalLabel = signature.toCanonicalString();
+		            if (children.containsKey(canonicalLabel)) {
+		                continue;
+		            } else {
+		                children.put(canonicalLabel, signature);
+		            }
 				}
 			}
 		}
-		Map<String, GraphSignature> dupMap = removeDuplicates(s);
-		for (String gPrimeCanonLabel : dupMap.keySet()) {
-			Graph canonGPrime = reconstruct(gPrimeCanonLabel);
-			Graph gPrimeMinusE = canonGPrime.removeLastEdge();
-			GraphSignature gPrimeMinusESignature = new GraphSignature(gPrimeMinusE);
-			if (gPrimeMinusESignature.toCanonicalString().equals(gCanonicalLabel)) {
-				GraphSignature gPrimeSignature = dupMap.get(gPrimeCanonLabel);
-				Graph gPrime = gPrimeSignature.getGraph();
-				orderlyGenerationMcKay(g, gPrime, n);
+		
+		for (String gPrimeCanonLabel : children.keySet()) {
+		    GraphSignature gPrimeSignature = children.get(gPrimeCanonLabel);
+		    Graph gPrime = gPrimeSignature.getGraph();
+		    Graph canonGPrime = reconstruct(gPrimeCanonLabel);
+			if (isCanonicalAugmentation(canonGPrime, gPrimeSignature, gPrime, gCanonicalLabel)) {
+			    if (gPrime.getVertexCount() == n && gPrime.isConnected()) {
+			        handler.handle(g, gPrime);
+		            count++;
+			    }
+			    extend(gPrime, n);
 			}
 		}
+		if (l < n - 2) {
+		    Graph h = g.makeNew(l, l + 1);
+		    extend(h, n);
+		}
+	}
+	
+	public boolean isCanonicalAugmentation(Graph parent, Graph child) {
+	    GraphSignature childSig = new GraphSignature(child);
+	    Graph canonChild = getCanonicalForm(child);
+	    String parentLabel = new GraphSignature(parent).toCanonicalString();
+	    return isCanonicalAugmentation(canonChild, childSig, child, parentLabel);
+	}
+	
+	public boolean isCanonicalAugmentation(
+	        Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
+	    Edge lastEdge = canonGPrime.edges.get(canonGPrime.esize() - 1);
+	    int[] labels = gPrimeSig.getCanonicalLabels();
+	    int lA = get(labels, lastEdge.a);
+	    int lB = get(labels, lastEdge.b);
+	    Graph gPrimeMinusE = gPrime.remove(gPrime.getEdge(lA, lB));
+//	    System.out.println(gPrime + "\t" + Arrays.toString(labels) + "\t" + gPrimeMinusE);
+        GraphSignature gPrimeMinusESignature = new GraphSignature(gPrimeMinusE);
+        return gPrimeMinusESignature.toCanonicalString().equals(gCanonicalLabel);
+	}
+	
+	private int get(int[] labels, int j) {
+	    for (int i = 0; i < labels.length; i++) {
+	        if (labels[i] == j) return i;
+	    }
+	    return -1;
+	}
+	
+//	private int get(int[] labels, int j) {
+//        return labels[j];
+//    }
+	
+	public Graph getCanonicalForm(Graph g) {
+	    String canString = new GraphSignature(g).toCanonicalString();
+	    return reconstruct(canString);
 	}
 	
 	public Graph reconstruct(String canonicalLabel) {
@@ -69,20 +109,6 @@ public class SimpleGraphGenerator {
 		GraphBuilder builder = new GraphBuilder();
 		builder.makeFromColoredTree(tree);
 		return builder.getProduct();
-	}
-	
-	public Map<String, GraphSignature> removeDuplicates(Set<Graph> s) {
-		Map<String, GraphSignature> canonicalGraphLabels = new HashMap<String, GraphSignature>();
-		for (Graph g : s) {
-			GraphSignature signature = new GraphSignature(g);
-			String canonicalLabel = signature.toCanonicalString();
-			if (canonicalGraphLabels.containsKey(canonicalLabel)) {
-				continue;
-			} else {
-				canonicalGraphLabels.put(canonicalLabel, signature);
-			}
-		}
-		return canonicalGraphLabels;
 	}
 
 }

@@ -1,9 +1,14 @@
 package test.scheme3;
 
 import generate.handler.FamilyCountingHandler;
+import generate.handler.FileOutputHandler;
+import generate.handler.GeneratorHandler;
+import generate.handler.IsomorphCountingHandler;
+import generate.handler.SystemOutHandler;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,33 +21,142 @@ import org.junit.Test;
 import scheme3.SimpleGraphGenerator;
 
 public class SimpleGraphGeneratorTest {
+    
+    public void testFromSingle(int n) {
+        testFromSingle(new SystemOutHandler(), n);
+    }
+    
+    public void testFromSingle(Graph initial, int n) {
+        SimpleGraphGenerator generator = new SimpleGraphGenerator();
+        generator.extend(initial, n);
+    }
+    
+    public void testFromSingleToFile(int n, String path) {
+        FileOutputHandler handler = new FileOutputHandler(path, n);
+        testFromSingle(handler, n);
+        handler.finish();
+    }
+    
+    public void testFromFileToFile(String inputFilepath, String outputFilepath, int n) throws FileNotFoundException {
+        FileOutputHandler handler = new FileOutputHandler(outputFilepath, n);
+        testFromFile(handler, inputFilepath, n);
+        handler.finish();
+    }
+    
+    public void testFromFile(GeneratorHandler handler, String filepath, int n) throws FileNotFoundException {
+        GraphFileReader reader = new GraphFileReader(new FileReader(filepath));
+        SimpleGraphGenerator generator = new SimpleGraphGenerator(handler);
+        for (Graph g : reader) {
+            Graph h = generator.getCanonicalForm(g);
+            generator.extend(h, n);
+        }
+    }
+    
+    public void testFromSingle(GeneratorHandler handler, int n) {
+        Graph initial = new Graph("0:1");
+        SimpleGraphGenerator generator = new SimpleGraphGenerator(handler);
+        generator.extend(initial, n);
+    }
+    
+    public void printIsomorphCounts(IsomorphCountingHandler handler) {
+        Map<Graph, Integer> map = handler.getNonIsomorphicGraphCount(); 
+        int i = 0;
+        for (Graph g : map.keySet()) {
+            String gS = g.getSortedEdgeString();
+            String gDetails = g.vsize() + "\t" + g.esize() + "\t" + Arrays.toString(g.degreeSequence(true));
+            System.out.println(i + "\t" + gDetails + "\t" + map.get(g) + "\t" + gS);
+            i++;
+        }
+    }
+    
+    @Test
+    public void test4FromSingleEdge() {
+        testFromSingle(4);
+    }
+    
+    @Test
+    public void test4FromThree() throws FileNotFoundException {
+        testFromSingle(new Graph("0:1,0:2"), 4);
+        testFromSingle(new Graph("0:1,0:2,1:2"), 4);
+    }
+
+    @Test
+    public void test4FromSingleEdgeToFile() {
+        testFromSingleToFile(4, "output/scheme3/fours.txt");
+    }
 	
 	@Test
 	public void test5FromSingle4() {
-		Graph initial = new Graph("0:1,0:2,1:3");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 5);
+		testFromSingle(new Graph("0:1,0:2,1:3"), 5);
 	}
 	
 	@Test
 	public void test6FromSingle4() {
-		Graph initial = new Graph("0:1,0:2,1:3");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 6);
+	    testFromSingle(new Graph("0:1,0:2,1:3"), 6);
 	}
 	
 	@Test
-	public void test5FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 5);
+    public void test5FromNautyFour() throws FileNotFoundException {
+	    IsomorphCountingHandler handler = new IsomorphCountingHandler();
+        testFromFile(handler, "output/nauty/fours_nauty.txt", 5);
+        printIsomorphCounts(handler);
+    }
+	
+	@Test
+    public void test6FromSingle5() {
+	    testFromSingle(new Graph("0:1,0:2,0:3,0:4,1:2,1:3"), 6);
+    }
+	
+	@Test
+    public void test5FromSingleEdge() {
+        testFromSingle(5);
+    }
+	
+	@Test
+	public void test5FromSingleEdgeCount() {
+		IsomorphCountingHandler handler = new IsomorphCountingHandler();
+		testFromSingle(handler, 5);
+		printIsomorphCounts(handler);
 	}
 	
 	@Test
-	public void test6FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 6);
+    public void test5FromSingleEdgeToFile() {
+        testFromSingleToFile(5, "output/scheme3/fives.txt");
+    }
+	
+	@Test
+    public void test6FromNautyFive() throws FileNotFoundException {
+        testFromFile(new SystemOutHandler(), "output/nauty/fives_nauty.txt", 6);
+    }
+	
+	@Test
+    public void test6FromNautyFiveToFile() throws FileNotFoundException {
+        testFromFileToFile("output/nauty/fives_nauty.txt", "output/scheme3/nFivesToSixes.txt", 6);
+    }
+	
+	@Test
+    public void test6FromNautyFiveCount() throws FileNotFoundException {
+        IsomorphCountingHandler handler = new IsomorphCountingHandler();
+//        testFromFile(handler, "output/nauty/fives_nauty.txt", 6);
+        testFromFile(handler, "output/scheme3/fours.txt", 6);
+        printIsomorphCounts(handler);
+    }
+	
+	@Test
+    public void test6FromSingleEdge() {
+        testFromSingle(6);
+    }
+	
+	@Test
+    public void test6FromSingleEdgeToFile() {
+        testFromSingleToFile(6, "output/scheme3/sixesFromE.txt");
+    }
+	
+	@Test
+	public void test6FromSingleEdgeCount() {
+	    IsomorphCountingHandler handler = new IsomorphCountingHandler();
+        testFromSingle(handler, 6);
+        printIsomorphCounts(handler);
 	}
 	
 	@Test
@@ -50,9 +164,8 @@ public class SimpleGraphGeneratorTest {
 		GraphFileReader reader = new GraphFileReader(new FileReader("output/scheme3/fives.txt"));
 		final Map<Graph, List<Graph>> counts = new HashMap<Graph, List<Graph>>();
 		SimpleGraphGenerator generator = new SimpleGraphGenerator(new FamilyCountingHandler(counts));
-//		SimpleGraphGenerator generator = new SimpleGraphGenerator();
 		for (Graph initial : reader) {
-			generator.orderlyGenerationMcKay(initial, 6);
+			generator.extend(initial, 6);
 		}
 		for (Graph graph : counts.keySet()) {
 			System.out.println(counts.get(graph).size() + "\t" + graph);
@@ -61,9 +174,7 @@ public class SimpleGraphGeneratorTest {
 	
 	@Test
 	public void test7FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 7);
+		testFromSingle(7);
 	}
 	
 	@Test
@@ -72,7 +183,7 @@ public class SimpleGraphGeneratorTest {
 		final Map<Graph, List<Graph>> counts = new HashMap<Graph, List<Graph>>();
 		SimpleGraphGenerator generator = new SimpleGraphGenerator(new FamilyCountingHandler(counts));
 		for (Graph initial : reader) {
-			generator.orderlyGenerationMcKay(initial, 7);
+			generator.extend(initial, 7);
 		}
 		for (Graph graph : counts.keySet()) {
 			System.out.println(counts.get(graph).size() + "\t" + graph);
@@ -85,7 +196,7 @@ public class SimpleGraphGeneratorTest {
 		final Map<Graph, List<Graph>> counts = new HashMap<Graph, List<Graph>>();
 		SimpleGraphGenerator generator = new SimpleGraphGenerator(new FamilyCountingHandler(counts));
 		for (Graph initial : reader) {
-			generator.orderlyGenerationMcKay(initial, 7);
+			generator.extend(initial, 7);
 		}
 		for (Graph graph : counts.keySet()) {
 			System.out.println(counts.get(graph).size() + "\t" + graph);
@@ -94,51 +205,37 @@ public class SimpleGraphGeneratorTest {
 	
 	@Test
 	public void test8FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 8);
+		testFromSingle(8);
 	}
 	
 	@Test
 	public void test9FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 9);
+	    testFromSingle(9);
 	}
 	
 	@Test
 	public void test10FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 10);
+	    testFromSingle(10);
 	}
 	
 	@Test
 	public void test11FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 11);
+	    testFromSingle(11);
 	}
 	
 	@Test
 	public void test12FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 12);
+	    testFromSingle(12);
 	}
 	
 	@Test
 	public void test13FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 13);
+	    testFromSingle(13);
 	}
 	
 	@Test
 	public void test14FromSingleEdge() {
-		Graph initial = new Graph("0:1");
-		SimpleGraphGenerator generator = new SimpleGraphGenerator();
-		generator.orderlyGenerationMcKay(initial, 14);
+	    testFromSingle(14);
 	}
 
 }
