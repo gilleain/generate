@@ -4,6 +4,7 @@ import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import model.Edge;
@@ -11,6 +12,7 @@ import model.Graph;
 import model.GraphBuilder;
 import model.GraphSignature;
 import model.VertexSignature;
+import signature.AbstractVertexSignature;
 import signature.ColoredTree;
 
 public class SimpleGraphGenerator {
@@ -69,6 +71,42 @@ public class SimpleGraphGenerator {
 		}
 	}
 	
+	public int[] getLabels(GraphSignature gSig) {
+	    Graph g = gSig.getGraph();
+	    List<List<Integer>> components = g.getComponents();
+	    if (components.size() == 1) {
+	        int[] extLabels = gSig.getCanonicalLabels();
+	        int[] labels = new int[g.vsize()];
+	        for (int i = 0; i < g.vsize(); i++) {
+	            labels[extLabels[i]] = i;
+	        }
+	        return labels;
+	    } else {
+	        int[] labels = new int[g.vsize()];
+	        int componentOffset = 0;
+	        for (List<Integer> component : components) {
+	            AbstractVertexSignature maxSigForComponent = null;
+	            String maxSigStrForComponent = null;
+	            for (int i : component) {
+	                AbstractVertexSignature sigForI = gSig.signatureForVertex(i);
+	                String sigForIStr = sigForI.toCanonicalString();
+	                if (maxSigForComponent == null || maxSigStrForComponent.compareTo(sigForIStr) < 0) {
+	                    maxSigForComponent = sigForI;
+	                    maxSigStrForComponent = sigForIStr;
+	                }
+	            }
+	            int[] componentLabels = maxSigForComponent.getCanonicalLabelling(g.vsize());
+	            for (int i : component) {
+	                int j = componentLabels[i];
+	                labels[componentOffset + j] = i;
+	            }
+	            componentOffset += component.size();
+	        }
+//	        System.out.println(java.util.Arrays.toString(labels));
+	        return labels;   
+	    }
+	}
+	
 	public boolean isCanonicalAugmentation(Graph parent, Graph child) {
 	    GraphSignature childSig = new GraphSignature(child);
 	    Graph canonChild = getCanonicalForm(child);
@@ -79,25 +117,13 @@ public class SimpleGraphGenerator {
 	public boolean isCanonicalAugmentation(
 	        Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
 	    Edge lastEdge = canonGPrime.edges.get(canonGPrime.esize() - 1);
-	    int[] labels = gPrimeSig.getCanonicalLabels();
-	    int lA = get(labels, lastEdge.a);
-	    int lB = get(labels, lastEdge.b);
+	    int[] labels = getLabels(gPrimeSig);
+	    int lA = labels[lastEdge.a];
+	    int lB = labels[lastEdge.b];
 	    Graph gPrimeMinusE = gPrime.remove(gPrime.getEdge(lA, lB));
-//	    System.out.println(gPrime + "\t" + Arrays.toString(labels) + "\t" + gPrimeMinusE);
         GraphSignature gPrimeMinusESignature = new GraphSignature(gPrimeMinusE);
         return gPrimeMinusESignature.toCanonicalString().equals(gCanonicalLabel);
 	}
-	
-	private int get(int[] labels, int j) {
-	    for (int i = 0; i < labels.length; i++) {
-	        if (labels[i] == j) return i;
-	    }
-	    return -1;
-	}
-	
-//	private int get(int[] labels, int j) {
-//        return labels[j];
-//    }
 	
 	public Graph getCanonicalForm(Graph g) {
 	    String canString = new GraphSignature(g).toCanonicalString();

@@ -22,9 +22,6 @@ import scheme3.SimpleGraphGenerator;
 
 public class SimpleGraphGeneratorTest {
     
-    public void testFromSingle(int n) {
-        testFromSingle(new SystemOutHandler(), n);
-    }
     
     public void testFromSingle(Graph initial, int n) {
         SimpleGraphGenerator generator = new SimpleGraphGenerator();
@@ -68,12 +65,7 @@ public class SimpleGraphGeneratorTest {
             i++;
         }
     }
-    
-    @Test
-    public void test4FromSingleEdge() {
-        testFromSingle(4);
-    }
-    
+   
     @Test
     public void test4FromThree() throws FileNotFoundException {
         testFromSingle(new Graph("0:1,0:2"), 4);
@@ -107,17 +99,6 @@ public class SimpleGraphGeneratorTest {
 	    testFromSingle(new Graph("0:1,0:2,0:3,0:4,1:2,1:3"), 6);
     }
 	
-	@Test
-    public void test5FromSingleEdge() {
-        testFromSingle(5);
-    }
-	
-	@Test
-	public void test5FromSingleEdgeCount() {
-		IsomorphCountingHandler handler = new IsomorphCountingHandler();
-		testFromSingle(handler, 5);
-		printIsomorphCounts(handler);
-	}
 	
 	@Test
     public void test5FromSingleEdgeToFile() {
@@ -142,22 +123,13 @@ public class SimpleGraphGeneratorTest {
         printIsomorphCounts(handler);
     }
 	
-	@Test
-    public void test6FromSingleEdge() {
-        testFromSingle(6);
-    }
+	
 	
 	@Test
     public void test6FromSingleEdgeToFile() {
         testFromSingleToFile(6, "output/scheme3/sixesFromE.txt");
     }
 	
-	@Test
-	public void test6FromSingleEdgeCount() {
-	    IsomorphCountingHandler handler = new IsomorphCountingHandler();
-        testFromSingle(handler, 6);
-        printIsomorphCounts(handler);
-	}
 	
 	@Test
 	public void test6FromFives() throws FileNotFoundException {
@@ -170,11 +142,6 @@ public class SimpleGraphGeneratorTest {
 		for (Graph graph : counts.keySet()) {
 			System.out.println(counts.get(graph).size() + "\t" + graph);
 		}
-	}
-	
-	@Test
-	public void test7FromSingleEdge() {
-		testFromSingle(7);
 	}
 	
 	@Test
@@ -202,40 +169,4 @@ public class SimpleGraphGeneratorTest {
 			System.out.println(counts.get(graph).size() + "\t" + graph);
 		}
 	}
-	
-	@Test
-	public void test8FromSingleEdge() {
-		testFromSingle(8);
-	}
-	
-	@Test
-	public void test9FromSingleEdge() {
-	    testFromSingle(9);
-	}
-	
-	@Test
-	public void test10FromSingleEdge() {
-	    testFromSingle(10);
-	}
-	
-	@Test
-	public void test11FromSingleEdge() {
-	    testFromSingle(11);
-	}
-	
-	@Test
-	public void test12FromSingleEdge() {
-	    testFromSingle(12);
-	}
-	
-	@Test
-	public void test13FromSingleEdge() {
-	    testFromSingle(13);
-	}
-	
-	@Test
-	public void test14FromSingleEdge() {
-	    testFromSingle(14);
-	}
-
 }
