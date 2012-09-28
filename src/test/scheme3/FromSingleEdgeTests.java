@@ -3,6 +3,8 @@ package test.scheme3;
 import java.util.Arrays;
 import java.util.Map;
 
+import junit.framework.Assert;
+
 import generate.handler.GeneratorHandler;
 import generate.handler.IsomorphCountingHandler;
 import generate.handler.SystemOutHandler;
@@ -15,8 +17,10 @@ import scheme3.SimpleGraphGenerator;
 
 public class FromSingleEdgeTests {
     
-    public void testFromSingle(int n) {
-        testFromSingle(new SystemOutHandler(), n);
+    public void testFromSingle(int n, int expected) {
+        SystemOutHandler handler = new SystemOutHandler(); 
+        testFromSingle(handler, n);
+        Assert.assertEquals(expected, handler.getCount());
     }
     
     public void testFromSingle(GeneratorHandler handler, int n) {
@@ -53,56 +57,26 @@ public class FromSingleEdgeTests {
     
     @Test
     public void test4FromSingleEdge() {
-        testFromSingle(4);
+        testFromSingle(4, 6);
     }
 
     @Test
     public void test5FromSingleEdge() {
-        testFromSingle(5);
+        testFromSingle(5, 21);
     }
     
     @Test
     public void test6FromSingleEdge() {
-        testFromSingle(6);
+        testFromSingle(6, 112);
     }
 
     @Test
     public void test7FromSingleEdge() {
-        testFromSingle(7);
+        testFromSingle(7, 853);
     }
 
     @Test
     public void test8FromSingleEdge() {
-        testFromSingle(8);
-    }
-    
-    @Test
-    public void test9FromSingleEdge() {
-        testFromSingle(9);
-    }
-    
-    @Test
-    public void test10FromSingleEdge() {
-        testFromSingle(10);
-    }
-    
-    @Test
-    public void test11FromSingleEdge() {
-        testFromSingle(11);
-    }
-    
-    @Test
-    public void test12FromSingleEdge() {
-        testFromSingle(12);
-    }
-    
-    @Test
-    public void test13FromSingleEdge() {
-        testFromSingle(13);
-    }
-    
-    @Test
-    public void test14FromSingleEdge() {
-        testFromSingle(14);
+        testFromSingle(8, 11117);
     }
 }

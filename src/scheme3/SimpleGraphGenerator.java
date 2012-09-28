@@ -3,6 +3,7 @@ package scheme3;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,8 @@ public class SimpleGraphGenerator {
 	    if (components.size() == 1) {
 	        return gSig.toCanonicalString();
 	    } else {
-	        StringBuffer fullLabel = new StringBuffer();
+	        String[] labelArray = new String[components.size()];
+	        int componentIndex = 0;
 	        for (List<Integer> component : components) {
 	            String maxComponentLabel = null;
 	            for (int i : component) {
@@ -86,11 +88,17 @@ public class SimpleGraphGenerator {
 	                    maxComponentLabel = sigStringForI;
 	                }
 	            }
-	            if (fullLabel.length() == 0) {
-	                fullLabel.append(maxComponentLabel);
-	            } else {
-	                fullLabel.append(".").append(maxComponentLabel);
-	            }
+	            labelArray[componentIndex] = maxComponentLabel;
+	            componentIndex++;
+	        }
+	        Arrays.sort(labelArray);
+	        StringBuffer fullLabel = new StringBuffer();
+	        for (String label : labelArray) {
+    	        if (fullLabel.length() == 0) {
+                    fullLabel.append(label);
+                } else {
+                    fullLabel.append("+").append(label);
+                }
 	        }
 	        return fullLabel.toString();
 	    }

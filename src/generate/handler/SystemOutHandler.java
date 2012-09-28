@@ -27,6 +27,10 @@ public class SystemOutHandler implements GeneratorHandler {
 		this.rejectDisconnected = rejectDisconnected;
 		this.printDetails = printDetails;
 	}
+	
+	public int getCount() {
+	    return count;
+	}
 
 	public void handle(Graph parent, Graph graph) {
 		if (size != -1 && graph.getVertexCount() != size) {

@@ -1,7 +1,9 @@
 package test.scheme3;
 
 import model.Graph;
+import model.GraphSignature;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import scheme3.SimpleGraphGenerator;
@@ -21,5 +23,16 @@ public class AugmentTest {
         System.out.println("Triangle = " + triangleToClaw);
         System.out.println("Three Star = " + threeStarToClaw);
         System.out.println("Four Line = " + fourLineToClaw);
+    }
+    
+    @Test
+    public void canonicalStringForDisconnected() {
+        Graph tandem = new Graph("0:1,2:3,3:4");
+        Graph nested = new Graph("0:4,1:2,2:3");
+        SimpleGraphGenerator gen = new SimpleGraphGenerator();
+        String tandemStr = gen.getCanonicalLabel(new GraphSignature(tandem));
+        String nestedStr = gen.getCanonicalLabel(new GraphSignature(nested));
+        System.out.println(tandemStr + "\n" + nestedStr);
+        Assert.assertEquals(tandemStr, nestedStr);
     }
 }
