@@ -33,7 +33,7 @@ public class SimpleGraphGenerator {
 		int l = g.getVertexCount(); 
 
 		GraphSignature gSignature = new GraphSignature(g);
-		String gCanonicalLabel = gSignature.toCanonicalString();
+		String gCanonicalLabel = getCanonicalLabel(gSignature);
 		Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
 		int max = Math.min(l, n - 1);
 		for (int start = 0; start < l; start++) {
@@ -43,7 +43,7 @@ public class SimpleGraphGenerator {
 				} else {
 				    Graph h = g.makeNew(start, end);
 				    GraphSignature signature = new GraphSignature(h);
-		            String canonicalLabel = signature.toCanonicalString();
+		            String canonicalLabel = getCanonicalLabel(signature);
 		            if (children.containsKey(canonicalLabel)) {
 		                continue;
 		            } else {
@@ -71,12 +71,39 @@ public class SimpleGraphGenerator {
 		}
 	}
 	
+	public String getCanonicalLabel(GraphSignature gSig) {
+	    Graph g = gSig.getGraph();
+	    List<List<Integer>> components = g.getComponents();
+	    if (components.size() == 1) {
+	        return gSig.toCanonicalString();
+	    } else {
+	        StringBuffer fullLabel = new StringBuffer();
+	        for (List<Integer> component : components) {
+	            String maxComponentLabel = null;
+	            for (int i : component) {
+	                String sigStringForI = gSig.signatureStringForVertex(i);
+	                if (maxComponentLabel == null || maxComponentLabel.compareTo(sigStringForI) < 0) {
+	                    maxComponentLabel = sigStringForI;
+	                }
+	            }
+	            if (fullLabel.length() == 0) {
+	                fullLabel.append(maxComponentLabel);
+	            } else {
+	                fullLabel.append(".").append(maxComponentLabel);
+	            }
+	        }
+	        return fullLabel.toString();
+	    }
+	}
+	 
+	
 	public int[] getLabels(GraphSignature gSig) {
 	    Graph g = gSig.getGraph();
 	    List<List<Integer>> components = g.getComponents();
 	    if (components.size() == 1) {
 	        int[] extLabels = gSig.getCanonicalLabels();
 	        int[] labels = new int[g.vsize()];
+	        // XXX this is effectively reversing the permutation again - don't reverse in first place? 
 	        for (int i = 0; i < g.vsize(); i++) {
 	            labels[extLabels[i]] = i;
 	        }
@@ -121,8 +148,8 @@ public class SimpleGraphGenerator {
 	    int lA = labels[lastEdge.a];
 	    int lB = labels[lastEdge.b];
 	    Graph gPrimeMinusE = gPrime.remove(gPrime.getEdge(lA, lB));
-        GraphSignature gPrimeMinusESignature = new GraphSignature(gPrimeMinusE);
-        return gPrimeMinusESignature.toCanonicalString().equals(gCanonicalLabel);
+        String gPrimeMinusESignatureString = getCanonicalLabel(new GraphSignature(gPrimeMinusE));
+        return gPrimeMinusESignatureString.equals(gCanonicalLabel);
 	}
 	
 	public Graph getCanonicalForm(Graph g) {
