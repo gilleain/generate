@@ -59,16 +59,12 @@ public class SimpleGraphGenerator {
 		    Graph gPrime = gPrimeSignature.getGraph();
 		    Graph canonGPrime = reconstruct(gPrimeCanonLabel);
 			if (isCanonicalAugmentation(canonGPrime, gPrimeSignature, gPrime, gCanonicalLabel)) {
-			    if (gPrime.getVertexCount() == n && gPrime.isConnected()) {
+			    if (gPrime.getVertexCount() == n) {
 			        handler.handle(g, gPrime);
 		            count++;
 			    }
 			    extend(gPrime, n);
 			}
-		}
-		if (l < n - 2) {
-		    Graph h = g.makeNew(l, l + 1);
-		    extend(h, n);
 		}
 	}
 	
@@ -151,7 +147,19 @@ public class SimpleGraphGenerator {
 	
 	public boolean isCanonicalAugmentation(
 	        Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
-	    Edge lastEdge = canonGPrime.edges.get(canonGPrime.esize() - 1);
+	    ChainDecomposition chains = new ChainDecomposition(canonGPrime);
+	    List<Edge> bridges = chains.getBridges();
+	    int lastEdgeIndex = canonGPrime.esize() - 1;
+	    Edge lastEdge = null;
+	    while (lastEdgeIndex > 0) {
+	        lastEdge = canonGPrime.edges.get(lastEdgeIndex);
+	        if (bridges.contains(lastEdge)) {
+	            lastEdgeIndex--;
+	            continue;
+	        } else {
+	            break;
+	        }
+	    }
 	    int[] labels = getLabels(gPrimeSig);
 	    int lA = labels[lastEdge.a];
 	    int lB = labels[lastEdge.b];
