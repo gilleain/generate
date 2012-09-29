@@ -50,12 +50,12 @@ public class ChainDecomposition {
     /**
      * The depth-first index of the parents of each vertex.
      */
-    private int[] parentDFI;
+    private int[] parentIndex;
     
     /**
      * The non-spanning tree edges, indexed by their low point.
      */
-    private Map<Integer, Edge> backEdges;
+    private Map<Integer, List<Edge>> backEdges;
     
     /**
      * The edges that are not part of a chain are bridges.
@@ -69,16 +69,14 @@ public class ChainDecomposition {
         pathChains = new ArrayList<List<Edge>>();
         pathChainEdges = 0;
         
-        backEdges = new HashMap<Integer, Edge>();
+        backEdges = new HashMap<Integer, List<Edge>>();
         
         dfi = new int[g.vsize()];
         Arrays.fill(dfi, -1);
         
-        parentDFI = new int[g.vsize()];
+        parentIndex = new int[g.vsize()];
         dfiIndex = 0;
         span(0, -1, g);
-//        System.out.println("DFI : " + java.util.Arrays.toString(dfi));
-//        System.out.println("pDFI : " + java.util.Arrays.toString(parentDFI));
         
         findChains(g.vsize());
         findBridges(g);
@@ -91,7 +89,8 @@ public class ChainDecomposition {
     private void findBridges(Graph g) {
         BitSet visitedEdges = new BitSet(g.esize());
         bridges = new ArrayList<Edge>();
-        // if all the edges are covered, there can be no bridges. If there are no chains, graph is a tree
+        // if all the edges are covered, there can be no bridges
+        // if there are no chains, graph is a tree
         int totalChainEdges = cycleChainEdges + pathChainEdges; 
         if (totalChainEdges == g.esize() || totalChainEdges == 0) {
             return;
@@ -116,21 +115,35 @@ public class ChainDecomposition {
     }
 
     private void span(int vertex, int parent, Graph g) {
-//        System.out.println(parent + "->" + vertex + " " + java.util.Arrays.toString(dfi));
         dfi[vertex] = dfiIndex;
         dfiIndex++;
-        parentDFI[dfi[vertex]] = (parent == -1) ? -1 : dfi[parent];
+        parentIndex[vertex] = parent;
         for (int neighbour : g.getConnected(vertex)) {
-//            System.out.println("v " + vertex + " n:" + neighbour + " p? " + (neighbour == parent));
             if (neighbour == parent) continue;
             if (dfi[neighbour] == -1) { // neighbour not visited yet
                 span(neighbour, vertex, g); 
             } else {
-                Edge backedge = new Edge(dfi[neighbour], dfi[vertex]);
-                // relies on (v, w) = (w, v)
-                if (!backEdges.values().contains(backedge)) {
-//                    System.out.println("adding backedge " + dfi[neighbour] + ":" + dfi[vertex]);
-                    backEdges.put(dfi[neighbour], backedge);
+                Edge backedge = new Edge(neighbour, vertex);
+                // assumes that dfi[neighbour] is always lower than dfi[vertex]
+                int key = dfi[neighbour];
+                List<Edge> edgesForVertex;
+                if (backEdges.containsKey(key)) {
+                    edgesForVertex = backEdges.get(key);
+                    // relies on (v, w) = (w, v)
+                    if (!edgesForVertex.contains(backedge)) {
+                        edgesForVertex.add(backedge);
+                    }
+                } else {
+                    boolean addEdge = true;
+                    if (backEdges.containsKey(dfi[vertex])) {
+                        // relies on (v, w) = (w, v)
+                        addEdge = !backEdges.get(dfi[vertex]).contains(backedge);
+                    }
+                    if (addEdge) {
+                        edgesForVertex = new ArrayList<Edge>();
+                        backEdges.put(key, edgesForVertex);
+                        edgesForVertex.add(backedge);
+                    }
                 }
             }
         }
@@ -139,26 +152,28 @@ public class ChainDecomposition {
     private void findChains(int n) {
         BitSet visitedVertices = new BitSet(n);
         
-        for (int x : backEdges.keySet()) {
-            Edge e = backEdges.get(x);
-            List<Edge> chain = new ArrayList<Edge>();
-            // start by adding the backedge itself
-            visitedVertices.set(e.a);
-            chain.add(new Edge(lookupIndex(e.a), lookupIndex(e.b)));
-            int current = e.b;
-            while (current != e.a && !visitedVertices.get(current)) {
-                visitedVertices.set(current);
-                int next = parentDFI[current]; 
-                chain.add(new Edge(lookupIndex(current), lookupIndex(next)));
-//                chain.add(new Edge(dfi[current], dfi[next]));
-                current = next;
-            }
-            if (current == e.a) {
-                cycleChains.add(chain);
-                cycleChainEdges += chain.size();
-            } else {
-                pathChains.add(chain);
-                pathChainEdges += chain.size();
+        // run through the backedges starting with the lowest
+        for (int v : backEdges.keySet()) {
+            List<Edge> edges = backEdges.get(v);
+            for (Edge e : edges) {
+                List<Edge> chain = new ArrayList<Edge>();
+                // start by adding the backedge itself
+                visitedVertices.set(e.a);
+                chain.add(new Edge(e.a, e.b));
+                int current = e.b;
+                while (current != e.a && !visitedVertices.get(current)) {
+                    visitedVertices.set(current);
+                    int next = parentIndex[current];
+                    chain.add(new Edge(current, next));
+                    current = next;
+                }
+                if (current == e.a) {
+                    cycleChains.add(chain);
+                    cycleChainEdges += chain.size();
+                } else {
+                    pathChains.add(chain);
+                    pathChainEdges += chain.size();
+                }
             }
         }
     }
