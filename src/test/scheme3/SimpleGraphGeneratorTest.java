@@ -28,12 +28,6 @@ public class SimpleGraphGeneratorTest {
         generator.extend(initial, n);
     }
     
-    public void testFromSingleToFile(int n, String path) {
-        FileOutputHandler handler = new FileOutputHandler(path, n);
-        testFromSingle(handler, n);
-        handler.finish();
-    }
-    
     public void testFromFileToFile(String inputFilepath, String outputFilepath, int n) throws FileNotFoundException {
         FileOutputHandler handler = new FileOutputHandler(outputFilepath, n);
         testFromFile(handler, inputFilepath, n);
@@ -72,11 +66,6 @@ public class SimpleGraphGeneratorTest {
         testFromSingle(new Graph("0:1,0:2,1:2"), 4);
     }
 
-    @Test
-    public void test4FromSingleEdgeToFile() {
-        testFromSingleToFile(4, "output/scheme3/fours.txt");
-    }
-	
 	@Test
 	public void test5FromSingle4() {
 		testFromSingle(new Graph("0:1,0:2,1:3"), 5);
@@ -155,9 +144,4 @@ public class SimpleGraphGeneratorTest {
 			System.out.println(counts.get(graph).size() + "\t" + graph);
 		}
 	}
-	
-	@Test
-    public void test7FromSingleEdgeToFile() {
-        testFromSingleToFile(7, "output/scheme3/sevens.txt");
-    }
 }

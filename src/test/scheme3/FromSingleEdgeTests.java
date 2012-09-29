@@ -46,6 +46,11 @@ public class FromSingleEdgeTests {
         testFromSingle(handler, n);
         handler.finish();
     }
+    
+    @Test
+    public void test4FromSingleEdgeToFile() {
+        testFromSingleToFile(4, "output/scheme3/fours.txt");
+    }
 
     @Test
     public void test5FromSingleEdgeToFile() {
@@ -55,6 +60,11 @@ public class FromSingleEdgeTests {
     @Test
     public void test6FromSingleEdgeToFile() {
         testFromSingleToFile(6, "output/scheme3/sixes.txt");
+    }
+
+    @Test
+    public void test7FromSingleEdgeToFile() {
+        testFromSingleToFile(7, "output/scheme3/sevens.txt");
     }
     
     @Test
