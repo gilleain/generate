@@ -5,6 +5,7 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
+import generate.handler.FileOutputHandler;
 import generate.handler.GeneratorHandler;
 import generate.handler.IsomorphCountingHandler;
 import generate.handler.SystemOutHandler;
@@ -38,6 +39,22 @@ public class FromSingleEdgeTests {
             System.out.println(i + "\t" + gDetails + "\t" + map.get(g) + "\t" + gS);
             i++;
         }
+    }
+    
+    public void testFromSingleToFile(int n, String path) {
+        FileOutputHandler handler = new FileOutputHandler(path, n);
+        testFromSingle(handler, n);
+        handler.finish();
+    }
+
+    @Test
+    public void test5FromSingleEdgeToFile() {
+        testFromSingleToFile(5, "output/scheme3/fives.txt");
+    }
+    
+    @Test
+    public void test6FromSingleEdgeToFile() {
+        testFromSingleToFile(6, "output/scheme3/sixes.txt");
     }
     
     @Test

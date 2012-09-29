@@ -99,12 +99,6 @@ public class SimpleGraphGeneratorTest {
 	    testFromSingle(new Graph("0:1,0:2,0:3,0:4,1:2,1:3"), 6);
     }
 	
-	
-	@Test
-    public void test5FromSingleEdgeToFile() {
-        testFromSingleToFile(5, "output/scheme3/fives.txt");
-    }
-	
 	@Test
     public void test6FromNautyFive() throws FileNotFoundException {
         testFromFile(new SystemOutHandler(), "output/nauty/fives_nauty.txt", 6);
@@ -122,14 +116,6 @@ public class SimpleGraphGeneratorTest {
         testFromFile(handler, "output/scheme3/fours.txt", 6);
         printIsomorphCounts(handler);
     }
-	
-	
-	
-	@Test
-    public void test6FromSingleEdgeToFile() {
-        testFromSingleToFile(6, "output/scheme3/sixesFromE.txt");
-    }
-	
 	
 	@Test
 	public void test6FromFives() throws FileNotFoundException {
@@ -169,4 +155,9 @@ public class SimpleGraphGeneratorTest {
 			System.out.println(counts.get(graph).size() + "\t" + graph);
 		}
 	}
+	
+	@Test
+    public void test7FromSingleEdgeToFile() {
+        testFromSingleToFile(7, "output/scheme3/sevens.txt");
+    }
 }
