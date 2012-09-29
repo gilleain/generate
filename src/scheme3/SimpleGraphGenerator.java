@@ -154,8 +154,12 @@ public class SimpleGraphGenerator {
 	    while (lastEdgeIndex > 0) {
 	        lastEdge = canonGPrime.edges.get(lastEdgeIndex);
 	        if (bridges.contains(lastEdge)) {
-	            lastEdgeIndex--;
-	            continue;
+	            if (canonGPrime.degree(lastEdge.a) > 1 && canonGPrime.degree(lastEdge.b) > 1) {
+    	            lastEdgeIndex--;
+    	            continue;
+	            } else {
+	                break;
+	            }
 	        } else {
 	            break;
 	        }
