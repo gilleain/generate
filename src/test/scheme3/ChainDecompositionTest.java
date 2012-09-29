@@ -39,7 +39,7 @@ public class ChainDecompositionTest {
     
     @Test
     public void paperTest() {
-        test(new Graph("0:1,0:2,0:3,0:4,0:5,1:2,1:6,2:7,3:4,5:8,5:9,6:7,8:9"), 1, 3, 1);
+        test(new Graph("0:1,0:2,0:3,0:4,0:5,1:2,1:6,2:6,2:7,3:4,5:8,5:9,6:7,8:9"), 2, 3, 1);
     }
     
     public void test(String file) throws FileNotFoundException {

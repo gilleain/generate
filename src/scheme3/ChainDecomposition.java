@@ -127,23 +127,26 @@ public class ChainDecomposition {
                 // assumes that dfi[neighbour] is always lower than dfi[vertex]
                 int key = dfi[neighbour];
                 List<Edge> edgesForVertex;
+                boolean addEdge = true;
                 if (backEdges.containsKey(key)) {
                     edgesForVertex = backEdges.get(key);
                     // relies on (v, w) = (w, v)
-                    if (!edgesForVertex.contains(backedge)) {
-                        edgesForVertex.add(backedge);
+                    if (edgesForVertex.contains(backedge)) {
+                        addEdge = false;
                     }
                 } else {
-                    boolean addEdge = true;
-                    if (backEdges.containsKey(dfi[vertex])) {
-                        // relies on (v, w) = (w, v)
-                        addEdge = !backEdges.get(dfi[vertex]).contains(backedge);
+                    edgesForVertex = new ArrayList<Edge>();
+                    backEdges.put(key, edgesForVertex);
+                }
+                    
+                if (backEdges.containsKey(dfi[vertex])) {
+                    // relies on (v, w) = (w, v)
+                    if (backEdges.get(dfi[vertex]).contains(backedge)) {
+                        addEdge = false;
                     }
-                    if (addEdge) {
-                        edgesForVertex = new ArrayList<Edge>();
-                        backEdges.put(key, edgesForVertex);
-                        edgesForVertex.add(backedge);
-                    }
+                }
+                if (addEdge) {
+                    edgesForVertex.add(backedge);
                 }
             }
         }
@@ -176,13 +179,6 @@ public class ChainDecomposition {
                 }
             }
         }
-    }
-    
-    private int lookupIndex(int dfiValue) {
-        for (int i = 0; i < dfi.length; i++) {
-            if (dfiValue == dfi[i]) return i;
-        }
-        return -1;
     }
     
     public List<List<Edge>> getCycleChains() {
