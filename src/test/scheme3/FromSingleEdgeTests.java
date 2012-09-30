@@ -18,13 +18,13 @@ import scheme3.SimpleGraphGenerator;
 
 public class FromSingleEdgeTests {
     
-    public void testFromSingle(int n, int expected) {
+    public void testFromSingle(int n, int expected, boolean generateDisconnected) {
         SystemOutHandler handler = new SystemOutHandler(); 
-        testFromSingle(handler, n);
+        testFromSingle(handler, n, generateDisconnected);
         Assert.assertEquals(expected, handler.getCount());
     }
     
-    public void testFromSingle(GeneratorHandler handler, int n) {
+    public void testFromSingle(GeneratorHandler handler, int n, boolean generateDisconnected) {
         Graph initial = new Graph("0:1");
         SimpleGraphGenerator generator = new SimpleGraphGenerator(handler);
         generator.extend(initial, n);
@@ -43,7 +43,7 @@ public class FromSingleEdgeTests {
     
     public void testFromSingleToFile(int n, String path) {
         FileOutputHandler handler = new FileOutputHandler(path, n);
-        testFromSingle(handler, n);
+        testFromSingle(handler, n, false);
         handler.finish();
     }
     
@@ -70,7 +70,7 @@ public class FromSingleEdgeTests {
     @Test
     public void test5FromSingleEdgeCount() {
         IsomorphCountingHandler handler = new IsomorphCountingHandler();
-        testFromSingle(handler, 5);
+        testFromSingle(handler, 5, false);
         printIsomorphCounts(handler);
     }
     
@@ -78,32 +78,57 @@ public class FromSingleEdgeTests {
     @Test
     public void test6FromSingleEdgeCount() {
         IsomorphCountingHandler handler = new IsomorphCountingHandler();
-        testFromSingle(handler, 6);
+        testFromSingle(handler, 6, false);
         printIsomorphCounts(handler);
     }
     
     @Test
-    public void test4FromSingleEdge() {
-        testFromSingle(4, 6);
+    public void test4FromSingleEdgeConn() {
+        testFromSingle(4, 6, false);
     }
 
     @Test
-    public void test5FromSingleEdge() {
-        testFromSingle(5, 21);
+    public void test5FromSingleEdgeConn() {
+        testFromSingle(5, 21, false);
     }
     
     @Test
-    public void test6FromSingleEdge() {
-        testFromSingle(6, 112);
+    public void test6FromSingleEdgeConn() {
+        testFromSingle(6, 112, false);
     }
 
     @Test
-    public void test7FromSingleEdge() {
-        testFromSingle(7, 853);
+    public void test7FromSingleEdgeConn() {
+        testFromSingle(7, 853, false);
     }
 
     @Test
-    public void test8FromSingleEdge() {
-        testFromSingle(8, 11117);
+    public void test8FromSingleEdgeConn() {
+        testFromSingle(8, 11117, false);
+    }
+    
+    @Test
+    public void test4FromSingleEdgeDisc() {
+        testFromSingle(4, 6, true);
+    }
+
+    @Test
+    public void test5FromSingleEdgeDisc() {
+        testFromSingle(5, 21, true);
+    }
+    
+    @Test
+    public void test6FromSingleEdgeDisc() {
+        testFromSingle(6, 112, true);
+    }
+
+    @Test
+    public void test7FromSingleEdgeDisc() {
+        testFromSingle(7, 853, true);
+    }
+
+    @Test
+    public void test8FromSingleEdgeDisc() {
+        testFromSingle(8, 11117, true);
     }
 }
