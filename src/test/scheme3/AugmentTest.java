@@ -46,6 +46,10 @@ public class AugmentTest {
         int[] nestedLabels = handler.getLabels(nestedSig);
         System.out.println(Arrays.toString(tandemLabels) + "\n" + Arrays.toString(nestedLabels));
         
+        Graph canonicalTandemForm = handler.getCanonicalForm(tandem);
+        Graph canonicalNestedForm = handler.getCanonicalForm(nested);
+        System.out.println(canonicalTandemForm + "\n" + canonicalNestedForm);
+        
         Assert.assertEquals(tandemStr, nestedStr);
     }
 }

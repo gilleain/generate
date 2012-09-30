@@ -19,6 +19,8 @@ import signature.ColoredTree;
  */
 public class DisconnectedGraphSignatureHandler implements GraphSignatureHandler {
     
+    private static final String SIG_SEPARATOR = "+";
+    
     public boolean isCanonicalAugmentation(
             Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
         ChainDecomposition chains = new ChainDecomposition(canonGPrime);
@@ -48,12 +50,34 @@ public class DisconnectedGraphSignatureHandler implements GraphSignatureHandler 
     }
     
     public Graph getCanonicalForm(Graph g) {
-        String canString = new GraphSignature(g).toCanonicalString();
+        String canString = getCanonicalLabel(new GraphSignature(g));
         return reconstruct(canString);
     }
     
     public Graph reconstruct(String canonicalLabel) {
-        ColoredTree tree = VertexSignature.parse(canonicalLabel);
+        if (canonicalLabel.contains(SIG_SEPARATOR)) {
+            String[] parts = canonicalLabel.split("\\Q" + SIG_SEPARATOR + "\\E");
+            int offset = 0;
+            Graph wholeGraph = null;
+            for (String part : parts) {
+                Graph gPart = reconstructSingleSignatureString(part);
+                if (offset == 0) {
+                    wholeGraph = gPart;
+                } else {
+                    for (Edge e : gPart.edges) {
+                        wholeGraph.makeEdge(e.a + offset, e.b + offset);
+                    }
+                }
+                offset += gPart.vsize();
+            }
+            return wholeGraph;
+        } else {
+            return reconstructSingleSignatureString(canonicalLabel);
+        }
+    }
+    
+    private Graph reconstructSingleSignatureString(String sigString) {
+        ColoredTree tree = VertexSignature.parse(sigString);
         GraphBuilder builder = new GraphBuilder();
         builder.makeFromColoredTree(tree);
         return builder.getProduct();
@@ -121,7 +145,7 @@ public class DisconnectedGraphSignatureHandler implements GraphSignatureHandler 
                 if (fullLabel.length() == 0) {
                     fullLabel.append(label);
                 } else {
-                    fullLabel.append("+").append(label);
+                    fullLabel.append(SIG_SEPARATOR).append(label);
                 }
             }
             return fullLabel.toString();
