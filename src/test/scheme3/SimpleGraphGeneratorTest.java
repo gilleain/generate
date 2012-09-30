@@ -18,6 +18,7 @@ import model.GraphFileReader;
 
 import org.junit.Test;
 
+import scheme3.ConnectedGraphSignatureHandler;
 import scheme3.SimpleGraphGenerator;
 
 public class SimpleGraphGeneratorTest {
@@ -37,8 +38,9 @@ public class SimpleGraphGeneratorTest {
     public void testFromFile(GeneratorHandler handler, String filepath, int n) throws FileNotFoundException {
         GraphFileReader reader = new GraphFileReader(new FileReader(filepath));
         SimpleGraphGenerator generator = new SimpleGraphGenerator(handler);
+        ConnectedGraphSignatureHandler signatureHandler = new ConnectedGraphSignatureHandler();
         for (Graph g : reader) {
-            Graph h = generator.getCanonicalForm(g);
+            Graph h = signatureHandler.getCanonicalForm(g);
             generator.extend(h, n);
         }
     }
