@@ -6,11 +6,18 @@ import java.util.Map;
 import model.Graph;
 import model.GraphSignature;
 
-public class DisconnectedChildLister implements ChildLister {
+/**
+ * List candidate children of a graph, by adding edges - possibly disconnected 
+ * ones - and filtering duplicates.
+ *  
+ * @author maclean
+ *
+ */
+public class DisconnectedEdgeChildLister implements ChildLister {
     
     private GraphSignatureHandler signatureHandler;
     
-    public DisconnectedChildLister(GraphSignatureHandler signatureHandler) {
+    public DisconnectedEdgeChildLister(GraphSignatureHandler signatureHandler) {
         this.signatureHandler = signatureHandler;
     }
     

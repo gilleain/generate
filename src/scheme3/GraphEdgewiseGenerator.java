@@ -32,10 +32,10 @@ public class GraphEdgewiseGenerator {
         this.handler = handler;
         if (generateDisconnected) {
             signatureHandler = new DisconnectedGraphSignatureHandler();
-            childLister = new DisconnectedChildLister(signatureHandler);
+            childLister = new DisconnectedEdgeChildLister(signatureHandler);
         } else {
             signatureHandler = new ConnectedGraphSignatureHandler();
-            childLister = new ConnectedChildLister(signatureHandler);
+            childLister = new ConnectedEdgeChildLister(signatureHandler);
         }
         this.generateDisconnected = generateDisconnected;
     }

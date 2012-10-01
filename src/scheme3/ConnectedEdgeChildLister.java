@@ -6,11 +6,17 @@ import java.util.Map;
 import model.Graph;
 import model.GraphSignature;
 
-public class ConnectedChildLister implements ChildLister {
+/**
+ * List candidate children of a graph, by adding connected edges and filtering duplicates.
+ * 
+ * @author maclean
+ *
+ */
+public class ConnectedEdgeChildLister implements ChildLister {
     
     private GraphSignatureHandler signatureHandler;
     
-    public ConnectedChildLister(GraphSignatureHandler signatureHandler) {
+    public ConnectedEdgeChildLister(GraphSignatureHandler signatureHandler) {
         this.signatureHandler = signatureHandler;
     }
     
