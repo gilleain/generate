@@ -3,73 +3,51 @@ package scheme3;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import model.Graph;
 import model.GraphSignature;
 
-public class SimpleGraphGenerator {
+public class GraphEdgewiseGenerator {
     
     private GeneratorHandler handler;
     
     private GraphSignatureHandler signatureHandler;
     
+    private ChildLister childLister;
+    
     private int count;
     
     private boolean generateDisconnected;
     
-    public SimpleGraphGenerator() {
+    public GraphEdgewiseGenerator() {
         this(new SystemOutHandler());
     }
     
-    public SimpleGraphGenerator(GeneratorHandler handler) {
+    public GraphEdgewiseGenerator(GeneratorHandler handler) {
         this(handler, false);
     }
     
-    public SimpleGraphGenerator(GeneratorHandler handler, boolean generateDisconnected) {
+    public GraphEdgewiseGenerator(GeneratorHandler handler, boolean generateDisconnected) {
         this.handler = handler;
         if (generateDisconnected) {
             signatureHandler = new DisconnectedGraphSignatureHandler();
+            childLister = new DisconnectedChildLister(signatureHandler);
         } else {
             signatureHandler = new ConnectedGraphSignatureHandler();
+            childLister = new ConnectedChildLister(signatureHandler);
         }
         this.generateDisconnected = generateDisconnected;
     }
     
     public void extend(Graph g, int n) {
-        int l = g.getVertexCount(); 
-        
         GraphSignature gSignature = new GraphSignature(g);
         String gCanonicalLabel = signatureHandler.getCanonicalLabel(gSignature);
-        Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
-        int max = Math.min(l, n - 1);
-        for (int start = 0; start < l; start++) {
-            for (int end = start + 1; end <= max; end++) {
-                if (g.isConnected(start, end)) {
-                    continue;
-                } else {
-                    Graph h = g.makeNew(start, end);
-                    GraphSignature signature = new GraphSignature(h);
-                    String canonicalLabel = signatureHandler.getCanonicalLabel(signature);
-                    if (children.containsKey(canonicalLabel)) {
-                        continue;
-                    } else {
-                        children.put(canonicalLabel, signature);
-                    }
-                }
-            }
-        }
-        if (generateDisconnected) {
-            if (l < n - 2) {
-                Graph h = g.makeNew(l, l + 1);
-                GraphSignature hSig = new GraphSignature(h);
-                String canonicalLabel = signatureHandler.getCanonicalLabel(hSig);
-                if (!children.containsKey(canonicalLabel)) {
-                    children.put(canonicalLabel, hSig);
-                }
-            }
-        }
+        extend(g, gSignature, gCanonicalLabel, n);
+    }
+    
+    public void extend(Graph g, GraphSignature gSignature, String gCanonicalLabel, int n) {
+        Map<String, GraphSignature> children = childLister.list(g, n);
         
         for (String gPrimeCanonLabel : children.keySet()) {
             GraphSignature gPrimeSignature = children.get(gPrimeCanonLabel);
@@ -81,7 +59,7 @@ public class SimpleGraphGenerator {
                     handler.handle(g, gPrime);
                     count++;
                 }
-                extend(gPrime, n);
+                extend(gPrime, gPrimeSignature, gPrimeCanonLabel, n);
             }
         }
     }

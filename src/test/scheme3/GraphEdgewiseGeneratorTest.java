@@ -19,13 +19,13 @@ import model.GraphFileReader;
 import org.junit.Test;
 
 import scheme3.ConnectedGraphSignatureHandler;
-import scheme3.SimpleGraphGenerator;
+import scheme3.GraphEdgewiseGenerator;
 
-public class SimpleGraphGeneratorTest {
+public class GraphEdgewiseGeneratorTest {
     
     
     public void testFromSingle(Graph initial, int n) {
-        SimpleGraphGenerator generator = new SimpleGraphGenerator();
+        GraphEdgewiseGenerator generator = new GraphEdgewiseGenerator();
         generator.extend(initial, n);
     }
     
@@ -37,7 +37,7 @@ public class SimpleGraphGeneratorTest {
     
     public void testFromFile(GeneratorHandler handler, String filepath, int n) throws FileNotFoundException {
         GraphFileReader reader = new GraphFileReader(new FileReader(filepath));
-        SimpleGraphGenerator generator = new SimpleGraphGenerator(handler);
+        GraphEdgewiseGenerator generator = new GraphEdgewiseGenerator(handler);
         ConnectedGraphSignatureHandler signatureHandler = new ConnectedGraphSignatureHandler();
         for (Graph g : reader) {
             Graph h = signatureHandler.getCanonicalForm(g);
@@ -47,7 +47,7 @@ public class SimpleGraphGeneratorTest {
     
     public void testFromSingle(GeneratorHandler handler, int n) {
         Graph initial = new Graph("0:1");
-        SimpleGraphGenerator generator = new SimpleGraphGenerator(handler);
+        GraphEdgewiseGenerator generator = new GraphEdgewiseGenerator(handler);
         generator.extend(initial, n);
     }
     
@@ -112,7 +112,7 @@ public class SimpleGraphGeneratorTest {
 	public void test6FromFives() throws FileNotFoundException {
 		GraphFileReader reader = new GraphFileReader(new FileReader("output/scheme3/fives.txt"));
 		final Map<Graph, List<Graph>> counts = new HashMap<Graph, List<Graph>>();
-		SimpleGraphGenerator generator = new SimpleGraphGenerator(new FamilyCountingHandler(counts));
+		GraphEdgewiseGenerator generator = new GraphEdgewiseGenerator(new FamilyCountingHandler(counts));
 		for (Graph initial : reader) {
 			generator.extend(initial, 6);
 		}
@@ -125,7 +125,7 @@ public class SimpleGraphGeneratorTest {
 	public void test7FromSixes() throws FileNotFoundException {
 		GraphFileReader reader = new GraphFileReader(new FileReader("output/scheme3/sixes.txt"));
 		final Map<Graph, List<Graph>> counts = new HashMap<Graph, List<Graph>>();
-		SimpleGraphGenerator generator = new SimpleGraphGenerator(new FamilyCountingHandler(counts));
+		GraphEdgewiseGenerator generator = new GraphEdgewiseGenerator(new FamilyCountingHandler(counts));
 		for (Graph initial : reader) {
 			generator.extend(initial, 7);
 		}
@@ -138,7 +138,7 @@ public class SimpleGraphGeneratorTest {
 	public void test7FromFives() throws FileNotFoundException {
 		GraphFileReader reader = new GraphFileReader(new FileReader("output/scheme3/fives.txt"));
 		final Map<Graph, List<Graph>> counts = new HashMap<Graph, List<Graph>>();
-		SimpleGraphGenerator generator = new SimpleGraphGenerator(new FamilyCountingHandler(counts));
+		GraphEdgewiseGenerator generator = new GraphEdgewiseGenerator(new FamilyCountingHandler(counts));
 		for (Graph initial : reader) {
 			generator.extend(initial, 7);
 		}

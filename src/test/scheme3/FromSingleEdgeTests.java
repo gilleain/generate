@@ -14,7 +14,7 @@ import model.Graph;
 
 import org.junit.Test;
 
-import scheme3.SimpleGraphGenerator;
+import scheme3.GraphEdgewiseGenerator;
 
 public class FromSingleEdgeTests {
     
@@ -26,7 +26,7 @@ public class FromSingleEdgeTests {
     
     public void testFromSingle(GeneratorHandler handler, int n, boolean generateDisconnected) {
         Graph initial = new Graph("0:1");
-        SimpleGraphGenerator generator = new SimpleGraphGenerator(handler);
+        GraphEdgewiseGenerator generator = new GraphEdgewiseGenerator(handler);
         generator.extend(initial, n);
     }
     
