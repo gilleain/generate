@@ -8,8 +8,8 @@ import model.GraphSignature;
 import org.junit.Assert;
 import org.junit.Test;
 
-import scheme3.ConnectedGraphSignatureHandler;
-import scheme3.DisconnectedGraphSignatureHandler;
+import scheme3.ConnectedGraphEdgeSignatureHandler;
+import scheme3.DisconnectedGraphEdgeSignatureHandler;
 
 public class AugmentTest {
     
@@ -19,7 +19,7 @@ public class AugmentTest {
         Graph threeStar = new Graph("0:1,0:2,0:3");
         Graph fourLine  = new Graph("0:1,0:2,1:3");
         Graph claw      = new Graph("0:1,0:2,0:3,1:2");
-        ConnectedGraphSignatureHandler handler = new ConnectedGraphSignatureHandler();
+        ConnectedGraphEdgeSignatureHandler handler = new ConnectedGraphEdgeSignatureHandler();
         boolean triangleToClaw = handler.isCanonicalAugmentation(triangle, claw);
         boolean threeStarToClaw = handler.isCanonicalAugmentation(threeStar, claw);
         boolean fourLineToClaw = handler.isCanonicalAugmentation(fourLine, claw);
@@ -33,7 +33,7 @@ public class AugmentTest {
         Graph tandem = new Graph("0:1,2:3,3:4");
         Graph nested = new Graph("0:4,1:2,2:3");
         
-        DisconnectedGraphSignatureHandler handler = new DisconnectedGraphSignatureHandler();
+        DisconnectedGraphEdgeSignatureHandler handler = new DisconnectedGraphEdgeSignatureHandler();
         
         GraphSignature tandemSig = new GraphSignature(tandem);
         GraphSignature nestedSig = new GraphSignature(nested);

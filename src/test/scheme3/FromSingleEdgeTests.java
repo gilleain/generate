@@ -14,19 +14,20 @@ import model.Graph;
 
 import org.junit.Test;
 
-import scheme3.GraphEdgewiseGenerator;
+import scheme3.GraphGenerator;
 
 public class FromSingleEdgeTests {
     
-    public void testFromSingle(int n, int expected, boolean generateDisconnected) {
+    public void testFromSingle(int n, int expected, boolean byVertex, boolean generateDisconnected) {
         SystemOutHandler handler = new SystemOutHandler(); 
-        testFromSingle(handler, n, generateDisconnected);
+        testFromSingle(handler, n, byVertex, generateDisconnected);
         Assert.assertEquals(expected, handler.getCount());
     }
     
-    public void testFromSingle(GeneratorHandler handler, int n, boolean generateDisconnected) {
+    public void testFromSingle(
+            GeneratorHandler handler, int n, boolean byVertex, boolean generateDisconnected) {
         Graph initial = new Graph("0:1");
-        GraphEdgewiseGenerator generator = new GraphEdgewiseGenerator(handler);
+        GraphGenerator generator = new GraphGenerator(handler, byVertex, generateDisconnected);
         generator.extend(initial, n);
     }
     
@@ -43,7 +44,7 @@ public class FromSingleEdgeTests {
     
     public void testFromSingleToFile(int n, String path) {
         FileOutputHandler handler = new FileOutputHandler(path, n);
-        testFromSingle(handler, n, false);
+        testFromSingle(handler, n, false, false);
         handler.finish();
     }
     
@@ -70,7 +71,7 @@ public class FromSingleEdgeTests {
     @Test
     public void test5FromSingleEdgeCount() {
         IsomorphCountingHandler handler = new IsomorphCountingHandler();
-        testFromSingle(handler, 5, false);
+        testFromSingle(handler, 5, false, false);
         printIsomorphCounts(handler);
     }
     
@@ -78,57 +79,57 @@ public class FromSingleEdgeTests {
     @Test
     public void test6FromSingleEdgeCount() {
         IsomorphCountingHandler handler = new IsomorphCountingHandler();
-        testFromSingle(handler, 6, false);
+        testFromSingle(handler, 6, false, false);
         printIsomorphCounts(handler);
     }
     
     @Test
     public void test4FromSingleEdgeConn() {
-        testFromSingle(4, 6, false);
+        testFromSingle(4, 6, false, false);
     }
 
     @Test
     public void test5FromSingleEdgeConn() {
-        testFromSingle(5, 21, false);
+        testFromSingle(5, 21, false, false);
     }
     
     @Test
     public void test6FromSingleEdgeConn() {
-        testFromSingle(6, 112, false);
+        testFromSingle(6, 112, false, false);
     }
 
     @Test
     public void test7FromSingleEdgeConn() {
-        testFromSingle(7, 853, false);
+        testFromSingle(7, 853, false, false);
     }
 
     @Test
     public void test8FromSingleEdgeConn() {
-        testFromSingle(8, 11117, false);
+        testFromSingle(8, 11117, false, false);
     }
     
     @Test
     public void test4FromSingleEdgeDisc() {
-        testFromSingle(4, 6, true);
+        testFromSingle(4, 6, false, true);
     }
 
     @Test
     public void test5FromSingleEdgeDisc() {
-        testFromSingle(5, 21, true);
+        testFromSingle(5, 21, false, true);
     }
     
     @Test
     public void test6FromSingleEdgeDisc() {
-        testFromSingle(6, 112, true);
+        testFromSingle(6, 112, false, true);
     }
 
     @Test
     public void test7FromSingleEdgeDisc() {
-        testFromSingle(7, 853, true);
+        testFromSingle(7, 853, false, true);
     }
 
     @Test
     public void test8FromSingleEdgeDisc() {
-        testFromSingle(8, 11117, true);
+        testFromSingle(8, 11117, false, true);
     }
 }

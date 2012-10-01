@@ -13,7 +13,7 @@ import signature.ColoredTree;
  * @author maclean
  *
  */
-public class ConnectedGraphSignatureHandler implements GraphSignatureHandler {
+public class ConnectedGraphEdgeSignatureHandler implements GraphSignatureHandler {
     
     public boolean isCanonicalAugmentation(Graph parent, Graph child) {
         GraphSignature childSig = new GraphSignature(child);

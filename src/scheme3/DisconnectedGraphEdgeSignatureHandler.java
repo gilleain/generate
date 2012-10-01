@@ -17,7 +17,7 @@ import signature.ColoredTree;
  * @author maclean
  *
  */
-public class DisconnectedGraphSignatureHandler implements GraphSignatureHandler {
+public class DisconnectedGraphEdgeSignatureHandler implements GraphSignatureHandler {
     
     private static final String SIG_SEPARATOR = "+";
     

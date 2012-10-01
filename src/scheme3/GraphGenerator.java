@@ -8,7 +8,7 @@ import java.util.Map;
 import model.Graph;
 import model.GraphSignature;
 
-public class GraphEdgewiseGenerator {
+public class GraphGenerator {
     
     private GeneratorHandler handler;
     
@@ -20,22 +20,27 @@ public class GraphEdgewiseGenerator {
     
     private boolean generateDisconnected;
     
-    public GraphEdgewiseGenerator() {
+    public GraphGenerator() {
         this(new SystemOutHandler());
     }
     
-    public GraphEdgewiseGenerator(GeneratorHandler handler) {
-        this(handler, false);
+    public GraphGenerator(GeneratorHandler handler) {
+        this(handler, false, false);
     }
     
-    public GraphEdgewiseGenerator(GeneratorHandler handler, boolean generateDisconnected) {
+    public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected) {
         this.handler = handler;
         if (generateDisconnected) {
-            signatureHandler = new DisconnectedGraphSignatureHandler();
+            signatureHandler = new DisconnectedGraphEdgeSignatureHandler();
             childLister = new DisconnectedEdgeChildLister(signatureHandler);
         } else {
-            signatureHandler = new ConnectedGraphSignatureHandler();
-            childLister = new ConnectedEdgeChildLister(signatureHandler);
+            if (byVertex) {
+                signatureHandler = new ConnectedGraphVertexSignatureHandler();
+                childLister = new ConnectedVertexChildLister(signatureHandler);
+            } else {
+                signatureHandler = new ConnectedGraphEdgeSignatureHandler();
+                childLister = new ConnectedEdgeChildLister(signatureHandler);
+            }
         }
         this.generateDisconnected = generateDisconnected;
     }
