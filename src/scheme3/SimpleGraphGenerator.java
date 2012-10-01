@@ -60,6 +60,16 @@ public class SimpleGraphGenerator {
                 }
             }
         }
+        if (generateDisconnected) {
+            if (l < n - 2) {
+                Graph h = g.makeNew(l, l + 1);
+                GraphSignature hSig = new GraphSignature(h);
+                String canonicalLabel = signatureHandler.getCanonicalLabel(hSig);
+                if (!children.containsKey(canonicalLabel)) {
+                    children.put(canonicalLabel, hSig);
+                }
+            }
+        }
         
         for (String gPrimeCanonLabel : children.keySet()) {
             GraphSignature gPrimeSignature = children.get(gPrimeCanonLabel);
@@ -72,13 +82,6 @@ public class SimpleGraphGenerator {
                     count++;
                 }
                 extend(gPrime, n);
-            }
-        }
-        
-        if (generateDisconnected) {
-            if (l < n - 2) {
-                Graph h = g.makeNew(l, l + 1);
-                extend(h, n);
             }
         }
     }
