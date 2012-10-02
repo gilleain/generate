@@ -33,9 +33,7 @@ public class ConnectedVertexChildLister implements ChildLister {
         // this seems unnecessary - surely this set will almost always be {0, ... , l} ?
         List<Integer> freeVertices = new ArrayList<Integer>();
         for (int i = 0; i < l; i++) {
-            if (g.degree(i) < n - 1) {
-                freeVertices.add(i);
-            }
+            freeVertices.add(i);
         }
         
         SubsetLister<Integer> subsetLister = new SubsetLister<Integer>(freeVertices);
