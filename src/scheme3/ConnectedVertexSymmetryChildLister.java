@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 import model.GraphSignature;
 
 import combinatorics.SubsetLister;
@@ -21,15 +20,10 @@ import combinatorics.SubsetLister;
  * @author maclean
  *
  */
-public class ConnectedVertexSymmetryChildLister implements ChildLister {
-    
-    private GraphSignatureHandler signatureHandler;
-    
-    private GraphDiscretePartitionRefiner refiner;
+public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister implements ChildLister {
     
     public ConnectedVertexSymmetryChildLister(GraphSignatureHandler signatureHandler) {
-        refiner = new GraphDiscretePartitionRefiner();
-        this.signatureHandler = signatureHandler;
+        super(signatureHandler);
     }
     
     @Override
@@ -67,14 +61,5 @@ public class ConnectedVertexSymmetryChildLister implements ChildLister {
         }
         return permuted;
     }
-
-    private SSPermutationGroup getAut(Graph g) {
-        return refiner.getAutomorphismGroup(g);
-    }
-
-    private void makeChild(Graph g, Graph h, Map<String, GraphSignature> children) {
-        GraphSignature signature = new GraphSignature(h);
-        String canonicalLabel = signatureHandler.getCanonicalLabel(signature);
-        children.put(canonicalLabel, signature);
-    }
+  
 }

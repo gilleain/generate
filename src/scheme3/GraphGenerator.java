@@ -43,7 +43,8 @@ public class GraphGenerator {
                 childLister = new ConnectedVertexSymmetryChildLister(signatureHandler);
             } else {
                 signatureHandler = new ConnectedEdgeSignatureHandler();
-                childLister = new ConnectedEdgeFilteringChildLister(signatureHandler);
+//                childLister = new ConnectedEdgeFilteringChildLister(signatureHandler);
+                childLister = new ConnectedEdgeSymmetryChildLister(signatureHandler);
             }
         }
         this.generateDisconnected = generateDisconnected;
