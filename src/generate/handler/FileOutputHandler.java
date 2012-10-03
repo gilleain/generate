@@ -4,11 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import model.Graph;
-import model.Edge;
 
 public class FileOutputHandler implements GeneratorHandler {
 
@@ -38,23 +35,9 @@ public class FileOutputHandler implements GeneratorHandler {
 		this.degree = degree;
 		this.rejectDisconnected = rejectDisconnected;
 	}
-	
-	private int getSize(Graph g) {
-	    // XXX - this is idiotic!
-	    List<Integer> vertices = new ArrayList<Integer>();
-	    for (Edge e : g.edges) {
-	        if (!vertices.contains(e.a)) {
-	            vertices.add(e.a);
-	        }
-	        if (!vertices.contains(e.b)) {
-	            vertices.add(e.b);
-	        }
-	    }
-	    return vertices.size();
-	}
 
 	public void handle(Graph parent, Graph graph) {
-		if (getSize(graph) != size) return;	// TODO : factor out into class
+		if (graph.vsize() != size) return;
 		if (degree > 0) {
 			for (int vertexIndex = 0; vertexIndex < graph.getVertexCount(); vertexIndex++) {
 				if (graph.degree(vertexIndex) > degree) {
