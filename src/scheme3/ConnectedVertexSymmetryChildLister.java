@@ -25,24 +25,21 @@ public class ConnectedVertexSymmetryChildLister implements ChildLister {
     
     private GraphSignatureHandler signatureHandler;
     
+    private GraphDiscretePartitionRefiner refiner;
+    
     public ConnectedVertexSymmetryChildLister(GraphSignatureHandler signatureHandler) {
+        refiner = new GraphDiscretePartitionRefiner();
         this.signatureHandler = signatureHandler;
     }
     
     @Override
     public Map<String, GraphSignature> list(Graph g, int n) {
-        return simpleMethod(g, n);
-    }
-    
-    public Map<String, GraphSignature> simpleMethod(Graph g, int n) {
         int l = g.getVertexCount();
         int max = Math.min(l, n - 1);
         Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
         SSPermutationGroup autG = getAut(g);
         
-        List<Integer> indices = new ArrayList<Integer>();
-        for (int i = 0; i < l; i++) { indices.add(i); }
-        for (List<Integer> subset : new SubsetLister<Integer>(indices)) {
+        for (List<Integer> subset : SubsetLister.getIndexLister(l)) {
             if (isMinimal(subset, autG)) {
                 Graph h = g.makeAll(subset, max);
                 makeChild(g, h, children);
@@ -72,7 +69,6 @@ public class ConnectedVertexSymmetryChildLister implements ChildLister {
     }
 
     private SSPermutationGroup getAut(Graph g) {
-        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         return refiner.getAutomorphismGroup(g);
     }
 
