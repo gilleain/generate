@@ -47,7 +47,8 @@ public class DuplicateCheckTest {
 	
 	@Test
     public void testEights() throws IOException {
-        String filepath = "output/scheme3/eights.txt";
+//	    String filepath = "output/scheme3/eights.txt";
+        String filepath = "output/scheme3/eights_sym.txt";
         List<Graph> graphs = readFile(filepath);
         GraphDuplicateChecker checker = new GraphDuplicateChecker();
         checker.checkForDuplicates(graphs);

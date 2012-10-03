@@ -94,7 +94,7 @@ public class FromSingleVertexTest {
     
     @Test
     public void test8ToFile() {
-        testToFile("output/scheme3/eights.txt", 8);
+        testToFile("output/scheme3/eights_sym.txt", 8);
     }
 }
     
