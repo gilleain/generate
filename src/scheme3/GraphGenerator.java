@@ -22,6 +22,8 @@ public class GraphGenerator {
     
     private boolean byVertex;
     
+    private boolean doFilter;
+    
     public GraphGenerator() {
         this(new SystemOutHandler());
     }
@@ -31,20 +33,32 @@ public class GraphGenerator {
     }
     
     public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected) {
+        this(handler, byVertex, generateDisconnected, true);
+    }
+    
+    public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected, boolean doFilter) {
         this.handler = handler;
         this.byVertex = byVertex;
+        this.doFilter = doFilter;
+        
         if (generateDisconnected) {
             signatureHandler = new DisconnectedEdgeSignatureHandler();
             childLister = new DisconnectedEdgeFilteringChildLister(signatureHandler);
         } else {
             if (byVertex) {
                 signatureHandler = new ConnectedVertexSignatureHandler();
-//                childLister = new ConnectedVertexFilteringChildLister(signatureHandler);
-                childLister = new ConnectedVertexSymmetryChildLister(signatureHandler);
+                if (doFilter) {
+                    childLister = new ConnectedVertexFilteringChildLister(signatureHandler);
+                } else {
+                    childLister = new ConnectedVertexSymmetryChildLister(signatureHandler);
+                }
             } else {
                 signatureHandler = new ConnectedEdgeSignatureHandler();
-//                childLister = new ConnectedEdgeFilteringChildLister(signatureHandler);
-                childLister = new ConnectedEdgeSymmetryChildLister(signatureHandler);
+                if (doFilter) {
+                    childLister = new ConnectedEdgeFilteringChildLister(signatureHandler);
+                } else {
+                    childLister = new ConnectedEdgeSymmetryChildLister(signatureHandler);
+                }
             }
         }
         this.generateDisconnected = generateDisconnected;
