@@ -18,13 +18,13 @@ import combinatorics.SubsetLister;
  * @author maclean
  *
  */
-public class ConnectedVertexChildLister implements ChildLister {
+public class ConnectedVertexFilteringChildLister implements ChildLister {
     
     private GraphSignatureHandler signatureHandler;
     
     private String tmpToFind = new GraphSignature(new Graph("0:1, 0:4, 1:2, 2:3, 2:4")).toCanonicalString();
     
-    public ConnectedVertexChildLister(GraphSignatureHandler signatureHandler) {
+    public ConnectedVertexFilteringChildLister(GraphSignatureHandler signatureHandler) {
         this.signatureHandler = signatureHandler;
     }
     

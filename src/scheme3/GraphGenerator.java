@@ -34,15 +34,16 @@ public class GraphGenerator {
         this.handler = handler;
         this.byVertex = byVertex;
         if (generateDisconnected) {
-            signatureHandler = new DisconnectedGraphEdgeSignatureHandler();
-            childLister = new DisconnectedEdgeChildLister(signatureHandler);
+            signatureHandler = new DisconnectedEdgeSignatureHandler();
+            childLister = new DisconnectedEdgeFilteringChildLister(signatureHandler);
         } else {
             if (byVertex) {
-                signatureHandler = new ConnectedGraphVertexSignatureHandler();
-                childLister = new ConnectedVertexChildLister(signatureHandler);
+                signatureHandler = new ConnectedVertexSignatureHandler();
+//                childLister = new ConnectedVertexFilteringChildLister(signatureHandler);
+                childLister = new ConnectedVertexSymmetryChildLister(signatureHandler);
             } else {
-                signatureHandler = new ConnectedGraphEdgeSignatureHandler();
-                childLister = new ConnectedEdgeChildLister(signatureHandler);
+                signatureHandler = new ConnectedEdgeSignatureHandler();
+                childLister = new ConnectedEdgeFilteringChildLister(signatureHandler);
             }
         }
         this.generateDisconnected = generateDisconnected;

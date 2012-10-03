@@ -12,7 +12,7 @@ import signature.ColoredTree;
  * @author maclean
  *
  */
-public class ConnectedGraphVertexSignatureHandler implements GraphSignatureHandler {
+public class ConnectedVertexSignatureHandler implements GraphSignatureHandler {
     
     private String tmpToFind = new GraphSignature(new Graph("0:1, 0:4, 1:2, 2:3, 2:4")).toCanonicalString();
     

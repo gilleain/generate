@@ -7,17 +7,16 @@ import model.Graph;
 import model.GraphSignature;
 
 /**
- * List candidate children of a graph, by adding edges - possibly disconnected 
- * ones - and filtering duplicates.
- *  
+ * List candidate children of a graph, by adding connected edges and filtering duplicates.
+ * 
  * @author maclean
  *
  */
-public class DisconnectedEdgeChildLister implements ChildLister {
+public class ConnectedEdgeFilteringChildLister implements ChildLister {
     
     private GraphSignatureHandler signatureHandler;
     
-    public DisconnectedEdgeChildLister(GraphSignatureHandler signatureHandler) {
+    public ConnectedEdgeFilteringChildLister(GraphSignatureHandler signatureHandler) {
         this.signatureHandler = signatureHandler;
     }
     
@@ -39,14 +38,6 @@ public class DisconnectedEdgeChildLister implements ChildLister {
                         children.put(canonicalLabel, signature);
                     }
                 }
-            }
-        }
-        if (l < n - 2) {
-            Graph h = g.makeNew(l, l + 1);
-            GraphSignature hSig = new GraphSignature(h);
-            String canonicalLabel = signatureHandler.getCanonicalLabel(hSig);
-            if (!children.containsKey(canonicalLabel)) {
-                children.put(canonicalLabel, hSig);
             }
         }
         return children;
