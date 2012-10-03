@@ -14,6 +14,7 @@ public class GraphDuplicateChecker {
 		long[] certs = new long[n];
 		boolean firstPass = true;
 		int uniq = n;
+		List<Graph> alldups = new ArrayList<Graph>();
 		for (int i = 0; i < n - 1; i++) {
 			Graph graphI = graphs.get(i);
 //			System.out.println("graph I " + graphI);
@@ -42,6 +43,7 @@ public class GraphDuplicateChecker {
 					dups.add(graphJ);
 				}
 			}
+			alldups.addAll(dups);
 			if (isUniq) {
 				System.out.println("OK " + graphI);
 			} else {
@@ -52,8 +54,9 @@ public class GraphDuplicateChecker {
 				firstPass = false;
 			}
 		}
-		Arrays.sort(certs);
-		System.out.println(certs.length + "\t" + uniq + "\t" + Arrays.toString(certs));
+//		Arrays.sort(certs);
+//		System.out.println(certs.length + "\t" + uniq + "\t" + Arrays.toString(certs));
+		System.out.println(alldups);
 	}
 	
 	public long getCertFor(Graph g) {
