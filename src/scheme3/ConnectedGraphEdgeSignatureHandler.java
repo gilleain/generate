@@ -19,10 +19,11 @@ public class ConnectedGraphEdgeSignatureHandler implements GraphSignatureHandler
         GraphSignature childSig = new GraphSignature(child);
         Graph canonChild = getCanonicalForm(childSig);
         String parentLabel = new GraphSignature(parent).toCanonicalString();
-        return isCanonicalAugmentation(canonChild, childSig, child, parentLabel);
+        return isCanonicalAugmentation(parent, canonChild, childSig, child, parentLabel);
     }
 
     public boolean isCanonicalAugmentation(
+            Graph g,
             Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
         int lastEdgeIndex = canonGPrime.esize() - 1;
         Edge lastEdge = canonGPrime.edges.get(lastEdgeIndex);

@@ -22,6 +22,7 @@ public class DisconnectedGraphEdgeSignatureHandler implements GraphSignatureHand
     private static final String SIG_SEPARATOR = "+";
     
     public boolean isCanonicalAugmentation(
+            Graph g,
             Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
         ChainDecomposition chains = new ChainDecomposition(canonGPrime);
         List<Edge> bridges = chains.getBridges();

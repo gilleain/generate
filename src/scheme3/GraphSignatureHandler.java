@@ -5,8 +5,11 @@ import model.GraphSignature;
 
 public interface GraphSignatureHandler {
     
-    public boolean isCanonicalAugmentation(
-            Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel);
+    public boolean isCanonicalAugmentation(Graph g, 
+                                           Graph canonGPrime, 
+                                           GraphSignature gPrimeSig, 
+                                           Graph gPrime, 
+                                           String gCanonicalLabel);
     
     public String getCanonicalLabel(GraphSignature gSig);
 

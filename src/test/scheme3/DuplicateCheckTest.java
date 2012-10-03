@@ -46,6 +46,14 @@ public class DuplicateCheckTest {
 	}
 	
 	@Test
+    public void testEights() throws IOException {
+        String filepath = "output/scheme3/eights.txt";
+        List<Graph> graphs = readFile(filepath);
+        GraphDuplicateChecker checker = new GraphDuplicateChecker();
+        checker.checkForDuplicates(graphs);
+    }
+	
+	@Test
 	public void diffFives() throws IOException {
 		List<Graph> diff = GraphFileDiff.diff("output/scheme3/fives.txt", "output/mckay/five_x.txt");
 		int count = 0;

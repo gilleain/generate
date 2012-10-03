@@ -20,6 +20,8 @@ public class GraphGenerator {
     
     private boolean generateDisconnected;
     
+    private boolean byVertex;
+    
     public GraphGenerator() {
         this(new SystemOutHandler());
     }
@@ -30,6 +32,7 @@ public class GraphGenerator {
     
     public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected) {
         this.handler = handler;
+        this.byVertex = byVertex;
         if (generateDisconnected) {
             signatureHandler = new DisconnectedGraphEdgeSignatureHandler();
             childLister = new DisconnectedEdgeChildLister(signatureHandler);
@@ -59,12 +62,14 @@ public class GraphGenerator {
             Graph gPrime = gPrimeSignature.getGraph();
             Graph canonGPrime = signatureHandler.reconstruct(gPrimeCanonLabel);
             if (signatureHandler.isCanonicalAugmentation(
-                    canonGPrime, gPrimeSignature, gPrime, gCanonicalLabel)) {
+                    g, canonGPrime, gPrimeSignature, gPrime, gCanonicalLabel)) {
                 if (gPrime.getVertexCount() == n && (!generateDisconnected || g.isConnected())) {
                     handler.handle(g, gPrime);
                     count++;
                 }
-                extend(gPrime, gPrimeSignature, gPrimeCanonLabel, n);
+                if (!byVertex || (byVertex && gPrime.vsize() < n)) {
+                    extend(gPrime, gPrimeSignature, gPrimeCanonLabel, n);
+                }
             }
         }
     }
