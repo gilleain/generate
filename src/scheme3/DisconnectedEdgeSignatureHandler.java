@@ -24,24 +24,8 @@ public class DisconnectedEdgeSignatureHandler implements GraphSignatureHandler {
     public boolean isCanonicalAugmentation(
             Graph g,
             Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
-        ChainDecomposition chains = new ChainDecomposition(canonGPrime);
-        List<Edge> bridges = chains.getBridges();
         int lastEdgeIndex = canonGPrime.esize() - 1;
-        Edge lastEdge = null;
-        while (lastEdgeIndex > 0) {
-            lastEdge = canonGPrime.edges.get(lastEdgeIndex);
-            if (bridges.contains(lastEdge)) {
-                if (canonGPrime.degree(lastEdge.a) > 1 && canonGPrime.degree(lastEdge.b) > 1) {
-                    lastEdgeIndex--;
-                    continue;
-                } else {
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
-        
+        Edge lastEdge = canonGPrime.edges.get(lastEdgeIndex);
         int[] labels = getLabels(gPrimeSig);
         int lA = labels[lastEdge.a];
         int lB = labels[lastEdge.b];

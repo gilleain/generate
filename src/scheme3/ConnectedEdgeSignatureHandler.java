@@ -1,5 +1,7 @@
 package scheme3;
 
+import java.util.List;
+
 import model.Edge;
 import model.Graph;
 import model.GraphBuilder;
@@ -15,18 +17,28 @@ import signature.ColoredTree;
  */
 public class ConnectedEdgeSignatureHandler implements GraphSignatureHandler {
     
-    public boolean isCanonicalAugmentation(Graph parent, Graph child) {
-        GraphSignature childSig = new GraphSignature(child);
-        Graph canonChild = getCanonicalForm(childSig);
-        String parentLabel = new GraphSignature(parent).toCanonicalString();
-        return isCanonicalAugmentation(parent, canonChild, childSig, child, parentLabel);
-    }
-
+    
     public boolean isCanonicalAugmentation(
             Graph g,
             Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
+        ChainDecomposition chains = new ChainDecomposition(canonGPrime);
+        List<Edge> bridges = chains.getBridges();
         int lastEdgeIndex = canonGPrime.esize() - 1;
-        Edge lastEdge = canonGPrime.edges.get(lastEdgeIndex);
+        Edge lastEdge = null;
+        while (lastEdgeIndex > 0) {
+            lastEdge = canonGPrime.edges.get(lastEdgeIndex);
+            if (bridges.contains(lastEdge)) {
+                if (canonGPrime.degree(lastEdge.a) > 1 && canonGPrime.degree(lastEdge.b) > 1) {
+                    lastEdgeIndex--;
+                    continue;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        
         int[] labels = getLabels(gPrimeSig);
         int lA = labels[lastEdge.a];
         int lB = labels[lastEdge.b];
@@ -34,7 +46,13 @@ public class ConnectedEdgeSignatureHandler implements GraphSignatureHandler {
         String gPrimeMinusESignatureString = getCanonicalLabel(new GraphSignature(gPrimeMinusE));
         return gPrimeMinusESignatureString.equals(gCanonicalLabel);
     }
-    
+    public boolean isCanonicalAugmentation(Graph parent, Graph child) {
+        GraphSignature childSig = new GraphSignature(child);
+        Graph canonChild = getCanonicalForm(childSig);
+        String parentLabel = new GraphSignature(parent).toCanonicalString();
+        return isCanonicalAugmentation(parent, canonChild, childSig, child, parentLabel);
+    }
+
     public Graph getCanonicalForm(Graph g) {
         return getCanonicalForm(new GraphSignature(g));
     }
