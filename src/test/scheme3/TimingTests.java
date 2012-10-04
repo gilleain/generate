@@ -41,11 +41,20 @@ public class TimingTests {
         System.out.println("Done E/Fil " + handler.getElapsedTime() + "ms " + handler.getCount());
     }
     
+    public void testEdgeFilteringDiscTime(int n) {
+        TimingHandler handler = new TimingHandler();
+        GraphGenerator generator = new GraphGenerator(handler, false, true, true);
+        generator.extend(new Graph("0:1"), n);
+        handler.finish();
+        System.out.println("Done E/Fil/Disc " + handler.getElapsedTime() + "ms " + handler.getCount());
+    }
+    
     public void testAll(int n) {
-        testEdgeFilteringTime(n);
-        testEdgeSymmetryTime(n);
-        testVertexFilteringTime(n);
-        testVertexSymmetryTime(n);
+//        testEdgeFilteringTime(n);
+//        testEdgeSymmetryTime(n);
+//        testVertexFilteringTime(n);
+//        testVertexSymmetryTime(n);
+        testEdgeFilteringDiscTime(n);
     }
     
     @Test
