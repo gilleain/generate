@@ -17,7 +17,6 @@ import signature.ColoredTree;
  */
 public class ConnectedEdgeSignatureHandler implements GraphSignatureHandler {
     
-    
     public boolean isCanonicalAugmentation(
             Graph g,
             Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {

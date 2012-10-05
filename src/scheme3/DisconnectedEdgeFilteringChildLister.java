@@ -17,6 +17,8 @@ public class DisconnectedEdgeFilteringChildLister implements ChildLister {
     
     private GraphSignatureHandler signatureHandler;
     
+    private int degMax;
+    
     public DisconnectedEdgeFilteringChildLister(GraphSignatureHandler signatureHandler) {
         this.signatureHandler = signatureHandler;
     }
@@ -26,17 +28,23 @@ public class DisconnectedEdgeFilteringChildLister implements ChildLister {
         Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
         int max = Math.min(l, n - 1);
         for (int start = 0; start < l; start++) {
-            for (int end = start + 1; end <= max; end++) {
-                if (g.isConnected(start, end)) {
-                    continue;
-                } else {
-                    Graph h = g.makeNew(start, end);
-                    GraphSignature signature = new GraphSignature(h);
-                    String canonicalLabel = signatureHandler.getCanonicalLabel(signature);
-                    if (children.containsKey(canonicalLabel)) {
+            int dS = (degMax < 1)? -1 : g.degree(start);
+            if (dS >= degMax) {
+                continue;
+            } else {
+                for (int end = start + 1; end <= max; end++) {
+                    int dE = (degMax < 1)? -1 : g.degree(end);
+                    if (g.isConnected(start, end) || (dE > 1 && dE >= degMax)) {
                         continue;
                     } else {
-                        children.put(canonicalLabel, signature);
+                        Graph h = g.makeNew(start, end);
+                        GraphSignature signature = new GraphSignature(h);
+                        String canonicalLabel = signatureHandler.getCanonicalLabel(signature);
+                        if (children.containsKey(canonicalLabel)) {
+                            continue;
+                        } else {
+                            children.put(canonicalLabel, signature);
+                        }
                     }
                 }
             }
@@ -50,5 +58,10 @@ public class DisconnectedEdgeFilteringChildLister implements ChildLister {
             }
         }
         return children;
+    }
+    
+    @Override
+    public void setMaxDegree(int degMax) {
+        this.degMax = degMax;
     }
 }

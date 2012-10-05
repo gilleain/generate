@@ -22,6 +22,8 @@ import combinatorics.SubsetLister;
  */
 public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister implements ChildLister {
     
+    private int degMax;
+    
     public ConnectedVertexSymmetryChildLister(GraphSignatureHandler signatureHandler) {
         super(signatureHandler);
     }
@@ -33,7 +35,7 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
         Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
         SSPermutationGroup autG = getAut(g);
         
-        for (List<Integer> subset : SubsetLister.getIndexLister(l)) {
+        for (List<Integer> subset : getSubsetLister(l, g)) {
             if (isMinimal(subset, autG)) {
                 Graph h = g.makeAll(subset, max);
                 makeChild(g, h, children);
@@ -41,6 +43,20 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
         }
         
         return children;
+    }
+
+    private SubsetLister<Integer> getSubsetLister(int l, Graph g) {
+        if (degMax < 1) {
+            return SubsetLister.getIndexLister(l);
+        } else {
+            List<Integer> indices = new ArrayList<Integer>();
+            for (int i = 0; i < l; i++) {
+                if (g.degree(i) < degMax) {
+                    indices.add(i);
+                }
+            }
+            return new SubsetLister<Integer>(indices);
+        }
     }
     
     private boolean isMinimal(List<Integer> subset, SSPermutationGroup autG) {
@@ -60,6 +76,11 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
             permuted.add(p.get(i));
         }
         return permuted;
+    }
+
+    @Override
+    public void setMaxDegree(int degMax) {
+        this.degMax = degMax;
     }
   
 }

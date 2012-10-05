@@ -7,79 +7,79 @@ import org.junit.Test;
 
 import scheme3.GraphGenerator;
 
-public class TimingTests {
+public class DegreeLimitedTimingTests {
     
-    public void testVertexSymmetryTime(int n) {
+    public void testVertexSymmetryTime(int n, int degMax) {
         TimingHandler handler = new TimingHandler();
-        GraphGenerator generator = new GraphGenerator(handler, true, false, false);
+        GraphGenerator generator = new GraphGenerator(handler, true, false, false, degMax);
         generator.extend(new Graph("0:1"), n);
         handler.finish();
         System.out.println("Done V/Sym/Conn " + handler.getElapsedTime() + "ms " + handler.getCount());
     }
     
-    public void testVertexFilteringTime(int n) {
+    public void testVertexFilteringTime(int n, int degMax) {
         TimingHandler handler = new TimingHandler();
-        GraphGenerator generator = new GraphGenerator(handler, true, false, true);
+        GraphGenerator generator = new GraphGenerator(handler, true, false, true, degMax);
         generator.extend(new Graph("0:1"), n);
         handler.finish();
         System.out.println("Done V/Fil/Conn " + handler.getElapsedTime() + "ms " + handler.getCount());
     }
     
-    public void testEdgeSymmetryTime(int n) {
+    public void testEdgeSymmetryTime(int n, int degMax) {
         TimingHandler handler = new TimingHandler();
-        GraphGenerator generator = new GraphGenerator(handler, false, false, false);
+        GraphGenerator generator = new GraphGenerator(handler, false, false, false, degMax);
         generator.extend(new Graph("0:1"), n);
         handler.finish();
         System.out.println("Done E/Sym/Conn " + handler.getElapsedTime() + "ms " + handler.getCount());
     }
     
-    public void testEdgeFilteringTime(int n) {
+    public void testEdgeFilteringTime(int n, int degMax) {
         TimingHandler handler = new TimingHandler();
-        GraphGenerator generator = new GraphGenerator(handler, false, false, true);
+        GraphGenerator generator = new GraphGenerator(handler, false, false, true, degMax);
         generator.extend(new Graph("0:1"), n);
         handler.finish();
         System.out.println("Done E/Fil/Conn " + handler.getElapsedTime() + "ms " + handler.getCount());
     }
     
-    public void testEdgeFilteringDiscTime(int n) {
+    public void testEdgeFilteringDiscTime(int n, int degMax) {
         TimingHandler handler = new TimingHandler();
-        GraphGenerator generator = new GraphGenerator(handler, false, true, true);
+        GraphGenerator generator = new GraphGenerator(handler, false, true, true, degMax);
         generator.extend(new Graph("0:1"), n);
         handler.finish();
         System.out.println("Done E/Fil/Disc " + handler.getElapsedTime() + "ms " + handler.getCount());
     }
     
-    public void testAll(int n) {
-        testEdgeFilteringTime(n);
-        testEdgeSymmetryTime(n);
-        testVertexFilteringTime(n);
-        testVertexSymmetryTime(n);
-        testEdgeFilteringDiscTime(n);
+    public void testAll(int n, int degMax) {
+        testEdgeFilteringTime(n, degMax);
+        testEdgeSymmetryTime(n, degMax);
+        testVertexFilteringTime(n, degMax);
+        testVertexSymmetryTime(n, degMax);
+        testEdgeFilteringDiscTime(n, degMax);
     }
     
     @Test
     public void testFours() {
-        testAll(4);
+        testAll(4, 4);
     }
     
     @Test
     public void testFives() {
-        testAll(5);
+        testAll(5, 4);
     }
     
     @Test
     public void testSixes() {
-        testAll(6);
+        testAll(6, 4);
     }
     
     @Test
     public void testSevens() {
-        testAll(7);
+        testAll(7, 4);
     }
     
     @Test
     public void testEights() {
-        testAll(8);
+        testAll(8, 4);
     }
     
 }

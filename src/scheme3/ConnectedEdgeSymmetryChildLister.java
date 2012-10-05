@@ -17,6 +17,8 @@ import model.GraphSignature;
  */
 public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister implements ChildLister {
     
+    private int degMax;
+    
     public ConnectedEdgeSymmetryChildLister(GraphSignatureHandler signatureHandler) {
         super(signatureHandler);
     }
@@ -27,14 +29,20 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
         int max = Math.min(l, n - 1);
         SSPermutationGroup autG = getAut(g);
         for (int start = 0; start < l; start++) {
-            for (int end = start + 1; end <= max; end++) {
-                if (g.isConnected(start, end)) {
-                    continue;
-                } else {
-                    if (end < max && isMinimal(start, end, autG)) {
-                        makeChild(g, g.makeNew(start, end), children);
-                    } else if (end == max && isMinimal(start, autG)) {
-                        makeChild(g, g.makeNew(start, end), children);
+            int dS = (degMax < 1)? -1 : g.degree(start);
+            if (dS >= degMax) {
+                continue;
+            } else {
+                for (int end = start + 1; end <= max; end++) {
+                    int dE = (degMax < 1)? -1 : g.degree(end);
+                    if (g.isConnected(start, end) || (dE > 1 && dE >= degMax)) {
+                        continue;
+                    } else {
+                        if (end < max && isMinimal(start, end, autG)) {
+                            makeChild(g, g.makeNew(start, end), children);
+                        } else if (end == max && isMinimal(start, autG)) {
+                            makeChild(g, g.makeNew(start, end), children);
+                        }
                     }
                 }
             }
@@ -62,5 +70,10 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
             }
         }
         return true;
+    }
+
+    @Override
+    public void setMaxDegree(int degMax) {
+        this.degMax = degMax;
     }
 }

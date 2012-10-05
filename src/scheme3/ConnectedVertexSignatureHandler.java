@@ -14,8 +14,6 @@ import signature.ColoredTree;
  */
 public class ConnectedVertexSignatureHandler implements GraphSignatureHandler {
     
-    private String tmpToFind = new GraphSignature(new Graph("0:1, 0:4, 1:2, 2:3, 2:4")).toCanonicalString();
-    
     public boolean isCanonicalAugmentation(Graph parent, Graph child) {
         GraphSignature childSig = new GraphSignature(child);
         Graph canonChild = getCanonicalForm(childSig);
@@ -29,30 +27,10 @@ public class ConnectedVertexSignatureHandler implements GraphSignatureHandler {
             GraphSignature gPrimeSig, 
             Graph gPrime, 
             String gCanonicalLabel) {
-        int n = gPrime.vsize();
-//        int[] labels = getLabels(gPrimeSig);
-//        int mappedVertex = labels[n - 1];
         int mappedVertex = getCanonicalIndex(gPrimeSig);
-//        boolean inv = invariantsTrue(g, gPrime, labels, mappedVertex);
-//        if (inv) {
-            Graph gPrimeMinusV = gPrime.minus(mappedVertex);
-            String gPrimeMinusVSignatureString = getCanonicalLabel(new GraphSignature(gPrimeMinusV));
-            boolean canon = gPrimeMinusVSignatureString.equals(gCanonicalLabel);
-            if (canon) {
-//                if (!inv) {
-//                    System.out.println("!inv yet canon " + gPrime 
-//                            + "\t" + mappedVertex + "\t" + g + "\t" + java.util.Arrays.toString(labels));
-//                }
-//                if (gPrimeSig.toCanonicalString().equals(tmpToFind)) {
-//                    System.out.println("canon " + gPrime);
-//                }
-                return true; 
-            } else {
-                return false;
-            }
-//        } else {
-//            return false;
-//        }
+        Graph gPrimeMinusV = gPrime.minus(mappedVertex);
+        String gPrimeMinusVSignatureString = getCanonicalLabel(new GraphSignature(gPrimeMinusV));
+        return gPrimeMinusVSignatureString.equals(gCanonicalLabel);
     }
     
     public boolean invariantsTrue(Graph parent, Graph child, int[] labels, int canonicalVertex) {

@@ -24,6 +24,8 @@ public class GraphGenerator {
     
     private boolean doFilter;
     
+    private int degMax;
+    
     public GraphGenerator() {
         this(new SystemOutHandler());
     }
@@ -35,11 +37,16 @@ public class GraphGenerator {
     public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected) {
         this(handler, byVertex, generateDisconnected, true);
     }
-    
     public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected, boolean doFilter) {
+        this(handler, byVertex, generateDisconnected, doFilter, 0);
+    }
+    
+    public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected, boolean doFilter, int degMax) {
         this.handler = handler;
+        this.generateDisconnected = generateDisconnected;
         this.byVertex = byVertex;
         this.doFilter = doFilter;
+        this.degMax = degMax;
         
         if (generateDisconnected) {
             signatureHandler = new DisconnectedEdgeSignatureHandler();
@@ -61,7 +68,23 @@ public class GraphGenerator {
                 }
             }
         }
-        this.generateDisconnected = generateDisconnected;
+        childLister.setMaxDegree(degMax);
+    }
+    
+    public boolean isGenerateDisconnected() {
+        return generateDisconnected;
+    }
+    
+    public boolean isByVertex() {
+        return byVertex;
+    }
+    
+    public boolean isDoFilter() {
+        return doFilter;
+    }
+    
+    public int getDegMax() {
+        return degMax;
     }
     
     public void extend(Graph g, int n) {
