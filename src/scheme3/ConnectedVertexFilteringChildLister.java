@@ -34,8 +34,12 @@ public class ConnectedVertexFilteringChildLister implements ChildLister {
         Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
         
         for (List<Integer> subset : getSubsetLister(l, g)) {
-            Graph h = g.makeAll(subset, max);
-            makeChild(g, h, children);
+            if (degMax > 1 && subset.size() > degMax) {
+                continue;
+            } else {
+                Graph h = g.makeAll(subset, max);
+                makeChild(g, h, children);
+            }
         }
         return children;
     }

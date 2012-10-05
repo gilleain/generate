@@ -36,9 +36,13 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
         SSPermutationGroup autG = getAut(g);
         
         for (List<Integer> subset : getSubsetLister(l, g)) {
-            if (isMinimal(subset, autG)) {
-                Graph h = g.makeAll(subset, max);
-                makeChild(g, h, children);
+            if (degMax > 1 && subset.size() > degMax) {
+                continue;
+            } else {
+                if (isMinimal(subset, autG)) {
+                    Graph h = g.makeAll(subset, max);
+                    makeChild(g, h, children);
+                }
             }
         }
         
