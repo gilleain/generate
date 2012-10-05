@@ -1,9 +1,9 @@
 package test.augment;
 
-import generate.handler.FamilyCountingHandler;
 import generate.handler.DegreeFilterHandler;
+import generate.handler.FamilyCountingHandler;
 import generate.handler.FileOutputHandler;
-import generate.handler.SystemOutHandler;
+import generate.handler.GeneratorHandler;
 import group.Permutation;
 import group.SSPermutationGroup;
 
@@ -52,8 +52,9 @@ public class ScanTest {
 	@Test
     public void sevenGraphsFromEmpty() {
         Graph initial = new Graph();
-        AugmentingGenerator generator = new AugmentingGenerator(
-                new FileOutputHandler("output/mckay/seven_x.txt", -1, 7, true));
+//        GeneratorHandler handler = new FileOutputHandler("output/mckay/seven_x.txt", -1, 7, true);
+        GeneratorHandler handler = new FileOutputHandler("output/mckay/seven_four.txt", 4, 7, true);
+        AugmentingGenerator generator = new AugmentingGenerator(handler);
         generator.scan(initial, 7);
     }
 	
