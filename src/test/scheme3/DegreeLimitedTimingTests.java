@@ -49,12 +49,20 @@ public class DegreeLimitedTimingTests {
         System.out.println("Done E/Fil/Disc " + handler.getElapsedTime() + "ms " + handler.getCount());
     }
     
-    public void testAll(int n, int degMax) {
+    public void testAllSingleRep(int n, int degMax) {
         testEdgeFilteringTime(n, degMax);
         testEdgeSymmetryTime(n, degMax);
         testVertexFilteringTime(n, degMax);
         testVertexSymmetryTime(n, degMax);
         testEdgeFilteringDiscTime(n, degMax);
+    }
+    
+    public void testAll(int n, int degMax) {
+        testAllSingleRep(n, degMax);
+        System.out.println("--------------");
+        testAllSingleRep(n, degMax);
+        System.out.println("--------------");
+        testAllSingleRep(n, degMax);
     }
     
     @Test
@@ -80,6 +88,11 @@ public class DegreeLimitedTimingTests {
     @Test
     public void testEights() {
         testAll(8, 4);
+    }
+    
+    @Test
+    public void testNines() {
+        testAll(9, 4);
     }
     
 }
