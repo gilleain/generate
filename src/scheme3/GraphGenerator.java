@@ -5,6 +5,17 @@ import generate.handler.SystemOutHandler;
 
 import java.util.Map;
 
+import scheme3.lister.ChildLister;
+import scheme3.lister.ConnectedEdgeFilteringChildLister;
+import scheme3.lister.ConnectedEdgeSymmetryChildLister;
+import scheme3.lister.ConnectedVertexFilteringChildLister;
+import scheme3.lister.ConnectedVertexSymmetryChildLister;
+import scheme3.lister.DisconnectedEdgeFilteringChildLister;
+import scheme3.signature.ConnectedEdgeSignatureHandler;
+import scheme3.signature.ConnectedVertexSignatureHandler;
+import scheme3.signature.DisconnectedEdgeSignatureHandler;
+import scheme3.signature.GraphSignatureHandler;
+
 import model.Graph;
 import model.GraphSignature;
 
@@ -35,6 +46,7 @@ public class GraphGenerator {
     public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected) {
         this(handler, byVertex, generateDisconnected, true);
     }
+    
     public GraphGenerator(GeneratorHandler handler, boolean byVertex, boolean generateDisconnected, boolean doFilter) {
         this(handler, byVertex, generateDisconnected, doFilter, 0);
     }

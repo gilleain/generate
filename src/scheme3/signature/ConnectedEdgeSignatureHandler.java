@@ -1,4 +1,4 @@
-package scheme3;
+package scheme3.signature;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import model.Graph;
 import model.GraphBuilder;
 import model.GraphSignature;
 import model.VertexSignature;
+import scheme3.ChainDecomposition;
 import signature.ColoredTree;
 
 /**
@@ -45,6 +46,7 @@ public class ConnectedEdgeSignatureHandler implements GraphSignatureHandler {
         String gPrimeMinusESignatureString = getCanonicalLabel(new GraphSignature(gPrimeMinusE));
         return gPrimeMinusESignatureString.equals(gCanonicalLabel);
     }
+    
     public boolean isCanonicalAugmentation(Graph parent, Graph child) {
         GraphSignature childSig = new GraphSignature(child);
         Graph canonChild = getCanonicalForm(childSig);

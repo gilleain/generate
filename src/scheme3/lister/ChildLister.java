@@ -1,4 +1,4 @@
-package scheme3;
+package scheme3.lister;
 
 import java.util.Map;
 

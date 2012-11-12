@@ -1,4 +1,4 @@
-package scheme3;
+package scheme3.signature;
 
 import java.util.Arrays;
 import java.util.List;

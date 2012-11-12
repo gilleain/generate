@@ -1,8 +1,10 @@
-package scheme3;
+package scheme3.lister;
 
 import group.SSPermutationGroup;
 
 import java.util.Map;
+
+import scheme3.signature.GraphSignatureHandler;
 
 import model.Graph;
 import model.GraphDiscretePartitionRefiner;

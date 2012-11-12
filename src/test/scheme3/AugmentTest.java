@@ -8,8 +8,8 @@ import model.GraphSignature;
 import org.junit.Assert;
 import org.junit.Test;
 
-import scheme3.ConnectedEdgeSignatureHandler;
-import scheme3.DisconnectedEdgeSignatureHandler;
+import scheme3.signature.ConnectedEdgeSignatureHandler;
+import scheme3.signature.DisconnectedEdgeSignatureHandler;
 
 public class AugmentTest {
     

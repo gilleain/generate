@@ -1,4 +1,4 @@
-package scheme3;
+package scheme3.signature;
 
 import model.Graph;
 import model.GraphBuilder;

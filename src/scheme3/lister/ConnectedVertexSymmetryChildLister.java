@@ -1,4 +1,4 @@
-package scheme3;
+package scheme3.lister;
 
 import group.Permutation;
 import group.SSPermutationGroup;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import scheme3.signature.GraphSignatureHandler;
 
 import model.Graph;
 import model.GraphSignature;

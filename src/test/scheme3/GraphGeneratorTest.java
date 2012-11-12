@@ -18,8 +18,8 @@ import model.GraphFileReader;
 
 import org.junit.Test;
 
-import scheme3.ConnectedEdgeSignatureHandler;
 import scheme3.GraphGenerator;
+import scheme3.signature.ConnectedEdgeSignatureHandler;
 
 public class GraphGeneratorTest {
     
