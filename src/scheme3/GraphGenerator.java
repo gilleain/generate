@@ -16,8 +16,6 @@ public class GraphGenerator {
     
     private ChildLister childLister;
     
-    private int count;
-    
     private boolean generateDisconnected;
     
     private boolean byVertex;
@@ -104,7 +102,6 @@ public class GraphGenerator {
                     g, canonGPrime, gPrimeSignature, gPrime, gCanonicalLabel)) {
                 if (gPrime.getVertexCount() == n && (!generateDisconnected || g.isConnected())) {
                     handler.handle(g, gPrime);
-                    count++;
                 }
                 if (!byVertex || (byVertex && gPrime.vsize() < n)) {
                     extend(gPrime, gPrimeSignature, gPrimeCanonLabel, n);
