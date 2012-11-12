@@ -1,9 +1,9 @@
 package scheme3.lister;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import scheme3.signature.GraphSignatureHandler;
 
 import model.Graph;
 import model.GraphSignature;
@@ -16,17 +16,11 @@ import model.GraphSignature;
  */
 public class ConnectedEdgeFilteringChildLister implements ChildLister {
     
-    private GraphSignatureHandler signatureHandler;
-    
     private int degMax;
     
-    public ConnectedEdgeFilteringChildLister(GraphSignatureHandler signatureHandler) {
-        this.signatureHandler = signatureHandler;
-    }
-    
-    public Map<String, GraphSignature> list(Graph g, int n) {
+    public List<Graph> list(Graph g, int n) {
         int l = g.getVertexCount();
-        Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
+        Map<String, Graph> children = new HashMap<String, Graph>();
         int max = Math.min(l, n - 1);
         for (int start = 0; start < l; start++) {
             int dS = (degMax < 1)? -1 : g.degree(start);
@@ -40,17 +34,21 @@ public class ConnectedEdgeFilteringChildLister implements ChildLister {
                     } else {
                         Graph h = g.makeNew(start, end);
                         GraphSignature signature = new GraphSignature(h);
-                        String canonicalLabel = signatureHandler.getCanonicalLabel(signature);
+                        String canonicalLabel = getCanonicalLabel(signature);
                         if (children.containsKey(canonicalLabel)) {
                             continue;
                         } else {
-                            children.put(canonicalLabel, signature);
+                            children.put(canonicalLabel, h);
                         }
                     }
                 }
             }
         }
-        return children;
+        return new ArrayList<Graph>(children.values());
+    }
+    
+    public String getCanonicalLabel(GraphSignature gSig) {
+        return gSig.toCanonicalString();
     }
 
     @Override

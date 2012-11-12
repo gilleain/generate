@@ -4,14 +4,9 @@ import group.Permutation;
 import group.SSPermutationGroup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import scheme3.signature.GraphSignatureHandler;
 
 import model.Graph;
-import model.GraphSignature;
 
 import combinatorics.SubsetLister;
 
@@ -26,24 +21,20 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
     
     private int degMax;
     
-    public ConnectedVertexSymmetryChildLister(GraphSignatureHandler signatureHandler) {
-        super(signatureHandler);
-    }
-    
     @Override
-    public Map<String, GraphSignature> list(Graph g, int n) {
+    public List<Graph> list(Graph g, int n) {
         int l = g.getVertexCount();
         int max = Math.min(l, n - 1);
-        Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
+        List<Graph> children = new ArrayList<Graph>();
         SSPermutationGroup autG = getAut(g);
         
         for (List<Integer> subset : getSubsetLister(l, g)) {
             if (degMax > 1 && subset.size() > degMax) {
                 continue;
             } else {
-                if (isMinimal(subset, autG)) {
+                if (subset.size() > 0 && isMinimal(subset, autG)) {
                     Graph h = g.makeAll(subset, max);
-                    makeChild(g, h, children);
+                    children.add(h);
                 }
             }
         }

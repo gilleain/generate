@@ -50,11 +50,11 @@ public class TimingTests {
     }
     
     public void testAll(int n) {
-        testEdgeFilteringTime(n);
-        testEdgeSymmetryTime(n);
+//        testEdgeFilteringTime(n);
+//        testEdgeSymmetryTime(n);
         testVertexFilteringTime(n);
         testVertexSymmetryTime(n);
-        testEdgeFilteringDiscTime(n);
+//        testEdgeFilteringDiscTime(n);
     }
     
     @Test

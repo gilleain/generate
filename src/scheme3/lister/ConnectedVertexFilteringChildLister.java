@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import scheme3.signature.GraphSignatureHandler;
-
 import model.Graph;
 import model.GraphSignature;
 
@@ -21,29 +19,25 @@ import combinatorics.SubsetLister;
  */
 public class ConnectedVertexFilteringChildLister implements ChildLister {
     
-    private GraphSignatureHandler signatureHandler;
-    
     private int degMax;
     
-    public ConnectedVertexFilteringChildLister(GraphSignatureHandler signatureHandler) {
-        this.signatureHandler = signatureHandler;
-    }
-    
     @Override
-    public Map<String, GraphSignature> list(Graph g, int n) {
+    public List<Graph> list(Graph g, int n) {
         int l = g.getVertexCount();
         int max = Math.min(l, n - 1);
-        Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
+        Map<String, Graph> children = new HashMap<String, Graph>();
         
         for (List<Integer> subset : getSubsetLister(l, g)) {
             if (degMax > 1 && subset.size() > degMax) {
                 continue;
             } else {
-                Graph h = g.makeAll(subset, max);
-                makeChild(g, h, children);
+                if (subset.size() > 0) {
+                    Graph h = g.makeAll(subset, max);
+                    makeChild(g, h, children);
+                }
             }
         }
-        return children;
+        return new ArrayList<Graph>(children.values());
     }
     
     private SubsetLister<Integer> getSubsetLister(int l, Graph g) {
@@ -60,13 +54,13 @@ public class ConnectedVertexFilteringChildLister implements ChildLister {
         }
     }
     
-    private void makeChild(Graph g, Graph h, Map<String, GraphSignature> children) {
+    private void makeChild(Graph g, Graph h, Map<String, Graph> children) {
         GraphSignature signature = new GraphSignature(h);
-        String canonicalLabel = signatureHandler.getCanonicalLabel(signature);
+        String canonicalLabel = signature.toCanonicalString();
         if (children.containsKey(canonicalLabel)) {
             return;
         } else {
-            children.put(canonicalLabel, signature);
+            children.put(canonicalLabel, h);
         }
     }
     

@@ -1,13 +1,12 @@
 package scheme3.lister;
 
-import java.util.Map;
+import java.util.List;
 
 import model.Graph;
-import model.GraphSignature;
 
 public interface ChildLister {
     
-    public Map<String, GraphSignature> list(Graph g, int n);
+    public List<Graph> list(Graph g, int n);
 
     public void setMaxDegree(int degMax);
     

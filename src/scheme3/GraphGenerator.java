@@ -3,8 +3,9 @@ package scheme3;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 
-import java.util.Map;
+import java.util.List;
 
+import model.Graph;
 import scheme3.lister.ChildLister;
 import scheme3.lister.ConnectedEdgeFilteringChildLister;
 import scheme3.lister.ConnectedEdgeSymmetryChildLister;
@@ -15,9 +16,6 @@ import scheme3.signature.ConnectedEdgeSignatureHandler;
 import scheme3.signature.ConnectedVertexSignatureHandler;
 import scheme3.signature.DisconnectedEdgeSignatureHandler;
 import scheme3.signature.GraphSignatureHandler;
-
-import model.Graph;
-import model.GraphSignature;
 
 public class GraphGenerator {
     
@@ -60,21 +58,21 @@ public class GraphGenerator {
         
         if (generateDisconnected) {
             signatureHandler = new DisconnectedEdgeSignatureHandler();
-            childLister = new DisconnectedEdgeFilteringChildLister(signatureHandler);
+            childLister = new DisconnectedEdgeFilteringChildLister();
         } else {
             if (byVertex) {
                 signatureHandler = new ConnectedVertexSignatureHandler();
                 if (doFilter) {
-                    childLister = new ConnectedVertexFilteringChildLister(signatureHandler);
+                    childLister = new ConnectedVertexFilteringChildLister();
                 } else {
-                    childLister = new ConnectedVertexSymmetryChildLister(signatureHandler);
+                    childLister = new ConnectedVertexSymmetryChildLister();
                 }
             } else {
                 signatureHandler = new ConnectedEdgeSignatureHandler();
                 if (doFilter) {
-                    childLister = new ConnectedEdgeFilteringChildLister(signatureHandler);
+                    childLister = new ConnectedEdgeFilteringChildLister();
                 } else {
-                    childLister = new ConnectedEdgeSymmetryChildLister(signatureHandler);
+                    childLister = new ConnectedEdgeSymmetryChildLister();
                 }
             }
         }
@@ -96,27 +94,17 @@ public class GraphGenerator {
     public int getDegMax() {
         return degMax;
     }
-    
+
     public void extend(Graph g, int n) {
-        GraphSignature gSignature = new GraphSignature(g);
-        String gCanonicalLabel = signatureHandler.getCanonicalLabel(gSignature);
-        extend(g, gSignature, gCanonicalLabel, n);
-    }
-    
-    public void extend(Graph g, GraphSignature gSignature, String gCanonicalLabel, int n) {
-        Map<String, GraphSignature> children = childLister.list(g, n);
+        List<Graph> children = childLister.list(g, n);
         
-        for (String gPrimeCanonLabel : children.keySet()) {
-            GraphSignature gPrimeSignature = children.get(gPrimeCanonLabel);
-            Graph gPrime = gPrimeSignature.getGraph();
-            Graph canonGPrime = signatureHandler.reconstruct(gPrimeCanonLabel);
-            if (signatureHandler.isCanonicalAugmentation(
-                    g, canonGPrime, gPrimeSignature, gPrime, gCanonicalLabel)) {
+        for (Graph gPrime : children) {
+            if (signatureHandler.isCanonicalAugmentation(gPrime)) {
                 if (gPrime.getVertexCount() == n && (!generateDisconnected || g.isConnected())) {
                     handler.handle(g, gPrime);
                 }
                 if (!byVertex || (byVertex && gPrime.vsize() < n)) {
-                    extend(gPrime, gPrimeSignature, gPrimeCanonLabel, n);
+                    extend(gPrime, n);
                 }
             }
         }

@@ -1,9 +1,10 @@
 package scheme3.lister;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import scheme3.signature.GraphSignatureHandler;
 
 import model.Graph;
 import model.GraphSignature;
@@ -17,17 +18,13 @@ import model.GraphSignature;
  */
 public class DisconnectedEdgeFilteringChildLister implements ChildLister {
     
-    private GraphSignatureHandler signatureHandler;
+    private static final String SIG_SEPARATOR = "+";
     
     private int degMax;
     
-    public DisconnectedEdgeFilteringChildLister(GraphSignatureHandler signatureHandler) {
-        this.signatureHandler = signatureHandler;
-    }
-    
-    public Map<String, GraphSignature> list(Graph g, int n) {
+    public List<Graph> list(Graph g, int n) {
         int l = g.getVertexCount();
-        Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
+        Map<String, Graph> children = new HashMap<String, Graph>();
         int max = Math.min(l, n - 1);
         for (int start = 0; start < l; start++) {
             int dS = (degMax < 1)? -1 : g.degree(start);
@@ -40,28 +37,60 @@ public class DisconnectedEdgeFilteringChildLister implements ChildLister {
                         continue;
                     } else {
                         Graph h = g.makeNew(start, end);
-                        GraphSignature signature = new GraphSignature(h);
-                        String canonicalLabel = signatureHandler.getCanonicalLabel(signature);
-                        if (children.containsKey(canonicalLabel)) {
-                            continue;
-                        } else {
-                            children.put(canonicalLabel, signature);
-                        }
+                        makeChild(g, h, children);
                     }
                 }
             }
         }
         if (l < n - 2) {
             Graph h = g.makeNew(l, l + 1);
-            GraphSignature hSig = new GraphSignature(h);
-            String canonicalLabel = signatureHandler.getCanonicalLabel(hSig);
-            if (!children.containsKey(canonicalLabel)) {
-                children.put(canonicalLabel, hSig);
-            }
+            makeChild(g, h, children);
         }
-        return children;
+        return new ArrayList<Graph>(children.values());
     }
     
+    private void makeChild(Graph g, Graph h, Map<String, Graph> children) {
+        GraphSignature signature = new GraphSignature(h);
+        String canonicalLabel = signature.toCanonicalString();
+        if (children.containsKey(canonicalLabel)) {
+            return;
+        } else {
+            children.put(canonicalLabel, h);
+        }
+    }
+    
+    public String getCanonicalLabel(GraphSignature signature) {
+        Graph g = signature.getGraph();
+        List<List<Integer>> components = g.getComponents();
+        if (components.size() == 1) {
+            return signature.toCanonicalString();
+        } else {
+            String[] labelArray = new String[components.size()];
+            int componentIndex = 0;
+            for (List<Integer> component : components) {
+                String maxComponentLabel = null;
+                for (int i : component) {
+                    String sigStringForI = signature.signatureStringForVertex(i);
+                    if (maxComponentLabel == null || maxComponentLabel.compareTo(sigStringForI) < 0) {
+                        maxComponentLabel = sigStringForI;
+                    }
+                }
+                labelArray[componentIndex] = maxComponentLabel;
+                componentIndex++;
+            }
+            Arrays.sort(labelArray);
+            StringBuffer fullLabel = new StringBuffer();
+            for (String label : labelArray) {
+                if (fullLabel.length() == 0) {
+                    fullLabel.append(label);
+                } else {
+                    fullLabel.append(SIG_SEPARATOR).append(label);
+                }
+            }
+            return fullLabel.toString();
+        }
+    }
+
     @Override
     public void setMaxDegree(int degMax) {
         this.degMax = degMax;

@@ -3,13 +3,10 @@ package scheme3.lister;
 import group.Permutation;
 import group.SSPermutationGroup;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import scheme3.signature.GraphSignatureHandler;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Graph;
-import model.GraphSignature;
 
 /**
  * List candidate children of a graph, by adding connected edges and filtering duplicates.
@@ -21,13 +18,9 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
     
     private int degMax;
     
-    public ConnectedEdgeSymmetryChildLister(GraphSignatureHandler signatureHandler) {
-        super(signatureHandler);
-    }
-    
-    public Map<String, GraphSignature> list(Graph g, int n) {
+    public List<Graph> list(Graph g, int n) {
         int l = g.getVertexCount();
-        Map<String, GraphSignature> children = new HashMap<String, GraphSignature>();
+        List<Graph> children = new ArrayList<Graph>();
         int max = Math.min(l, n - 1);
         SSPermutationGroup autG = getAut(g);
         for (int start = 0; start < l; start++) {
@@ -41,9 +34,9 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
                         continue;
                     } else {
                         if (end < max && isMinimal(start, end, autG)) {
-                            makeChild(g, g.makeNew(start, end), children);
+                            children.add(g.makeNew(start, end));
                         } else if (end == max && isMinimal(start, autG)) {
-                            makeChild(g, g.makeNew(start, end), children);
+                            children.add(g.makeNew(start, end));
                         }
                     }
                 }
@@ -78,4 +71,5 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
     public void setMaxDegree(int degMax) {
         this.degMax = degMax;
     }
+
 }
