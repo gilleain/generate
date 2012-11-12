@@ -4,6 +4,7 @@ import group.Permutation;
 import group.SSPermutationGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.Graph;
@@ -57,10 +58,14 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
     }
     
     private boolean isMinimal(List<Integer> subset, SSPermutationGroup autG) {
+        Collections.sort(subset);
         String subsetAsStr = subset.toString();
         for (Permutation p : autG.all()) {
-            String permutedAsStr = permute(subset, p).toString(); 
-            if (permutedAsStr.compareTo(subsetAsStr) > 0) {
+            List<Integer> psubset = permute(subset, p);
+            Collections.sort(psubset);
+            String permutedAsStr = psubset.toString(); 
+            if (permutedAsStr.compareTo(subsetAsStr) < 0) {
+//                System.out.println(permutedAsStr + " < " + subsetAsStr);
                 return false;
             }
         }

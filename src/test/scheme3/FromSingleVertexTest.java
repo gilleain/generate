@@ -32,8 +32,13 @@ public class FromSingleVertexTest {
     }
     
     public void testToFile(String outputFilepath, int n) {
+        testToFile(outputFilepath, n, true, false, true);
+    }
+    
+    public void testToFile(
+            String outputFilepath, int n, boolean byVertex, boolean generateDisconnected, boolean doFilter) {
         FileOutputHandler handler = new FileOutputHandler(outputFilepath, n);
-        GraphGenerator generator = new GraphGenerator(handler, true, false);
+        GraphGenerator generator = new GraphGenerator(handler, byVertex, generateDisconnected, doFilter);
         generator.extend(new Graph("0:1"), n);
         handler.finish();
     }
@@ -76,6 +81,21 @@ public class FromSingleVertexTest {
     @Test
     public void test5FromSingleEdgeConnSym() {
         testFromSingle(5, 21, true, false, false);
+    }
+    
+    @Test
+    public void test6FromSingleEdgeConnSym() {
+        testFromSingle(6, 112, true, false, false);
+    }
+    
+    @Test
+    public void test7FromSingleEdgeConnSym() {
+        testFromSingle(7, 853, true, false, false);
+    }
+    
+    @Test
+    public void test5FromSingleEdgeConnSymToFile() {
+        testToFile("output/scheme3/fives_v_conn_sym.txt", 5, true, false, false);
     }
     
     @Test

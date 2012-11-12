@@ -38,6 +38,14 @@ public class DuplicateCheckTest {
 	}
 	
 	@Test
+    public void testFivesVSymConn() throws IOException {
+        String filepath = "output/scheme3/fives_v_conn_sym.txt";
+        List<Graph> graphs = readFile(filepath);
+        GraphDuplicateChecker checker = new GraphDuplicateChecker();
+        checker.checkForDuplicates(graphs);
+    }
+	
+	@Test
 	public void testSixes() throws IOException {
 		String filepath = "output/scheme3/sixes.txt";
 		List<Graph> graphs = readFile(filepath);
