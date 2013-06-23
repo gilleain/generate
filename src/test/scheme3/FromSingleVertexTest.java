@@ -1,12 +1,13 @@
 package test.scheme3;
 
-import org.junit.Test;
-
 import generate.handler.FileOutputHandler;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
+import graph.model.Graph;
 import junit.framework.Assert;
-import model.Graph;
+
+import org.junit.Test;
+
 import scheme3.GraphGenerator;
 
 public class FromSingleVertexTest {

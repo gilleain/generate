@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import model.Graph;
-import model.GraphFileReader;
-
 import org.junit.Test;
 
 import filter.MaxDegreeFilter;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
 
 public class DegreeThreeFilter {
 	

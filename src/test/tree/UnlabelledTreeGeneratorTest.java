@@ -1,13 +1,13 @@
 package test.tree;
 
+import graph.model.Graph;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import model.Graph;
 
 import org.junit.Test;
 

@@ -2,10 +2,9 @@ package test.degreeseq;
 
 import filter.DegreeSequenceFilter;
 import generate.handler.IsomorphCountingHandler;
+import graph.model.Graph;
 
 import java.util.Map;
-
-import model.Graph;
 
 import org.junit.Test;
 

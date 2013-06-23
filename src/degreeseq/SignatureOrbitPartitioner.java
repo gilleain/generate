@@ -1,12 +1,12 @@
 package degreeseq;
 
+import graph.model.Graph;
+import graph.model.GraphSignature;
 import group.Partition;
 
 import java.util.List;
 import java.util.SortedSet;
 
-import model.Graph;
-import model.GraphSignature;
 import signature.SymmetryClass;
 
 public class SignatureOrbitPartitioner implements OrbitPartitioner {

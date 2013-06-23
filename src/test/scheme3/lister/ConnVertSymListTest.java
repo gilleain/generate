@@ -1,8 +1,8 @@
 package test.scheme3.lister;
 
-import java.util.List;
+import graph.model.Graph;
 
-import model.Graph;
+import java.util.List;
 
 import org.junit.Test;
 

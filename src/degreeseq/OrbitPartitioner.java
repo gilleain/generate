@@ -1,7 +1,7 @@
 package degreeseq;
 
+import graph.model.Graph;
 import group.Partition;
-import model.Graph;
 
 public interface OrbitPartitioner {
     

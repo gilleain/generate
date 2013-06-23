@@ -1,6 +1,6 @@
 package generate;
 
-import model.Graph;
+import graph.model.Graph;
 
 public class RegularGraphGenerator {
     

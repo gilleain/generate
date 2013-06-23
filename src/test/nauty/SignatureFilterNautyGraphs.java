@@ -5,12 +5,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Graph;
-import model.GraphFileReader;
-
 import org.junit.Test;
 
 import filter.SignatureFilter;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
 
 public class SignatureFilterNautyGraphs {
     

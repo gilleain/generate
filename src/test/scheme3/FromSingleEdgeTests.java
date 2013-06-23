@@ -1,16 +1,15 @@
 package test.scheme3;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import junit.framework.Assert;
-
 import generate.handler.FileOutputHandler;
 import generate.handler.GeneratorHandler;
 import generate.handler.IsomorphCountingHandler;
 import generate.handler.SystemOutHandler;
+import graph.model.Graph;
 
-import model.Graph;
+import java.util.Arrays;
+import java.util.Map;
+
+import junit.framework.Assert;
 
 import org.junit.Test;
 

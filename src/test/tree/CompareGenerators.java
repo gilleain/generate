@@ -1,15 +1,15 @@
 package test.tree;
 
+import graph.model.Graph;
+import graph.tree.TreeCertificateMaker;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.Graph;
-
 import org.junit.Test;
 
-import tree.TreeCertificateMaker;
 import tree.UnlabelledTreeGenerator;
 import tree.WROMTreeGenerator;
 

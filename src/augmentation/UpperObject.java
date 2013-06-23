@@ -1,12 +1,11 @@
 package augmentation;
 
+import graph.model.Graph;
 import group.Permutation;
 
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import model.Graph;
 
 public class UpperObject {
 	

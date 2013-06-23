@@ -1,15 +1,6 @@
 package scheme3.signature;
 
-import java.util.Arrays;
-import java.util.List;
-
-import model.Edge;
-import model.Graph;
-import model.GraphBuilder;
-import model.GraphSignature;
-import model.VertexSignature;
-import signature.AbstractVertexSignature;
-import signature.ColoredTree;
+import graph.model.Graph;
 
 /**
  * Canonicalize both disconnected and connected graphs, and reconstruct them from their signature strings.

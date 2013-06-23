@@ -1,7 +1,7 @@
 package test.tree;
 
+import graph.model.Graph;
 import junit.framework.Assert;
-import model.Graph;
 
 import org.junit.Test;
 

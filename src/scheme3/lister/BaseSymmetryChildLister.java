@@ -1,8 +1,8 @@
 package scheme3.lister;
 
-import group.SSPermutationGroup;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
+import group.PermutationGroup;
 
 public abstract class BaseSymmetryChildLister {
     
@@ -12,7 +12,7 @@ public abstract class BaseSymmetryChildLister {
         refiner = new GraphDiscretePartitionRefiner();
     }
     
-    protected SSPermutationGroup getAut(Graph g) {
+    protected PermutationGroup getAut(Graph g) {
         return refiner.getAutomorphismGroup(g);
     }
 

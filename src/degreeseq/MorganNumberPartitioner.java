@@ -1,5 +1,6 @@
 package degreeseq;
 
+import graph.model.Graph;
 import group.Partition;
 
 import java.util.ArrayList;
@@ -8,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import model.Graph;
 
 public class MorganNumberPartitioner implements OrbitPartitioner {
     

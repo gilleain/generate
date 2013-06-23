@@ -1,9 +1,9 @@
 package test.coloring;
 
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
+import group.PermutationGroup;
 
 import org.junit.Test;
 
@@ -13,8 +13,8 @@ public class VertexToEdgePermutationConverterTest {
     
     public void test(Graph g) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-        SSPermutationGroup vGroup = refiner.getAutomorphismGroup(g);
-        SSPermutationGroup eGroup = VertexToEdgePermutationConverter.convert(g, vGroup);
+        PermutationGroup vGroup = refiner.getAutomorphismGroup(g);
+        PermutationGroup eGroup = VertexToEdgePermutationConverter.convert(g, vGroup);
         int index = 0;
         for (Permutation p : eGroup.all()) {
             System.out.println(index + "\t" + p.toCycleString());

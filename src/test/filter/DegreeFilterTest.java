@@ -4,13 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import junit.framework.Assert;
-import model.Graph;
-import model.GraphFileReader;
 
 import org.junit.Test;
 
 import filter.DegreeSequenceFilter;
 import generate.CanonicalChecker;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
 
 public class DegreeFilterTest {
     

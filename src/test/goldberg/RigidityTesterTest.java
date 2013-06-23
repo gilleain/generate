@@ -1,5 +1,9 @@
 package test.goldberg;
 
+import goldberg.RigidityTester;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -7,10 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import goldberg.RigidityTester;
-import model.Graph;
-import model.GraphFileReader;
 
 import org.junit.Test;
 

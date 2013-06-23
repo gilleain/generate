@@ -1,7 +1,7 @@
 package cubic;
 
+import graph.model.Edge;
 import group.Permutation;
-import model.Edge;
 
 public class EdgePair implements Comparable<EdgePair> {
     public Edge f;

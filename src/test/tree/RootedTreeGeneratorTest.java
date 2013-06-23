@@ -1,15 +1,15 @@
 package test.tree;
 
+import graph.model.Graph;
+import graph.tree.TreeCertificateMaker;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.Graph;
-
 import org.junit.Test;
 
 import tree.RootedTreeGenerator;
-import tree.TreeCertificateMaker;
 
 public class RootedTreeGeneratorTest {
 	

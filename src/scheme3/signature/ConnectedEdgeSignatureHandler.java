@@ -1,12 +1,13 @@
 package scheme3.signature;
 
+import graph.model.Edge;
+import graph.model.Graph;
+import graph.model.GraphBuilder;
+import graph.model.GraphSignature;
+import graph.model.VertexSignature;
+
 import java.util.List;
 
-import model.Edge;
-import model.Graph;
-import model.GraphBuilder;
-import model.GraphSignature;
-import model.VertexSignature;
 import scheme3.ChainDecomposition;
 import signature.ColoredTree;
 

@@ -1,6 +1,9 @@
 package test.degreeseq;
 
 import generate.handler.IsomorphCountingHandler;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
+import graph.model.GraphSignature;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,10 +12,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.Graph;
-import model.GraphFileReader;
-import model.GraphSignature;
 
 import org.junit.Test;
 

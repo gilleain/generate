@@ -1,9 +1,9 @@
 package coloring;
 
+import graph.model.Edge;
+import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
-import model.Edge;
-import model.Graph;
+import group.PermutationGroup;
 
 /**
  * Convert a permutation group of a graphs vertices into a permutation group of its edges.
@@ -13,9 +13,9 @@ import model.Graph;
  */
 public class VertexToEdgePermutationConverter {
     
-    public static SSPermutationGroup convert(Graph graph, SSPermutationGroup vertexGroup) {
+    public static PermutationGroup convert(Graph graph, PermutationGroup vertexGroup) {
         int e = graph.edges.size();
-        SSPermutationGroup edgeGroup = new SSPermutationGroup(e);
+        PermutationGroup edgeGroup = new PermutationGroup(e);
         
         // hmm - inefficient! can't we iterate through just the generators instead?
         for (Permutation pV : vertexGroup.all()) {

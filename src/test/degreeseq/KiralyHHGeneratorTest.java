@@ -1,12 +1,11 @@
 package test.degreeseq;
 
 import generate.handler.IsomorphCountingHandler;
+import graph.model.Graph;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import model.Graph;
 
 import org.junit.Test;
 

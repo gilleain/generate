@@ -1,10 +1,10 @@
 package generate.handler;
 
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import model.Graph;
 
 public class FamilyCountingHandler implements GeneratorHandler {
 	

@@ -1,14 +1,14 @@
 package scheme3;
 
+import graph.model.Edge;
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.Edge;
-import model.Graph;
 
 /**
  * Structure used for finding bridges (or cut-edges) in a graph, based on Jens Schmidt's algorithm.

@@ -1,10 +1,10 @@
 package fusanes;
 
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
-
-import model.Graph;
 
 public class FusaneDualExpander {
     

@@ -1,12 +1,12 @@
 package tools;
 
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 public class GraphFileSearch {
 	

@@ -1,8 +1,9 @@
 package nauty;
 
+import graph.model.Graph;
 import group.Partition;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,11 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Graph;
-
 public class DreadnautLink {
     
-    public static SSPermutationGroup getAutGroup(Graph graph, boolean useColors) throws IOException, InterruptedException {
+    public static PermutationGroup getAutGroup(Graph graph, boolean useColors) throws IOException, InterruptedException {
         List<Permutation> generators = new ArrayList<Permutation>();
         int size = graph.getVertexCount();
         List<String> output = getOutput(graph, useColors);
@@ -30,7 +29,7 @@ public class DreadnautLink {
                 generators.add(p);
             }
         }
-        SSPermutationGroup group = new SSPermutationGroup(size, generators);
+        PermutationGroup group = new PermutationGroup(size, generators);
         return group;
     }
     

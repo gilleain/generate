@@ -4,8 +4,11 @@ import generate.handler.DegreeFilterHandler;
 import generate.handler.FamilyCountingHandler;
 import generate.handler.FileOutputHandler;
 import generate.handler.GeneratorHandler;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,10 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
-
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
-import model.GraphFileReader;
 
 import org.junit.Test;
 
@@ -184,7 +183,7 @@ public class ScanTest {
 		AugmentingGenerator generator = new AugmentingGenerator(new DegreeFilterHandler(9, 9));
 		generator.scan(parent, 9);
 		Graph child = new Graph("0:1,0:2,0:3,1:2,3:4,4:5,5:6,6:7,6:8,7:8");
-		SSPermutationGroup autG = refiner.getAutomorphismGroup(child);
+		PermutationGroup autG = refiner.getAutomorphismGroup(child);
 		System.out.println(child.getPermutedGraph(refiner.getBest().invert()).getSortedEdgeString());
 		Permutation minPerm = refiner.getBest();
 		SortedSet<Integer> orbit = generator.getOrbit(minPerm.get(8), autG);

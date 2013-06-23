@@ -1,7 +1,7 @@
 package test.arrangement;
 
-import model.Edge;
-import model.Graph;
+import graph.model.Edge;
+import graph.model.Graph;
 
 import org.junit.Test;
 

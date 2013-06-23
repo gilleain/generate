@@ -1,6 +1,6 @@
 package arrangement;
 
-import model.Graph;
+import graph.model.Graph;
 
 /**
  * Checks if an arrangement is canonical by trying all possible cyclic permutations.

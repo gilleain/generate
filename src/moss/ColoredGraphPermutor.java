@@ -1,13 +1,13 @@
 package moss;
 
+import group.Permutor;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
 import moss.ColoredGraph.Edge;
 import moss.ColoredGraph.Vertex;
-
-import group.Permutor;
 
 public class ColoredGraphPermutor extends Permutor implements Iterator<ColoredGraph> {
 

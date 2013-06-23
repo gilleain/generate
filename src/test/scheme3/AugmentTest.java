@@ -1,15 +1,10 @@
 package test.scheme3;
 
-import java.util.Arrays;
+import graph.model.Graph;
 
-import model.Graph;
-import model.GraphSignature;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 import scheme3.signature.ConnectedEdgeSignatureHandler;
-import scheme3.signature.DisconnectedEdgeSignatureHandler;
 
 public class AugmentTest {
     

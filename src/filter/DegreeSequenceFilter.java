@@ -1,8 +1,8 @@
 package filter;
 
-import java.util.BitSet;
+import graph.model.Graph;
 
-import model.Graph;
+import java.util.BitSet;
 
 public class DegreeSequenceFilter implements Filter {
     

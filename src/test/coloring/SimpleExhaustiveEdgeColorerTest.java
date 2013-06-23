@@ -2,14 +2,13 @@ package test.coloring;
 
 import java.util.List;
 
-import model.Graph;
-
 import org.junit.Test;
 
 import coloring.NeighbourFilter;
 import coloring.SimpleExhaustiveEdgeColorer;
 import filter.Filterer;
 import filter.SignatureCanonicalFilter;
+import graph.model.Graph;
 
 public class SimpleExhaustiveEdgeColorerTest {
     

@@ -1,5 +1,8 @@
 package tools;
 
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,9 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 public class GraphFileDiff {
 	

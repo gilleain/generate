@@ -1,14 +1,15 @@
 package fusanes;
 
+import filter.MaxDegreeFilter;
+import graph.model.Graph;
+import graph.tree.TreeCertificateMaker;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.Graph;
-import tree.TreeCertificateMaker;
 import tree.WROMTreeGenerator;
-import filter.MaxDegreeFilter;
 
 public class FusaneGenerator {
     

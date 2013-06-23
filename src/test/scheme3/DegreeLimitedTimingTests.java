@@ -1,7 +1,7 @@
 package test.scheme3;
 
 import generate.handler.TimingHandler;
-import model.Graph;
+import graph.model.Graph;
 
 import org.junit.Test;
 

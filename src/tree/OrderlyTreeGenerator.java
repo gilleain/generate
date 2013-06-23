@@ -1,10 +1,10 @@
 package tree;
 
+import graph.model.Graph;
+import graph.model.GraphSignature;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Graph;
-import model.GraphSignature;
 
 public class OrderlyTreeGenerator {
 

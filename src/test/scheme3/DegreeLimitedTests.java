@@ -2,7 +2,7 @@ package test.scheme3;
 
 import generate.handler.FileOutputHandler;
 import generate.handler.GeneratorHandler;
-import model.Graph;
+import graph.model.Graph;
 
 import org.junit.Test;
 

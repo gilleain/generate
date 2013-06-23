@@ -1,7 +1,7 @@
 package test.degreeseq;
 
+import graph.model.Graph;
 import group.Partition;
-import model.Graph;
 
 import org.junit.Test;
 

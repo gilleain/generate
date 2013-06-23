@@ -1,6 +1,6 @@
 package generate.handler;
 
-import model.Graph;
+import graph.model.Graph;
 
 public class TimingHandler implements GeneratorHandler {
     

@@ -2,14 +2,13 @@ package degreeseq;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
+import graph.model.Graph;
 import group.Partition;
 
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 import java.util.SortedSet;
-
-import model.Graph;
 
 public class OrbitSaturatingGenerator {
     

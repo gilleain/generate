@@ -1,6 +1,6 @@
 package test.augment;
 
-import model.Graph;
+import graph.model.Graph;
 
 import org.junit.Test;
 

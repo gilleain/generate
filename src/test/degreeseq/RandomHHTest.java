@@ -1,9 +1,8 @@
 package test.degreeseq;
 
+import graph.model.Graph;
+
 import java.util.Collections;
-
-
-import model.Graph;
 
 import org.junit.Test;
 

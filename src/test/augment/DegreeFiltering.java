@@ -3,12 +3,11 @@ package test.augment;
 import java.io.FileReader;
 import java.io.IOException;
 
-import model.Graph;
-import model.GraphFileReader;
-
 import org.junit.Test;
 
 import filter.DegreeSequenceFilter;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
 
 public class DegreeFiltering {
 

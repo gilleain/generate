@@ -1,9 +1,9 @@
 package test.tree;
 
-import java.util.Arrays;
+import graph.model.Graph;
+import graph.model.GraphSignature;
 
-import model.Graph;
-import model.GraphSignature;
+import java.util.Arrays;
 
 import org.junit.Test;
 

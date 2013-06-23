@@ -1,13 +1,13 @@
 package test.augment;
 
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import junit.framework.Assert;
-
-import model.Graph;
 
 import org.junit.Test;
 

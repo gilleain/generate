@@ -1,7 +1,7 @@
 package generate.handler;
 
-import model.Edge;
-import model.Graph;
+import graph.model.Edge;
+import graph.model.Graph;
 
 public class DegreeFilterHandler implements GeneratorHandler {
 	

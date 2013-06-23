@@ -1,27 +1,26 @@
 package coloring;
 
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Edge;
+import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Edge;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 public class AugmentingEdgeColorer implements EdgeColorer {
     
     public List<Graph> color(Graph graph) {
         List<Graph> coloredGraphs = new ArrayList<Graph>();
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-        SSPermutationGroup vGroup = refiner.getAutomorphismGroup(graph);
-        SSPermutationGroup eGroup = VertexToEdgePermutationConverter.convert(graph, vGroup);
+        PermutationGroup vGroup = refiner.getAutomorphismGroup(graph);
+        PermutationGroup eGroup = VertexToEdgePermutationConverter.convert(graph, vGroup);
         color(graph, coloredGraphs, eGroup);
         return coloredGraphs;
     }
     
-    public void color(Graph graph, List<Graph> coloredGraphs, SSPermutationGroup group) {
+    public void color(Graph graph, List<Graph> coloredGraphs, PermutationGroup group) {
         if (valid(graph, group)) {
             coloredGraphs.add(graph);
             int next = getMax(graph) + 1;
@@ -58,7 +57,7 @@ public class AugmentingEdgeColorer implements EdgeColorer {
         return max;
     }
 
-    public boolean valid(Graph graph, SSPermutationGroup group) {
+    public boolean valid(Graph graph, PermutationGroup group) {
         String initial = getColorString(graph, new Permutation(graph.edges.size()));
         for (Permutation p : group.all()) {
             String permStr = getColorString(graph, p);

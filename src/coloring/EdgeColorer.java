@@ -1,8 +1,8 @@
 package coloring;
 
-import java.util.List;
+import graph.model.Graph;
 
-import model.Graph;
+import java.util.List;
 
 public interface EdgeColorer {
     

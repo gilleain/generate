@@ -1,10 +1,10 @@
 package test.graph;
 
 import generate.CanonicalChecker;
-import model.Edge;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
-import model.GraphPermutor;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.group.GraphPermutor;
+import graph.model.Edge;
+import graph.model.Graph;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,8 +51,7 @@ public class GraphTest {
         Assert.assertTrue("non ordered", frag.edgesInOrder());
         Assert.assertTrue("non canonical", CanonicalChecker.isCanonical3(frag));
         // don't need to check for disconnected for this example
-        GraphDiscretePartitionRefiner refiner = 
-            new GraphDiscretePartitionRefiner(false, false);
+        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         refiner.getAutomorphismGroup(frag);
         System.out.println(refiner.getBest());
     }

@@ -2,15 +2,14 @@ package cubic;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Edge;
+import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Edge;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 public class CubicGenerator {
     
@@ -53,7 +52,7 @@ public class CubicGenerator {
 
     private List<EdgePair> getEdgePairReps(Graph prime) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-        SSPermutationGroup autGroup = refiner.getAutomorphismGroup(prime);
+        PermutationGroup autGroup = refiner.getAutomorphismGroup(prime);
         List<EdgePair> edgePairs = new ArrayList<EdgePair>(); 
         for (int i = 0; i < prime.esize(); i++) {
             Edge f = prime.edges.get(i);
@@ -75,7 +74,7 @@ public class CubicGenerator {
         return reps;
     }
     
-    private boolean isRep(EdgePair p, List<EdgePair> reps, SSPermutationGroup autGroup) {
+    private boolean isRep(EdgePair p, List<EdgePair> reps, PermutationGroup autGroup) {
         for (Permutation pi : autGroup.all()) {
             EdgePair permutedPair = p.permute(pi);
             if (reps.contains(permutedPair)) {

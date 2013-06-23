@@ -1,9 +1,9 @@
 package tree;
 
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Graph;
 
 /**
  * Generate non-isomorphic rooted trees using Beyer and Hedetniemi's (1980) algorithm.

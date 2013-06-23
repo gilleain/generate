@@ -1,8 +1,8 @@
 package test.augment;
 
-import java.io.FileNotFoundException;
+import graph.model.GraphFileReader;
 
-import model.GraphFileReader;
+import java.io.FileNotFoundException;
 
 import org.junit.Test;
 

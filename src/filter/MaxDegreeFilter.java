@@ -1,6 +1,6 @@
 package filter;
 
-import model.Graph;
+import graph.model.Graph;
 
 public class MaxDegreeFilter implements Filter {
     

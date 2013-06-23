@@ -1,12 +1,11 @@
 package scheme3.lister;
 
+import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Graph;
 
 /**
  * List candidate children of a graph, by adding connected edges and filtering duplicates.
@@ -22,7 +21,7 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
         int l = g.getVertexCount();
         List<Graph> children = new ArrayList<Graph>();
         int max = Math.min(l, n - 1);
-        SSPermutationGroup autG = getAut(g);
+        PermutationGroup autG = getAut(g);
         for (int start = 0; start < l; start++) {
             int dS = (degMax < 1)? -1 : g.degree(start);
             if (dS >= degMax) {
@@ -45,7 +44,7 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
         return children;
     }
     
-    private boolean isMinimal(int start, SSPermutationGroup autG) {
+    private boolean isMinimal(int start, PermutationGroup autG) {
         for (Permutation p : autG.all()) {
             if (p.get(start) < start) {
                 return false;
@@ -54,7 +53,7 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
         return true;
     }
 
-    private boolean isMinimal(int start, int end, SSPermutationGroup autG) {
+    private boolean isMinimal(int start, int end, PermutationGroup autG) {
         String orig = start + ":" + end;
         for (Permutation p : autG.all()) {
             int pStart = p.get(start);

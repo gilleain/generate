@@ -1,6 +1,7 @@
 package test.generate;
 
 import generate.EdgewiseGenerator;
+import graph.model.Graph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,8 +14,6 @@ import java.util.Map;
 import junit.framework.Assert;
 
 import org.junit.Test;
-
-import model.Graph;
 
 
 public class EdgewiseGeneratorTest {

@@ -1,12 +1,13 @@
 package test.generate;
 
+import generate.SignatureGenerator;
+import graph.model.Graph;
+import group.Partition;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import generate.SignatureGenerator;
-import group.Partition;
 import junit.framework.Assert;
-import model.Graph;
 
 import org.junit.Before;
 import org.junit.Test;

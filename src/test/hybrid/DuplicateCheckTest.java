@@ -1,10 +1,10 @@
 package test.hybrid;
 
+import graph.model.Graph;
+import graph.model.GraphFileReader;
+
 import java.io.IOException;
 import java.util.List;
-
-import model.Graph;
-import model.GraphFileReader;
 
 import org.junit.Test;
 

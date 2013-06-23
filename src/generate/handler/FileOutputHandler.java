@@ -1,11 +1,11 @@
 package generate.handler;
 
+import graph.model.Graph;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import model.Graph;
 
 public class FileOutputHandler implements GeneratorHandler {
 

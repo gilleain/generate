@@ -1,11 +1,10 @@
 package test.fusanes;
 
-import model.Graph;
-
 import org.junit.Test;
 
 import fusanes.FusaneInnerDual;
 import fusanes.SimpleFusaneLabeler;
+import graph.model.Graph;
 
 public class SimpleFusaneLabelerTest {
     

@@ -1,7 +1,7 @@
 package test.augment;
 
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
 
 import org.junit.Test;
 

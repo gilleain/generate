@@ -1,8 +1,8 @@
 package goldberg;
 
-import group.SSPermutationGroup;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
+import group.PermutationGroup;
 
 /**
  * Not really intended for any real use, but for testing a set of graphs to see which are 
@@ -15,7 +15,7 @@ public class RigidityTester {
     
     public static boolean isRigid(Graph g) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-        SSPermutationGroup autG = refiner.getAutomorphismGroup(g);
+        PermutationGroup autG = refiner.getAutomorphismGroup(g);
 //        System.out.println("|AUT| = " + autG.order() + " for " + g);
         return autG.order() == 1;
     }

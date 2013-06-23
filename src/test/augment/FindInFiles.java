@@ -1,8 +1,8 @@
 package test.augment;
 
-import java.io.IOException;
+import graph.model.Graph;
 
-import model.Graph;
+import java.io.IOException;
 
 import org.junit.Test;
 

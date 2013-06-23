@@ -1,14 +1,15 @@
 package scheme3;
 
+import graph.model.Graph;
+import graph.model.GraphBuilder;
+import graph.model.GraphSignature;
+import graph.model.VertexSignature;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import model.Graph;
-import model.GraphBuilder;
-import model.GraphSignature;
-import model.VertexSignature;
 import signature.ColoredTree;
 
 public class TreeGenerator {

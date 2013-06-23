@@ -1,12 +1,12 @@
 package scheme3.lister;
 
+import graph.model.Graph;
+import graph.model.GraphSignature;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.Graph;
-import model.GraphSignature;
 
 /**
  * List candidate children of a graph, by adding connected edges and filtering duplicates.

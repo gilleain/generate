@@ -1,7 +1,7 @@
 package tree;
 
-import model.Edge;
-import model.Graph;
+import graph.model.Edge;
+import graph.model.Graph;
 
 /**
  * An unranking generator that uses the Prüfer correspondence between labelled trees on n

@@ -1,10 +1,10 @@
 package test.scheme3;
 
+import graph.model.Graph;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import model.Graph;
 
 import org.junit.Test;
 

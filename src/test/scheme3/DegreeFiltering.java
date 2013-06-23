@@ -3,12 +3,11 @@ package test.scheme3;
 import java.io.FileReader;
 import java.io.IOException;
 
-import model.Graph;
-import model.GraphFileReader;
-
 import org.junit.Test;
 
 import filter.MaxDegreeFilter;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
 
 public class DegreeFiltering {
     

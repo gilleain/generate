@@ -1,10 +1,10 @@
 package coloring;
 
+import graph.model.Edge;
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Edge;
-import model.Graph;
 
 import combinatorics.SubsetLister;
 

@@ -2,14 +2,13 @@ package degreeseq;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
+import graph.model.Edge;
+import graph.model.Graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
-
-import model.Edge;
-import model.Graph;
 
 public class KiralyHHGenerator {
     

@@ -2,11 +2,10 @@ package degreeseq;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
+import graph.model.Graph;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Graph;
 
 public class GeneralizedHakimiHavelGenerator extends BaseHHGenerator {
     

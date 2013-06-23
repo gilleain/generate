@@ -2,10 +2,10 @@ package scheme3;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
+import graph.model.Graph;
 
 import java.util.List;
 
-import model.Graph;
 import scheme3.lister.ChildLister;
 import scheme3.lister.ConnectedEdgeFilteringChildLister;
 import scheme3.lister.ConnectedEdgeSymmetryChildLister;

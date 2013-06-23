@@ -1,13 +1,12 @@
 package scheme3.lister;
 
+import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import model.Graph;
 
 import combinatorics.SubsetLister;
 
@@ -27,7 +26,7 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
         int l = g.getVertexCount();
         int max = Math.min(l, n - 1);
         List<Graph> children = new ArrayList<Graph>();
-        SSPermutationGroup autG = getAut(g);
+        PermutationGroup autG = getAut(g);
         
         for (List<Integer> subset : getSubsetLister(l, g)) {
             if (degMax > 1 && subset.size() > degMax) {
@@ -57,7 +56,7 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
         }
     }
     
-    private boolean isMinimal(List<Integer> subset, SSPermutationGroup autG) {
+    private boolean isMinimal(List<Integer> subset, PermutationGroup autG) {
         Collections.sort(subset);
         String subsetAsStr = subset.toString();
         for (Permutation p : autG.all()) {

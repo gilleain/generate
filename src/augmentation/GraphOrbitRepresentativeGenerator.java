@@ -1,8 +1,8 @@
 package augmentation;
 
-import java.util.SortedSet;
+import graph.model.Graph;
 
-import model.Graph;
+import java.util.SortedSet;
 
 public class GraphOrbitRepresentativeGenerator extends OrbitRepresentativeGenerator<Graph> {
 

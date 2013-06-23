@@ -1,9 +1,9 @@
 package generate.handler;
 
+import graph.model.Graph;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import model.Graph;
 
 public class DuplicateCountingHandler implements GeneratorHandler {
     

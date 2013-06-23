@@ -2,7 +2,7 @@ package augmentation;
 
 import group.Partition;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.TreeSet;
  */
 public abstract class OrbitRepresentativeGenerator<T> {
 	
-	public List<SortedSet<Integer>> getOrbitCombinations(SSPermutationGroup autG, int n) {
+	public List<SortedSet<Integer>> getOrbitCombinations(PermutationGroup autG, int n) {
 		Partition orbitPartition = getOrbitPartition(autG, n);
 		SortedSet<Integer> singletonSet = new TreeSet<Integer>();
 		SortedSet<Integer> candidateSet = new TreeSet<Integer>();
@@ -59,7 +59,7 @@ public abstract class OrbitRepresentativeGenerator<T> {
 	 * @param n the size of the object the group permutes
 	 * @return an orbit partition
 	 */
-	public Partition getOrbitPartition(SSPermutationGroup autG, int n) {
+	public Partition getOrbitPartition(PermutationGroup autG, int n) {
 		// needed for checking which elements have been assigned to an orbit 
 		int[] orbits = new int[n];
 		
@@ -95,7 +95,7 @@ public abstract class OrbitRepresentativeGenerator<T> {
 	
 	private void combine(
 			SortedSet<Integer> candidateSet,
-			SSPermutationGroup autG,
+			PermutationGroup autG,
 			int n,
 			List<SortedSet<Integer>> parents,
 			List<SortedSet<Integer>> combinations) {
@@ -129,7 +129,7 @@ public abstract class OrbitRepresentativeGenerator<T> {
 	 */
 	public abstract boolean combinationIsValid(SortedSet<Integer> combination);
 	
-	private boolean isMinimalInOrbit(SortedSet<Integer> set, SSPermutationGroup autG) {
+	private boolean isMinimalInOrbit(SortedSet<Integer> set, PermutationGroup autG) {
 		String original = setToString(set);
 		for (Permutation permutation : autG.all()) {
 			if (setToString(apply(permutation, set)).compareTo(original) < 0) {

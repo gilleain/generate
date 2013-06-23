@@ -5,9 +5,10 @@ import group.Partition;
 import org.junit.Test;
 
 import combinatorics.PartitionCalculator;
+
 import degreeseq.GraphicalChecker;
-import degreeseq.HakimiHavelGenerator;
 import degreeseq.GraphicalChecker.Graphicality;
+import degreeseq.HakimiHavelGenerator;
 
 public class GraphicalCheckerTest {
     

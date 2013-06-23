@@ -1,11 +1,11 @@
 package fusanes;
 
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.Graph;
 
 /**
  * A reduced representation of a fusane as a labeled inner dual.

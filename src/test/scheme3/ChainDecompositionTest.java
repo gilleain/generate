@@ -1,11 +1,11 @@
 package test.scheme3;
 
+import graph.model.Edge;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
+
 import java.io.FileNotFoundException;
 import java.util.List;
-
-import model.Edge;
-import model.Graph;
-import model.GraphFileReader;
 
 import org.junit.Assert;
 import org.junit.Test;

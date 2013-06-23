@@ -3,8 +3,8 @@ package test.hybrid;
 import generate.handler.FileOutputHandler;
 import generate.handler.SystemOutHandler;
 import generate.handler.TreeHandler;
+import graph.model.Graph;
 import hybrid.HybridGenerator;
-import model.Graph;
 
 import org.junit.Test;
 

@@ -1,10 +1,10 @@
 package arrangement;
 
+import graph.model.Edge;
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Edge;
-import model.Graph;
 
 /**
  * Extend an arrangement by all possible ways.

@@ -2,16 +2,15 @@ package augmentation;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 public class AugmentingGenerator {
 	
@@ -36,13 +35,13 @@ public class AugmentingGenerator {
 		handler.handle(parent, g);
 	}
 	
-	public SSPermutationGroup getGroup(Graph g) {
+	public PermutationGroup getGroup(Graph g) {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 //		System.out.println("getting group for " + g.toStringIncludingSize());
 		return refiner.getAutomorphismGroup(g);
 	}
 	
-	public SortedSet<Integer> getOrbit(int element, SSPermutationGroup autG) {
+	public SortedSet<Integer> getOrbit(int element, PermutationGroup autG) {
 		SortedSet<Integer> orbit = new TreeSet<Integer>();
 		orbit.add(element);
 		for (Permutation p : autG.all()) {
@@ -65,7 +64,7 @@ public class AugmentingGenerator {
 		return getUpperObjects(g, getGroup(g));
 	}
 	
-	public List<UpperObject> getUpperObjects(Graph g, SSPermutationGroup autG) {
+	public List<UpperObject> getUpperObjects(Graph g, PermutationGroup autG) {
 		List<UpperObject> upperObjects = new ArrayList<UpperObject>();
 		representativeGenerator.setGraph(g);
 		for (SortedSet<Integer> combination : representativeGenerator.getOrbitCombinations(autG, g.getVertexCount())) {
@@ -82,7 +81,7 @@ public class AugmentingGenerator {
 	private void recursive_scan(Graph parent, Graph g, int n) {
 		output(parent, g);
 		if (g.getVertexCount() == n) return;
-		SSPermutationGroup autG = getGroup(g);
+		PermutationGroup autG = getGroup(g);
 		for (UpperObject orbitRep : getUpperObjects(g, autG)) {
 			List<LowerObject> lowerObjects = invF(orbitRep);
 			if (!lowerObjects.isEmpty()) {
@@ -98,7 +97,7 @@ public class AugmentingGenerator {
 		Graph g = y.getGraph();
 		int n = g.getVertexCount();
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-		SSPermutationGroup autG = refiner.getAutomorphismGroup(g);
+		PermutationGroup autG = refiner.getAutomorphismGroup(g);
 		Permutation minPerm = refiner.getBest();
 		if (minPerm.get(n - 1) == n - 1) {
 			return true;

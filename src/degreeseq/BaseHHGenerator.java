@@ -1,10 +1,10 @@
 package degreeseq;
 
+import graph.model.Graph;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import model.Graph;
 
 public class BaseHHGenerator {
     

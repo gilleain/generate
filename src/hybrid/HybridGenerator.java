@@ -1,11 +1,11 @@
 package hybrid;
 
 import generate.handler.GeneratorHandler;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
+import graph.model.GraphSignature;
 import group.Permutation;
-import group.SSPermutationGroup;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
-import model.GraphSignature;
+import group.PermutationGroup;
 
 public class HybridGenerator {
 	
@@ -15,7 +15,7 @@ public class HybridGenerator {
 		this.handler = handler;
 	}
 	
-	public SSPermutationGroup getGroup(Graph g) {
+	public PermutationGroup getGroup(Graph g) {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		return refiner.getAutomorphismGroup(g);
 	}
@@ -30,7 +30,7 @@ public class HybridGenerator {
 		int l = graph.getVertexCount();
 		if (l > n) return;
 		int max = Math.min(l, n);
-		SSPermutationGroup autG = getGroup(graph);
+		PermutationGroup autG = getGroup(graph);
 		GraphSignature gSignature = new GraphSignature(graph);
 		String gCanonicalLabel = gSignature.toCanonicalString();
 		for (int start = 0; start < l; start++) {
@@ -58,7 +58,7 @@ public class HybridGenerator {
 		}
 	}
 	
-	private boolean isMinimalInOrbit(int start, int end, int l, Graph g, SSPermutationGroup autG) {
+	private boolean isMinimalInOrbit(int start, int end, int l, Graph g, PermutationGroup autG) {
 		for (Permutation p : autG.all()) {
 			int startPrime = p.get(start);
 			if (end == l) {

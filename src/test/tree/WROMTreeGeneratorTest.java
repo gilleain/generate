@@ -1,10 +1,10 @@
 package test.tree;
 
+import graph.model.Graph;
+
 import java.util.Arrays;
 
 import junit.framework.Assert;
-
-import model.Graph;
 
 import org.junit.Test;
 

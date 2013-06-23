@@ -5,6 +5,8 @@ import generate.handler.FileOutputHandler;
 import generate.handler.GeneratorHandler;
 import generate.handler.IsomorphCountingHandler;
 import generate.handler.SystemOutHandler;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,9 +14,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.Graph;
-import model.GraphFileReader;
 
 import org.junit.Test;
 

@@ -3,17 +3,15 @@ package test.fusanes;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Graph;
-
 import org.junit.Test;
 
-import tree.TreeCertificateMaker;
 import tree.WROMTreeGenerator;
-
 import filter.MaxDegreeFilter;
 import fusanes.FusaneDualExpander;
 import fusanes.FusaneInnerDual;
 import fusanes.SimpleFusaneLabeler;
+import graph.model.Graph;
+import graph.tree.TreeCertificateMaker;
 
 public class FusaneDualExpanderTest {
     

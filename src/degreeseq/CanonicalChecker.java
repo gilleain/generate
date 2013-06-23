@@ -1,9 +1,9 @@
 package degreeseq;
 
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Edge;
+import graph.model.Graph;
 import group.Partition;
-import model.Edge;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 public class CanonicalChecker {
     
@@ -43,10 +43,7 @@ public class CanonicalChecker {
 //        Partition q = getOrbits(deg);
 //        System.out.println("Red " + h + "\t" + q);
         
-        boolean useColorsInEq = false;
-        boolean checkDiscon = false;
-        GraphDiscretePartitionRefiner refiner = 
-            new GraphDiscretePartitionRefiner(useColorsInEq, checkDiscon);
+        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         
 //        refiner.getAutomorphismGroup(g, p);
 //        return refiner.firstIsIdentity();

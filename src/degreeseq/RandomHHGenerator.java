@@ -1,12 +1,11 @@
 package degreeseq;
 
+import graph.model.Graph;
 import group.Partition;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import model.Graph;
 
 import combinatorics.PartitionCalculator;
 

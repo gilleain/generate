@@ -1,11 +1,11 @@
 package generate;
 
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.group.TraversalBacktracker;
+import graph.model.Graph;
 import group.Permutation;
+import group.PermutationGroup;
 import group.Permutor;
-import group.SSPermutationGroup;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
-import model.TraversalBacktracker;
 
 public class CanonicalChecker {
     
@@ -28,9 +28,9 @@ public class CanonicalChecker {
     public static boolean isCanonical2(Graph graph) {
         if (!graph.edgesInOrder()) return false;
         int n = graph.getVertexCount();
-        SSPermutationGroup symN = SSPermutationGroup.makeSymN(n);
+        PermutationGroup symN = PermutationGroup.makeSymN(n);
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-        SSPermutationGroup autN = refiner.getAutomorphismGroup(graph);
+        PermutationGroup autN = refiner.getAutomorphismGroup(graph);
         
         String original = graph.getSortedEdgeString();
         TraversalBacktracker traveller = new TraversalBacktracker(original, symN, graph, autN);
@@ -42,7 +42,8 @@ public class CanonicalChecker {
 //        if (!graph.edgesInOrder()) return false;
         GraphDiscretePartitionRefiner refiner = 
 //            new GraphDiscretePartitionRefiner(false, false);
-            new GraphDiscretePartitionRefiner(false, true);
+//            new GraphDiscretePartitionRefiner(false, true);
+                new GraphDiscretePartitionRefiner();    // XXX
         return refiner.isCanonical(graph);
     }
     
@@ -56,11 +57,11 @@ public class CanonicalChecker {
     
     public static boolean isCanonical5(Graph parent, Graph child) {
     	if (parent == null || parent.getVertexCount() < 2) return true;
-    	GraphDiscretePartitionRefiner parentRefiner = new GraphDiscretePartitionRefiner(false, false);
+    	GraphDiscretePartitionRefiner parentRefiner = new GraphDiscretePartitionRefiner();
     	parentRefiner.isCanonical(parent);
 //    	Permutation canonParent = parentRefiner.getFirst();
     	Permutation canonParent = parentRefiner.getBest();
-    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner(false, false);
+    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner();
     	childRefiner.isCanonical(child);
 //    	Permutation canonChild = childRefiner.getFirst();
     	Permutation canonChild = childRefiner.getBest();
@@ -78,8 +79,8 @@ public class CanonicalChecker {
     }
     
     public static boolean isCanonical6(Graph parent, Graph child, int i, int j) {
-    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner(false, false);
-    	SSPermutationGroup group = childRefiner.getAutomorphismGroup(child);
+    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner();
+    	PermutationGroup group = childRefiner.getAutomorphismGroup(child);
     	for (Permutation p : group.all()) {
     		System.out.println(p);
     	}
@@ -90,7 +91,8 @@ public class CanonicalChecker {
         if (checkEdgeOrder && !graph.edgesInOrder()) return false;
         GraphDiscretePartitionRefiner refiner = 
 //            new GraphDiscretePartitionRefiner(false, false);
-            new GraphDiscretePartitionRefiner(false, true);
+//            new GraphDiscretePartitionRefiner(false, true);
+                new GraphDiscretePartitionRefiner();    // XXX
         return refiner.isCanonical(graph);
     }
     

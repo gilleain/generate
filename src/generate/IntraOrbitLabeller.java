@@ -1,21 +1,20 @@
 package generate;
 
+import graph.model.Graph;
 import group.Partition;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 
-import model.Graph;
-
 public class IntraOrbitLabeller {
     
     public static boolean isCanonical(Graph g, Partition orbits) {
         String initialLabelling = g.getSortedEdgeString();
-        SSPermutationGroup permGroup = colorEquivalenceClasses(orbits);
+        PermutationGroup permGroup = colorEquivalenceClasses(orbits);
         for (Permutation p : permGroup.all()) {
             String permutedLabelling = g.getPermutedEdgeString(p.getValues());
             if (permutedLabelling.compareTo(initialLabelling) < 0) {
@@ -25,7 +24,7 @@ public class IntraOrbitLabeller {
         return true;
     }
     
-    public static SSPermutationGroup colorEquivalenceClasses(Partition partition) {
+    public static PermutationGroup colorEquivalenceClasses(Partition partition) {
         int n = partition.numberOfElements();
         List<Permutation> generators = new ArrayList<Permutation>();
         for (int cellIndex = 0; cellIndex < partition.size(); cellIndex++) {
@@ -37,7 +36,7 @@ public class IntraOrbitLabeller {
                 generators.add(generatorB);
             }
         }
-        return new SSPermutationGroup(n, generators);
+        return new PermutationGroup(n, generators);
     }
     
     private static Permutation cellToPermutationA(SortedSet<Integer> cell, int n) {

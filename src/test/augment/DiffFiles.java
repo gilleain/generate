@@ -1,11 +1,11 @@
 package test.augment;
 
+import graph.model.Graph;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-
-import model.Graph;
 
 import org.junit.Test;
 

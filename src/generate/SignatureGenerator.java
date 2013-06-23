@@ -1,5 +1,8 @@
 package generate;
 
+import graph.model.Graph;
+import graph.model.GraphSignature;
+import graph.model.VertexSignature;
 import group.Partition;
 
 import java.util.ArrayList;
@@ -13,9 +16,6 @@ import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TreeSet;
 
-import model.Graph;
-import model.GraphSignature;
-import model.VertexSignature;
 import signature.SymmetryClass;
 
 public class SignatureGenerator {

@@ -1,8 +1,8 @@
 package test.augment;
 
-import group.SSPermutationGroup;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
+import group.PermutationGroup;
 
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class OrbitsTest {
 		GraphOrbitRepresentativeGenerator generator = new GraphOrbitRepresentativeGenerator();
 		generator.setGraph(g);
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-		SSPermutationGroup autG = refiner.getAutomorphismGroup(g);
+		PermutationGroup autG = refiner.getAutomorphismGroup(g);
 		System.out.println(generator.getOrbitPartition(autG, g.getVertexCount()));
 	}
 

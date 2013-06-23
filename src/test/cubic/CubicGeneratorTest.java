@@ -1,10 +1,9 @@
 package test.cubic;
 
 import generate.handler.IsomorphCountingHandler;
+import graph.model.Graph;
 
 import java.util.List;
-
-import model.Graph;
 
 import org.junit.Test;
 

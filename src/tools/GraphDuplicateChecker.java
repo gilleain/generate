@@ -1,11 +1,10 @@
 package tools;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
 
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GraphDuplicateChecker {
 	
