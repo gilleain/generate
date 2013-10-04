@@ -89,5 +89,19 @@ public class CentralityCalculator {
         }
         return cent;
     }
+    
+    public static int[] getORS(Graph g) {
+        int[][] c = getCentralityMatrix(g);
+        int[] rowSum = new int[c.length];
+        for (int i = 0; i < c.length; i++) {
+            int sum = 0;
+            for (int k : c[i]) {
+                sum += k;
+            }
+            rowSum[i] = sum;
+        }
+        Arrays.sort(rowSum);
+        return rowSum;
+    }
         
 }
