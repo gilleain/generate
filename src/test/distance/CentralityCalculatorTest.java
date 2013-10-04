@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import distance.CentralityCalculator;
@@ -42,47 +43,51 @@ public class CentralityCalculatorTest {
         prettyPrint(neighbours);
     }
     
-    private void testCent(Graph g) {
+    private void testCent(Graph g, int... expected) {
         int[][] c = CentralityCalculator.getCentralityMatrix(g);
+        int[] rowSum = new int[c.length];
         for (int i = 0; i < c.length; i++) {
             System.out.print(Arrays.toString(c[i]));
             int sum = 0;
             for (int k : c[i]) {
                 sum += k;
             }
+            rowSum[i] = sum;
             System.out.println(" : " + sum);
         }
+        Arrays.sort(rowSum);
+        Assert.assertArrayEquals(expected, rowSum);
 
     }
     
     @Test
     public void testCent_3MePent() {
         Graph g = new Graph("0:1,1:2,2:3,2:5,3:4");
-        testCent(g);
+        testCent(g, 2, 3, 3, 5, 5, 6);  // in paper, is 2, 2, 3, 5, 5, 6!
     }
     
     @Test
     public void testCent_nHex() {
         Graph g = new Graph("0:1,1:2,2:3,3:4,4:5");
-        testCent(g);
+        testCent(g, 2, 2, 2, 2, 2, 2);
     }
     
     @Test
     public void testCent_2_3_DiMeBut() {
         Graph g = new Graph("0:1,1:2,1:4,2:3,2:5");
-        testCent(g);
+        testCent(g, 4, 4, 6, 6, 6, 6);
     }
     
     @Test
     public void testCent_2_MePent() {
         Graph g = new Graph("0:1,1:2,1:5,2:3,3:4");
-        testCent(g);
+        testCent(g, 1, 1, 3, 5, 7, 7);
     }
     
     @Test
     public void testCent_2_2_DiMeBut() {
         Graph g = new Graph("0:1,1:2,1:4,1:5,2:3");
-        testCent(g);
+        testCent(g, 1, 1, 9, 11, 11, 11);
     }
     
 }
