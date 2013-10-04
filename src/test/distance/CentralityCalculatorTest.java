@@ -42,9 +42,7 @@ public class CentralityCalculatorTest {
         prettyPrint(neighbours);
     }
     
-    @Test
-    public void testCent() {
-        Graph g = new Graph("0:1,1:2,2:3,2:5,3:4");
+    private void testCent(Graph g) {
         int[][] c = CentralityCalculator.getCentralityMatrix(g);
         for (int i = 0; i < c.length; i++) {
             System.out.print(Arrays.toString(c[i]));
@@ -54,6 +52,37 @@ public class CentralityCalculatorTest {
             }
             System.out.println(" : " + sum);
         }
+
+    }
+    
+    @Test
+    public void testCent_3MePent() {
+        Graph g = new Graph("0:1,1:2,2:3,2:5,3:4");
+        testCent(g);
+    }
+    
+    @Test
+    public void testCent_nHex() {
+        Graph g = new Graph("0:1,1:2,2:3,3:4,4:5");
+        testCent(g);
+    }
+    
+    @Test
+    public void testCent_2_3_DiMeBut() {
+        Graph g = new Graph("0:1,1:2,1:4,2:3,2:5");
+        testCent(g);
+    }
+    
+    @Test
+    public void testCent_2_MePent() {
+        Graph g = new Graph("0:1,1:2,1:5,2:3,3:4");
+        testCent(g);
+    }
+    
+    @Test
+    public void testCent_2_2_DiMeBut() {
+        Graph g = new Graph("0:1,1:2,1:4,1:5,2:3");
+        testCent(g);
     }
     
 }
