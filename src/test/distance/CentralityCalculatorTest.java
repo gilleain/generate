@@ -67,7 +67,7 @@ public class CentralityCalculatorTest {
     }
     
     @Test
-    public void testCent_nHex() {
+    public void testCent_n_Hex() {
         Graph g = new Graph("0:1,1:2,2:3,3:4,4:5");
         testCent(g, 2, 2, 2, 2, 2, 2);
     }
@@ -88,6 +88,72 @@ public class CentralityCalculatorTest {
     public void testCent_2_2_DiMeBut() {
         Graph g = new Graph("0:1,1:2,1:4,1:5,2:3");
         testCent(g, 1, 1, 9, 11, 11, 11);
+    }
+    
+    @Test
+    public void testCent_n_Hept() {
+        Graph g = new Graph("0:1,1:2,2:3,3:4,4:5,5:6");
+        testCent(g, 2, 2, 2, 3, 3, 3, 3);
+    }
+    
+    @Test
+    public void testCent_3_Et_Pent() {
+        Graph g = new Graph("0:1,1:2,2:3,2:5,3:4,5:6");
+        testCent(g, 3, 6, 6, 6, 7, 7, 7);
+    }
+    
+    @Test
+    public void testCent_3_Me_Hex() {
+        Graph g = new Graph("0:1,1:2,2:3,2:6,3:4,4:5");
+        testCent(g, 2, 3, 3, 3, 6, 7, 8);
+    }
+    
+    @Test
+    public void testCent_2_Me_Hex() {
+        Graph g = new Graph("0:1,1:2,1:6,2:3,3:4,4:5");
+        testCent(g, 2, 2, 2, 3, 5, 8, 8);
+    }
+    
+    @Test
+    public void testCent_2_3_DiMe_Pent() {
+        Graph g = new Graph("0:1,1:2,1:5,2:3,2:6,3:4");
+        testCent(g, 5, 5, 5, 6, 7, 9, 9);
+    }
+    
+    @Test
+    public void testCent_2_4_DiMe_Pent() {
+        Graph g = new Graph("0:1,1:2,1:5,2:3,3:4,3:6");
+        testCent(g, 1, 1, 8, 9, 9, 9, 9);
+    }
+    
+    @Test
+    public void testCent_3_3_DiMe_Pent() {
+        Graph g = new Graph("0:1,1:2,2:3,2:5,2:6,3:4");
+        testCent(g, 2, 4, 4, 11, 11, 13, 13);
+    }
+    
+    @Test
+    public void testCent_2_2_3_TriMe_But() {
+        Graph g = new Graph("0:1,1:2,1:4,1:5,2:6,2:3");
+        testCent(g, 4, 7, 7, 9, 13, 13, 13);
+    }
+    
+    @Test
+    public void testCent_2_2_DiMe_Pent() {
+        Graph g = new Graph("0:1,1:2,1:5,1:6,2:3,3:4");
+        testCent(g, 1, 1, 4, 10, 14, 14, 14);
+    }
+    
+    @Test
+    public void testCent_3_Et_2_3_DiMeHex() {
+        Graph g = new Graph("0:6,1:6,3:6,1:7,1:9,2:7,2:8,4:7,5:9");
+        testCent(g, 5, 8, 10, 10, 11, 19, 19, 20, 21, 21);
+    }
+    
+    @Test
+    public void testCent_Cuneane() {
+        Graph g = new Graph("0:1,0:3,0:5,1:2,1:7,2:3,2:7,3:4,4:5,4:6,5:6,6:7");
+        testCent(g, 14, 14, 14, 14, 16, 16, 16, 16);
     }
     
 }
