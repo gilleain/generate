@@ -38,9 +38,7 @@ public class LargeScaleCentralityTest {
         
     }
     
-    @Test
-    public void testFives() throws FileNotFoundException {
-        String filename = "output/nauty/fives_nauty.txt";
+    public void testFile(String filename) throws FileNotFoundException {
         GraphFileReader gFile = new GraphFileReader(filename);
         Map<int[], Graph> byORS = new HashMap<int[], Graph>();
         for (Graph g : gFile) {
@@ -51,6 +49,17 @@ public class LargeScaleCentralityTest {
         for (int[] ors : keys) {
             System.out.println(Arrays.toString(ors) + "\t" + byORS.get(ors));
         }
+    }
+
+    
+    @Test
+    public void testFives() throws FileNotFoundException {
+        testFile("output/nauty/fives_nauty.txt");
+    }
+    
+    @Test
+    public void testSixes() throws FileNotFoundException {
+        testFile("output/nauty/sixes_nauty.txt");
     }
     
 }
