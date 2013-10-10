@@ -1,6 +1,7 @@
 package test.distance;
 
 import graph.model.Graph;
+import group.Partition;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,13 @@ public class CentralityCalculatorTest {
             }
             System.out.println();
         }
+    }
+    
+    @Test
+    public void testPartition() {
+        Graph g = new Graph("0:1,1:2,2:3,2:5,3:4");
+        Partition p = CentralityCalculator.getVertexPartition(g);
+        System.out.println(p);
     }
     
     @Test

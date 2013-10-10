@@ -2,6 +2,7 @@ package distance;
 
 import graph.model.Edge;
 import graph.model.Graph;
+import group.Partition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,9 +10,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class CentralityCalculator {
+    
+    public static Partition getVertexPartition(Graph g) {
+        int[][] cm = CentralityCalculator.getCentralityMatrix(g);
+        Map<Integer, SortedSet<Integer>> cellMap = new HashMap<Integer, SortedSet<Integer>>();
+        for (int i = 0; i < g.vsize(); i++) {
+            int[] rowCopy = Arrays.copyOf(cm[i], cm.length);
+            Arrays.sort(rowCopy);
+            StringBuffer label = new StringBuffer();
+            label.append(g.degree(i));
+            for (int j = 0; j < cm.length; j++) {
+                label.append(rowCopy[j]);
+            }
+            // erk.. what if really large? use BigInteger?
+            Integer labelClass = Integer.valueOf(label.toString());
+            SortedSet<Integer> cell;
+            if (cellMap.containsKey(labelClass)) {
+                cell = cellMap.get(labelClass);
+            } else {
+                cell = new TreeSet<Integer>();
+                cellMap.put(labelClass, cell);
+            }
+            cell.add(i);
+        }
+        
+        Partition partition = new Partition();
+        for (int classNum : cellMap.keySet()) {
+            partition.addCell(cellMap.get(classNum));
+        }
+        partition.order();
+        
+        return partition;
+    }
     
     /**
      * Floyd-Warshall - could replace with a dedicated class.
