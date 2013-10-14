@@ -17,30 +17,30 @@ public class CentralityCalculator {
     
     public static Partition getVertexPartition(Graph g) {
         int[][] cm = CentralityCalculator.getCentralityMatrix(g);
-        Map<Integer, SortedSet<Integer>> cellMap = new HashMap<Integer, SortedSet<Integer>>();
+        Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
         for (int i = 0; i < g.vsize(); i++) {
             int[] rowCopy = Arrays.copyOf(cm[i], cm.length);
             Arrays.sort(rowCopy);
-            StringBuffer label = new StringBuffer();
-            label.append(g.degree(i));
+            StringBuffer labelBuffer = new StringBuffer();
+            labelBuffer.append(g.degree(i));
             for (int j = 0; j < cm.length; j++) {
-                label.append(rowCopy[j]);
+                labelBuffer.append(rowCopy[j]);
             }
             // erk.. what if really large? use BigInteger?
-            Integer labelClass = Integer.valueOf(label.toString());
+            String label = labelBuffer.toString();
             SortedSet<Integer> cell;
-            if (cellMap.containsKey(labelClass)) {
-                cell = cellMap.get(labelClass);
+            if (cellMap.containsKey(label)) {
+                cell = cellMap.get(label);
             } else {
                 cell = new TreeSet<Integer>();
-                cellMap.put(labelClass, cell);
+                cellMap.put(label, cell);
             }
             cell.add(i);
         }
         
         Partition partition = new Partition();
-        for (int classNum : cellMap.keySet()) {
-            partition.addCell(cellMap.get(classNum));
+        for (String label : cellMap.keySet()) {
+            partition.addCell(cellMap.get(label));
         }
         partition.order();
         
