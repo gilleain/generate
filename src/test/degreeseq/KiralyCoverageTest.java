@@ -43,13 +43,14 @@ public class KiralyCoverageTest {
         KiralyHHGenerator generator = new KiralyHHGenerator(duplicateHandler);
         for (String degreeSequenceString : degreeSeqMap.keySet()) {
             int[] degreeSequence = parse(degreeSequenceString);
+            List<Graph> mckaySet = degreeSeqMap.get(degreeSequenceString);
+            System.out.print(Arrays.toString(degreeSequence) + "\t" + mckaySet.size());
             generator.generate(degreeSequence);
             List<Graph> kiralySet = duplicateHandler.getNonIsomorphicGraphs();
-            List<Graph> mckaySet = degreeSeqMap.get(degreeSequenceString);
             if (kiralySet.size() == mckaySet.size()) {
-                System.out.println(Arrays.toString(degreeSequence) + " PASS " + kiralySet.size() + "\t" + mckaySet.size());
+                System.out.println("\tPASS\t" + kiralySet.size());
             } else {
-                System.out.println(Arrays.toString(degreeSequence) + " FAIL " + kiralySet.size() + "\t" + mckaySet.size());
+                System.out.println("\tFAIL\t" + kiralySet.size() );
                 missingDegreeSeqMap.put(degreeSequence, diff(kiralySet, mckaySet));
             }
         }
@@ -99,6 +100,16 @@ public class KiralyCoverageTest {
             }
         }
         return diffAB;
+    }
+    
+    @Test
+    public void testNine_Fours() throws FileNotFoundException {
+        testFile("output/mckay/nine_4.txt");
+    }
+    
+    @Test
+    public void testSeven_Fours() throws FileNotFoundException {
+        testFile("output/mckay/seven_four.txt");
     }
     
     @Test

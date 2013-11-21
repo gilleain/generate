@@ -1,5 +1,6 @@
 package generate.handler;
 
+import graph.model.Edge;
 import graph.model.Graph;
 import graph.model.GraphSignature;
 
@@ -37,11 +38,19 @@ public class IsomorphCountingHandler implements GeneratorHandler {
         if (ignoreDisconnected && !graph.isConnected()) {
             return;
         }
-        String signature = new GraphSignature(graph).toCanonicalString();
+        // XXX TMP HACK to remove loops made by KiralyHH...
+//        Graph h = graph;
+        Graph h = new Graph();
+        for (Edge e : graph.edges) {
+            if (e.a != e.b) {
+                h.makeEdge(e.a, e.b);
+            }
+        }
+        String signature = new GraphSignature(h).toCanonicalString();
         if (signatures.containsKey(signature)) {
             counts.put(signature, counts.get(signature) + 1);
         } else {
-            signatures.put(signature, graph);
+            signatures.put(signature, h);
             counts.put(signature, 1);
         }
     }

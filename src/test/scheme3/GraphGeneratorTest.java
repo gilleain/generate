@@ -60,6 +60,13 @@ public class GraphGeneratorTest {
             i++;
         }
     }
+    
+    @Test public void tmp() {
+        java.util.BitSet b = new java.util.BitSet();
+        System.out.println(b.cardinality());
+        b.set(1);
+        System.out.println(b.cardinality());
+    }
    
     @Test
     public void test4FromThree() throws FileNotFoundException {

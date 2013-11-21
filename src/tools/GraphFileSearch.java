@@ -26,10 +26,20 @@ public class GraphFileSearch {
 			refiner = new GraphDiscretePartitionRefiner();
 			refiner.getAutomorphismGroup(other);
 			if (refiner.getCertificate() == cert) {
+			    reader.close();
 				return other;
 			}
 		}
+		reader.close();
 		return null;
+	}
+	
+	public static void main(String[] args) {
+	    try {
+            System.out.println(GraphFileSearch.get(new Graph(args[0]), args[1]));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 }
