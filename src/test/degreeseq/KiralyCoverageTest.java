@@ -39,7 +39,8 @@ public class KiralyCoverageTest {
         
         // use the degree sequences to re-generate the graphs using KiralyHH
         Map<int[], List<Graph>> missingDegreeSeqMap = new HashMap<int[], List<Graph>>();
-        IsomorphCountingHandler duplicateHandler = new IsomorphCountingHandler(true);
+        Map<int[], List<Graph>> surplusDegreeSeqMap = new HashMap<int[], List<Graph>>();
+        IsomorphCountingHandler duplicateHandler = new IsomorphCountingHandler(true, false);
         KiralyHHGenerator generator = new KiralyHHGenerator(duplicateHandler);
         for (String degreeSequenceString : degreeSeqMap.keySet()) {
             int[] degreeSequence = parse(degreeSequenceString);
@@ -49,7 +50,10 @@ public class KiralyCoverageTest {
             List<Graph> kiralySet = duplicateHandler.getNonIsomorphicGraphs();
             if (kiralySet.size() == mckaySet.size()) {
                 System.out.println("\tPASS\t" + kiralySet.size());
-            } else {
+            } else if (kiralySet.size() > mckaySet.size()){
+                System.out.println("\tFAIL\t" + kiralySet.size() );
+                surplusDegreeSeqMap.put(degreeSequence, diff(kiralySet, mckaySet));
+            } else if (kiralySet.size() < mckaySet.size()){
                 System.out.println("\tFAIL\t" + kiralySet.size() );
                 missingDegreeSeqMap.put(degreeSequence, diff(kiralySet, mckaySet));
             }
@@ -58,8 +62,18 @@ public class KiralyCoverageTest {
         int count = 0;
         for (int[] degSeq : missingDegreeSeqMap.keySet()) {
             List<Graph> diff = missingDegreeSeqMap.get(degSeq);
+            String degSeqString = Arrays.toString(degSeq);
             for (Graph g : diff) {
-                System.out.println(count + "\tMISSING : " + Arrays.toString(degSeq) + "\t" + g);
+                System.out.println(count + "\tMISSING : " + degSeqString + "\t" + g);
+                count++;
+            }
+        }
+        count = 0;
+        for (int[] degSeq : surplusDegreeSeqMap.keySet()) {
+            List<Graph> diff = surplusDegreeSeqMap.get(degSeq);
+            String degSeqString = Arrays.toString(degSeq);
+            for (Graph g : diff) {
+                System.out.println(count + "\tSURPLUS : " + degSeqString + "\t" + g);
                 count++;
             }
         }
@@ -105,6 +119,11 @@ public class KiralyCoverageTest {
     @Test
     public void testNine_Fours() throws FileNotFoundException {
         testFile("output/mckay/nine_4.txt");
+    }
+    @Test
+    public void testEights() throws FileNotFoundException {
+//        testFile("output/mckay/eight_x.txt");
+        testFile("output/nauty/eights_nauty.txt");
     }
     
     @Test

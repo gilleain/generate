@@ -2,13 +2,15 @@ package tools;
 
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
+import graph.model.GraphFileReader;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GraphDuplicateChecker {
 	
-	public void checkForDuplicates(List<Graph> graphs) {
+	public static void checkForDuplicates(List<Graph> graphs) {
 		int n = graphs.size();
 		long[] certs = new long[n];
 		boolean firstPass = true;
@@ -58,10 +60,14 @@ public class GraphDuplicateChecker {
 		System.out.println(alldups);
 	}
 	
-	public long getCertFor(Graph g) {
+	public static long getCertFor(Graph g) {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		refiner.getAutomorphismGroup(g);
 		return refiner.getCertificate();
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException {
+	    GraphDuplicateChecker.checkForDuplicates(GraphFileReader.readAll(args[0]));
 	}
 
 }

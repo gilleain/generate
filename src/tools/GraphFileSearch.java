@@ -2,11 +2,12 @@ package tools;
 
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
+import graph.model.GraphFileReader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GraphFileSearch {
 	
@@ -18,25 +19,62 @@ public class GraphFileSearch {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		refiner.getAutomorphismGroup(g);
 		long cert = refiner.getCertificate();
-		System.out.println("getting " + cert);
-		BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
-		String line;
-		while ((line = reader.readLine()) != null) {
-			Graph other = new Graph(line);
+//		System.out.println("getting " + cert);
+		GraphFileReader fileReader = new GraphFileReader(filename);
+        for (Graph other : fileReader) {
 			refiner = new GraphDiscretePartitionRefiner();
 			refiner.getAutomorphismGroup(other);
 			if (refiner.getCertificate() == cert) {
-			    reader.close();
+			    fileReader.close();
 				return other;
 			}
 		}
-		reader.close();
+		fileReader.close();
 		return null;
 	}
 	
+	public static List<Graph> get(int[] degreeSequence, String filename) throws IOException {
+	    List<Graph> hits = new ArrayList<Graph>();
+        GraphFileReader fileReader = new GraphFileReader(filename);
+        for (Graph graph : fileReader) {
+            int[] otherDegreeSeq = graph.degreeSequence(true);
+            if (Arrays.equals(degreeSequence, otherDegreeSeq)) {
+                hits.add(graph);
+            }
+        }
+        fileReader.close();
+        return hits;
+	}
+	
+	// TODO : put into some utility class?
+	public static int[] parse(String degreeSequenceString) {
+        int end = degreeSequenceString.indexOf("]");
+        String[] bits = degreeSequenceString.substring(1, end).split(","); 
+        int[] degSeq = new int[bits.length];
+        int i = 0;
+        for (String bit : bits) {
+            degSeq[i] = Integer.parseInt(bit.trim());
+            i++;
+        }
+        return degSeq;
+    }
+	
 	public static void main(String[] args) {
 	    try {
-            System.out.println(GraphFileSearch.get(new Graph(args[0]), args[1]));
+	        if (args[1].equals("-g")) {
+	            Graph g = new Graph(args[2]);
+	            System.out.println(GraphFileSearch.get(g, args[0]));
+	        } else if (args[1].equals("-d")) {
+	            int[] degreeSequence = GraphFileSearch.parse(args[2]);
+	            List<Graph> hits = GraphFileSearch.get(degreeSequence, args[0]);
+	            if (hits.size() == 0) {
+	                System.out.println("None found");
+	            } else {
+	                for (Graph hit : hits) {
+	                    System.out.println(hit);
+	                }
+	            }
+	        }
         } catch (IOException e) {
             e.printStackTrace();
         }

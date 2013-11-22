@@ -19,14 +19,21 @@ public class IsomorphCountingHandler implements GeneratorHandler {
     
     private boolean reset;
     
+    private boolean filterLoops;
+    
     public IsomorphCountingHandler() {
         this(false);
     }
         
     public IsomorphCountingHandler(boolean ignoreDisconnected) {
+        this(ignoreDisconnected, false);
+    }
+    
+    public IsomorphCountingHandler(boolean ignoreDisconnected, boolean filterLoops) {
         this.signatures = new HashMap<String, Graph>();
         this.counts = new HashMap<String, Integer>();
         this.ignoreDisconnected = ignoreDisconnected;
+        this.filterLoops = filterLoops;
     }
     
     public void handle(Graph parent, Graph graph) {
@@ -38,14 +45,14 @@ public class IsomorphCountingHandler implements GeneratorHandler {
         if (ignoreDisconnected && !graph.isConnected()) {
             return;
         }
-        // XXX TMP HACK to remove loops made by KiralyHH...
-//        Graph h = graph;
-        Graph h = new Graph();
-        for (Edge e : graph.edges) {
-            if (e.a != e.b) {
-                h.makeEdge(e.a, e.b);
-            }
+        
+        Graph h;
+        if (this.filterLoops) {
+            h = loopFilter(graph);
+        } else {
+            h = graph;
         }
+        
         String signature = new GraphSignature(h).toCanonicalString();
         if (signatures.containsKey(signature)) {
             counts.put(signature, counts.get(signature) + 1);
@@ -53,6 +60,16 @@ public class IsomorphCountingHandler implements GeneratorHandler {
             signatures.put(signature, h);
             counts.put(signature, 1);
         }
+    }
+    
+    private Graph loopFilter(Graph g) {
+        Graph h = new Graph();
+        for (Edge e : g.edges) {
+            if (e.a != e.b) {
+                h.makeEdge(e.a, e.b);
+            }
+        }
+        return h;
     }
     
     public Map<String, Graph> getSignatureMap() {

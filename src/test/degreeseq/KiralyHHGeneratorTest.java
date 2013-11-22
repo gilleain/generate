@@ -75,4 +75,14 @@ public class KiralyHHGeneratorTest {
     public void five_to_four_four_squared_Test() {
         test(new int[] { 5, 5, 5, 5, 4, 4 });
     }
+    
+    @Test
+    public void five_to_four_three_squared_two() {
+        test(new int[] { 5, 5, 5, 5, 3, 3, 2 });
+    }
+    
+    @Test
+    public void four_to_five_three_squared_two() {
+        test(new int[] { 4, 4, 4, 4, 4, 3, 3, 2 });
+    }
 }
