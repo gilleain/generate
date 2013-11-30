@@ -5,6 +5,7 @@ import graph.model.Graph;
 import graph.model.GraphFileReader;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +19,7 @@ public class GraphFileSearch {
 	public static Graph get(Graph g, String filename) throws IOException {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		refiner.getAutomorphismGroup(g);
-		long cert = refiner.getCertificate();
+		BigInteger cert = refiner.getCertificate();
 //		System.out.println("getting " + cert);
 		GraphFileReader fileReader = new GraphFileReader(filename);
         for (Graph other : fileReader) {

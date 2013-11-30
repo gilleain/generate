@@ -1,38 +1,33 @@
 package tools;
 
-import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import graph.model.GraphFileReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GraphFileDiff {
-	
-	public static List<Graph> diff(String pathA, String pathB) throws IOException {
+    
+    public interface GraphDifference {
+        public void add(Graph graph);
+        public void compare(Graph graph, List<Graph> difference);
+    }
+    
+    public static List<Graph> diff(String pathA, String pathB) throws IOException {
+        return GraphFileDiff.diff(pathA, pathB, new RefinerGraphDifference());
+    }
+    
+	public static List<Graph> diff(String pathA, String pathB, GraphDifference differ) throws IOException {
 		List<Graph> difference = new ArrayList<Graph>();
-		Map<Long, Graph> graphsA = new HashMap<Long, Graph>();
 		GraphFileReader readerA = new GraphFileReader(pathA);
 		for (Graph graphA : readerA) {
-			GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-			refiner.getAutomorphismGroup(graphA);
-			graphsA.put(refiner.getCertificate(), graphA);
+			differ.add(graphA);
 		}
 		readerA.close();
 		GraphFileReader readerB = new GraphFileReader(pathB);
 		for (Graph graphB : readerB) {
-			GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-			refiner.getAutomorphismGroup(graphB);
-			long certB = refiner.calculateCertificate(refiner.getFirst());
-			if (graphsA.containsKey(certB)) {
-				Graph graphA = graphsA.get(certB);
-				System.out.println(certB + " " + graphA + " = " + graphB);
-			} else {
-				difference.add(graphB);
-			}
+			differ.compare(graphB, difference);
 		}
 		readerB.close();
 		return difference;
@@ -41,7 +36,17 @@ public class GraphFileDiff {
 	public static void main(String[] args) {
 	    if (args.length > 1) {
 	        try {
-                for (Graph g : GraphFileDiff.diff(args[0], args[1])) {
+	            GraphDifference differ;
+	            if (args.length > 2) {
+	                if (args[2].equals("SIG")) {
+	                    differ = new SignatureGraphDifference();
+	                } else {
+	                    differ = new RefinerGraphDifference();
+	                }
+	            } else {
+	                differ = new RefinerGraphDifference();
+	            }
+                for (Graph g : GraphFileDiff.diff(args[0], args[1], differ)) {
                     System.out.println(g);
                 }
             } catch (IOException e) {

@@ -5,6 +5,7 @@ import graph.model.Graph;
 import graph.model.GraphFileReader;
 
 import java.io.FileNotFoundException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +13,14 @@ public class GraphDuplicateChecker {
 	
 	public static void checkForDuplicates(List<Graph> graphs) {
 		int n = graphs.size();
-		long[] certs = new long[n];
+		BigInteger[] certs = new BigInteger[n];
 		boolean firstPass = true;
 		int uniq = n;
 		List<Graph> alldups = new ArrayList<Graph>();
 		for (int i = 0; i < n - 1; i++) {
 			Graph graphI = graphs.get(i);
 //			System.out.println("graph I " + graphI);
-			long certForI;
+			BigInteger certForI;
 			if (firstPass) {
 				certForI = getCertFor(graphI);
 				certs[i] = certForI;
@@ -30,7 +31,7 @@ public class GraphDuplicateChecker {
 			List<Graph> dups = new ArrayList<Graph>();
 			for (int j = i + 1; j < n; j++) {
 				Graph graphJ = graphs.get(j);
-				long certForJ;
+				BigInteger certForJ;
 				if (firstPass) {
 					certForJ = getCertFor(graphJ);
 					certs[j] = certForJ;
@@ -60,7 +61,7 @@ public class GraphDuplicateChecker {
 		System.out.println(alldups);
 	}
 	
-	public static long getCertFor(Graph g) {
+	public static BigInteger getCertFor(Graph g) {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		refiner.getAutomorphismGroup(g);
 		return refiner.getCertificate();
