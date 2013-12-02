@@ -1,74 +1,54 @@
 package tools;
 
-import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import graph.model.GraphFileReader;
 
 import java.io.FileNotFoundException;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GraphDuplicateChecker {
-	
-	public static void checkForDuplicates(List<Graph> graphs) {
-		int n = graphs.size();
-		BigInteger[] certs = new BigInteger[n];
-		boolean firstPass = true;
-		int uniq = n;
-		List<Graph> alldups = new ArrayList<Graph>();
-		for (int i = 0; i < n - 1; i++) {
-			Graph graphI = graphs.get(i);
-//			System.out.println("graph I " + graphI);
-			BigInteger certForI;
-			if (firstPass) {
-				certForI = getCertFor(graphI);
-				certs[i] = certForI;
-			} else {
-				certForI = certs[i];
-			}
-			boolean isUniq = true;
-			List<Graph> dups = new ArrayList<Graph>();
-			for (int j = i + 1; j < n; j++) {
-				Graph graphJ = graphs.get(j);
-				BigInteger certForJ;
-				if (firstPass) {
-					certForJ = getCertFor(graphJ);
-					certs[j] = certForJ;
-				} else {
-					certForJ = certs[j];
-				}
-				if (certForI == certForJ) {
-//					System.out.println((i + 1) + "\t" + certForI + "\t" + graphI + "\t" + 
-//									   (j + 1) + "\t" + certForJ + "\t" + graphJ);
-					isUniq = false;
-					dups.add(graphJ);
-				}
-			}
-			alldups.addAll(dups);
-			if (isUniq) {
-				System.out.println("OK " + graphI);
-			} else {
-				uniq--;
-				System.out.println("NO " + graphI + "\t" + dups);
-			}
-			if (firstPass) {
-				firstPass = false;
-			}
-		}
-//		Arrays.sort(certs);
-//		System.out.println(certs.length + "\t" + uniq + "\t" + Arrays.toString(certs));
-		System.out.println(alldups);
-	}
-	
-	public static BigInteger getCertFor(Graph g) {
-		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-		refiner.getAutomorphismGroup(g);
-		return refiner.getCertificate();
-	}
+    
+    public static void checkForDuplicates(List<Graph> graphs) {
+        GraphDuplicateChecker.checkForDuplicates(graphs, new RefinerGraphDifference());
+    }
+    
+    public static void checkForDuplicates(List<Graph> graphs, GraphDifference differ) {
+        
+        GraphDifference.Callback callback = new GraphDifference.Callback() {
+            int dupCount = 0;
+            
+            @Override
+            public void same(Graph graphA, Graph graphB) {
+                System.out.println(dupCount + "\t" + graphA + "\t" + graphB);
+                dupCount++;
+            }
+            
+            @Override
+            public void different(Graph graphA, Graph graphB) {
+                // don't care...
+            }
+        };
+        for (int i = 0; i < graphs.size() - 1; i++) {
+            Graph graph = graphs.get(i);
+            differ.add(graph);
+            int j = i + 1;
+            Graph otherGraph = graphs.get(j);
+            differ.compare(otherGraph, callback);
+        }
+    }
 	
 	public static void main(String[] args) throws FileNotFoundException {
-	    GraphDuplicateChecker.checkForDuplicates(GraphFileReader.readAll(args[0]));
+	    GraphDifference differ;
+	    if (args.length > 1) {
+	        if (args[1].equals("SIG")) {
+	            differ = new SignatureGraphDifference();
+	        } else {
+	            differ = new RefinerGraphDifference();
+	        }
+	    } else {
+	        differ = new RefinerGraphDifference();
+	    }
+	    GraphDuplicateChecker.checkForDuplicates(GraphFileReader.readAll(args[0]), differ);
 	}
 
 }

@@ -5,36 +5,34 @@ import graph.model.Graph;
 
 import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import tools.GraphFileDiff.GraphDifference;
 
 public class RefinerGraphDifference implements GraphDifference {
     
-    private Map<BigInteger, Graph> graphsA;
+    private Map<BigInteger, Graph> graphs;
     
     public RefinerGraphDifference() {
-        this.graphsA = new HashMap<BigInteger, Graph>();
+        this.graphs = new HashMap<BigInteger, Graph>();
     }
 
     @Override
     public void add(Graph graph) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         refiner.getAutomorphismGroup(graph);
-        graphsA.put(refiner.getCertificate(), graph);
+        graphs.put(refiner.getCertificate(), graph);
     }
 
     @Override
-    public void compare(Graph graph, List<Graph> difference) {
+    public void compare(Graph otherGraph, GraphDifference.Callback callback) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-        refiner.getAutomorphismGroup(graph);
+        refiner.getAutomorphismGroup(otherGraph);
         BigInteger cert = refiner.calculateCertificate(refiner.getBest());
-        if (graphsA.containsKey(cert)) {
-            Graph graphA = graphsA.get(cert);
-            System.out.println(cert + " " + graphA + " = " + graph);
+        if (graphs.containsKey(cert)) {
+            Graph graph = graphs.get(cert);
+//            System.out.println(cert + " " + graph + " = " + otherGraph);
+            callback.same(graph, otherGraph);
         } else {
-            difference.add(graph);
+            callback.different(null, otherGraph);   // TODO!
         }
     }
     

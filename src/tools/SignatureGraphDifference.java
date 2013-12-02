@@ -4,10 +4,9 @@ import graph.model.Graph;
 import graph.model.GraphSignature;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class SignatureGraphDifference implements GraphFileDiff.GraphDifference {
+public class SignatureGraphDifference implements GraphDifference {
     
     private Map<String, Graph> signatureMap;
     
@@ -22,15 +21,17 @@ public class SignatureGraphDifference implements GraphFileDiff.GraphDifference {
     }
 
     @Override
-    public void compare(Graph graph, List<Graph> difference) {
-        GraphSignature sig = new GraphSignature(graph);
+    public void compare(Graph otherGraph, Callback callback) {
+        GraphSignature sig = new GraphSignature(otherGraph);
         String signatureString = sig.toCanonicalString();
         if (signatureMap.containsKey(signatureString)) {
-            Graph graphA = signatureMap.get(signatureString);
-            System.out.println(signatureString + " " + graphA + " = " + graph);
+            Graph graph = signatureMap.get(signatureString);
+//            System.out.println(signatureString + " " + graphA + " = " + graph);
+            callback.same(graph, otherGraph);
         } else {
-            difference.add(graph);
+            callback.different(null, otherGraph);
         }
+        
     }
     
 }
