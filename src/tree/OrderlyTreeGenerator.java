@@ -39,9 +39,9 @@ public class OrderlyTreeGenerator {
 	}
 	
 	private static Graph makeChild(Graph parent, int i, int j) {
-		int n = parent.getVertexCount();
+//		int n = parent.getVertexCount();    XXX - unused, is this code live?
 		Graph child = new Graph();
-		n++;
+//		n++;
 		return child;
 	}
 	
