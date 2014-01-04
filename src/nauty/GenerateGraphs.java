@@ -83,6 +83,7 @@ public class GenerateGraphs {
             }
             graphs.add(graph);
         }
+        reader.close();
         return graphs;
     }
 
