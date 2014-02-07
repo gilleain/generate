@@ -73,8 +73,9 @@ public class MetaTree {
     
     // TODO : replace with graph method?
     private void add(Graph parent, Graph child) {
+        int max = parent.getVertexCount();
         for (Edge e : child.edges) {
-            parent.makeEdge(e.a, e.b);
+            parent.makeEdge(max + e.a, max + e.b);
         }
     }
     
