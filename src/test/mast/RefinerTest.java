@@ -5,6 +5,12 @@ import graph.model.Graph;
 import group.Permutation;
 import group.PermutationGroup;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 
 public class RefinerTest {
@@ -12,8 +18,26 @@ public class RefinerTest {
     public void test(Graph tree) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         PermutationGroup group = refiner.getAutomorphismGroup(tree);
+        Map<String, List<Permutation>> pmap = new HashMap<String, List<Permutation>>();
         for (Permutation p : group.all()) {
-            System.out.println(p + "\t" + tree.getSortedPermutedEdgeString(p.getValues()));
+//            System.out.println(counter + "\t" + p.toCycleString());
+            String type = Arrays.toString(p.getType());
+            List<Permutation> plist;
+            if (pmap.containsKey(type)) {
+                plist = pmap.get(type);
+            } else {
+                plist = new ArrayList<Permutation>();
+                pmap.put(type, plist);
+            }
+            plist.add(p);
+        }
+        int counter = 0;
+        for (String type : pmap.keySet()) {
+            List<Permutation> plist = pmap.get(type);
+            for (Permutation p : plist) {
+                System.out.println(counter + "\t" + p.toCycleString() + "\t" + type);
+                counter++;
+            }
         }
 //        System.out.println(tree + "\t" + group.getSize());
     }

@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import java.util.TreeSet;
 import java.util.Set;
 
-public class OriginalAlgorithm {
+public class OriginalAlgorithm extends AbstractAlgorithm {
     
     private class Vertex implements Comparable<Vertex> {
         public int treeIndex;
@@ -127,15 +127,6 @@ public class OriginalAlgorithm {
             }
         }
         return brethren;
-    }
-    
-    public BigInteger factorial(BigInteger k) {
-        BigInteger one = BigInteger.valueOf(1);
-        if (k.equals(one)) {
-            return BigInteger.valueOf(1);
-        } else {
-            return k.multiply(factorial(k.subtract(one)));  
-        }
     }
     
     private Set<Vertex> getBrethren(Set<Vertex> neighbours) {
