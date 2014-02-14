@@ -1,4 +1,4 @@
-package tools;
+package util;
 
 import graph.model.Graph;
 import graph.model.GraphSignature;
