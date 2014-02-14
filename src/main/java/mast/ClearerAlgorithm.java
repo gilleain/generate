@@ -4,6 +4,7 @@ import graph.model.Graph;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
         Map<Integer, Map<Integer, List<Integer>>> parentLeafMap = 
                 new HashMap<Integer, Map<Integer, List<Integer>>>();
         int maxLabel = 2;
-        System.out.println(maxLabel + "\t" + parents + "\t" + leaves);
+        System.out.println(maxLabel + "\t" + parents + "\t" + leaves + "\t" + Arrays.toString(labels));
         while (seen.cardinality() < tree.getVertexCount() - 2) {
             for (int parent : parents) {
                 Map<Integer, List<Integer>> leafSets = getLeafSets(parent, leaves, tree, labels);
@@ -43,9 +44,13 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
             setSeen(seen, leaves);
             leaves = parents;
             parents = getParents(leaves, seen, tree);
-            System.out.println(maxLabel + "\t" + parents + "\t" + leaves);
+            System.out.println(maxLabel + "\t" + parents + "\t" + leaves + "\t" + Arrays.toString(labels));
         }
-        return sym;
+        if (parents.size() == 2 && (labels[parents.get(0)] == labels[parents.get(1)])) {
+        	return sym.multiply(BigInteger.valueOf(2));
+        } else {
+        	return sym;
+        }
     }
     
     private void setSeen(BitSet seen, List<Integer> values) {
