@@ -1,16 +1,14 @@
-package test.filter;
+package filter;
+
+import generate.CanonicalChecker;
+import graph.model.Graph;
+import graph.model.GraphFileReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
-
-import filter.DegreeSequenceFilter;
-import generate.CanonicalChecker;
-import graph.model.Graph;
-import graph.model.GraphFileReader;
 
 public class DegreeFilterTest {
     

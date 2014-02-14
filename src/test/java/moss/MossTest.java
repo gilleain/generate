@@ -1,4 +1,4 @@
-package test.moss;
+package moss;
 
 import java.util.Arrays;
 

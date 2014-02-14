@@ -1,4 +1,4 @@
-package test.fusanes;
+package fusanes;
 
 import org.junit.Test;
 

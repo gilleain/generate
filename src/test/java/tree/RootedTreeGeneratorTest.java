@@ -1,4 +1,4 @@
-package test.tree;
+package tree;
 
 import graph.model.Graph;
 import graph.tree.TreeCertificateMaker;
@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
-
-import tree.RootedTreeGenerator;
 
 public class RootedTreeGeneratorTest {
 	

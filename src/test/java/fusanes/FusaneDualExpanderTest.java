@@ -1,4 +1,4 @@
-package test.fusanes;
+package fusanes;
 
 import java.util.ArrayList;
 import java.util.List;

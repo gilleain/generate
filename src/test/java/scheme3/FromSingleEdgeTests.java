@@ -1,4 +1,4 @@
-package test.scheme3;
+package scheme3;
 
 import generate.handler.FileOutputHandler;
 import generate.handler.GeneratorHandler;
@@ -9,11 +9,8 @@ import graph.model.Graph;
 import java.util.Arrays;
 import java.util.Map;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
-
-import scheme3.GraphGenerator;
 
 public class FromSingleEdgeTests {
     

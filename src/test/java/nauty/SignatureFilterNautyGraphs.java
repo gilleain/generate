@@ -1,4 +1,4 @@
-package test.nauty;
+package nauty;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

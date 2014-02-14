@@ -1,4 +1,4 @@
-package test.degreeseq;
+package degreeseq;
 
 import org.junit.Test;
 

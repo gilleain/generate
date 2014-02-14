@@ -1,4 +1,4 @@
-package test.augment;
+package augment;
 
 import graph.model.Graph;
 
@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import augmentation.AugmentingGenerator;

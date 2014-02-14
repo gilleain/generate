@@ -1,4 +1,4 @@
-package test.scheme3;
+package scheme3;
 
 import graph.model.Edge;
 import graph.model.Graph;

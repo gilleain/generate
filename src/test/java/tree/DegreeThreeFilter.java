@@ -1,4 +1,4 @@
-package test.tree;
+package tree;
 
 import java.io.File;
 import java.io.FileNotFoundException;

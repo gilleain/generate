@@ -1,13 +1,11 @@
-package test.nauty;
+package nauty;
 
 import graph.model.Graph;
 
 import java.io.IOException;
 import java.util.List;
 
-import junit.framework.Assert;
-import nauty.GenerateGraphs;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class GenerateGraphsTest {

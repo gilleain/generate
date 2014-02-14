@@ -1,4 +1,4 @@
-package test.generate;
+package generate;
 
 import generate.EdgewiseGenerator;
 import graph.model.Graph;

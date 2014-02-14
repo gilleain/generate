@@ -1,4 +1,4 @@
-package test.augment;
+package augment;
 
 import java.io.FileReader;
 import java.io.IOException;

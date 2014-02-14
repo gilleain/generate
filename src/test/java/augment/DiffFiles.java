@@ -1,4 +1,4 @@
-package test.augment;
+package augment;
 
 import graph.model.Graph;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import tools.GraphFileDiff;
+import util.GraphFileDiff;
 
 public class DiffFiles {
 	

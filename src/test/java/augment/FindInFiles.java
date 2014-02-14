@@ -1,4 +1,4 @@
-package test.augment;
+package augment;
 
 import graph.model.Graph;
 
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import tools.GraphFileSearch;
+import util.GraphFileSearch;
 
 public class FindInFiles {
 	

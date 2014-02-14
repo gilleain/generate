@@ -1,4 +1,4 @@
-package test.cubic;
+package cubic;
 
 import generate.handler.IsomorphCountingHandler;
 import graph.model.Graph;

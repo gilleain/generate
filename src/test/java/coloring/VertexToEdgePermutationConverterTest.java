@@ -1,4 +1,4 @@
-package test.coloring;
+package coloring;
 
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;

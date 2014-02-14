@@ -1,4 +1,4 @@
-package test.arrangement;
+package arrangement;
 
 import graph.model.Edge;
 import graph.model.Graph;

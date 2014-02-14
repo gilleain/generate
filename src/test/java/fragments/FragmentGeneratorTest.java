@@ -1,4 +1,4 @@
-package test.fragments;
+package fragments;
 
 import org.junit.Test;
 

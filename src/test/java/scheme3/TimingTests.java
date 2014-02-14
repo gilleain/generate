@@ -1,4 +1,4 @@
-package test.scheme3;
+package scheme3;
 
 import generate.handler.TimingHandler;
 import graph.model.Graph;

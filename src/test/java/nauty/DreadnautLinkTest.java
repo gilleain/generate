@@ -1,4 +1,4 @@
-package test.nauty;
+package nauty;
 
 import graph.model.Graph;
 import group.PermutationGroup;

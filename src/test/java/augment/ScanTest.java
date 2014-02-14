@@ -1,4 +1,4 @@
-package test.augment;
+package augment;
 
 import generate.handler.DegreeFilterHandler;
 import generate.handler.FamilyCountingHandler;

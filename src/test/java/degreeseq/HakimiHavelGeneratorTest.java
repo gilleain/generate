@@ -1,17 +1,14 @@
-package test.degreeseq;
+package degreeseq;
 
 import graph.model.Graph;
 import group.Partition;
 
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import combinatorics.PartitionCalculator;
-
-import degreeseq.HakimiHavelGenerator;
 
 public class HakimiHavelGeneratorTest {
     

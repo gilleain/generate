@@ -1,14 +1,11 @@
-package test.tree;
+package tree;
 
 import graph.model.Graph;
 
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
-
-import tree.WROMTreeGenerator;
 
 public class WROMTreeGeneratorTest {
 	

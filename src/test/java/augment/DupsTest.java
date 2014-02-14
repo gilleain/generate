@@ -1,4 +1,4 @@
-package test.augment;
+package augment;
 
 import graph.model.GraphFileReader;
 
@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-import tools.GraphDuplicateChecker;
+import util.GraphDuplicateChecker;
 
 public class DupsTest {
 	

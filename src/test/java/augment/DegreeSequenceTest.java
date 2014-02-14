@@ -1,4 +1,4 @@
-package test.augment;
+package augment;
 
 import graph.model.Graph;
 import graph.model.GraphFileReader;

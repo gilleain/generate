@@ -1,4 +1,4 @@
-package test.mast;
+package mast;
 
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;

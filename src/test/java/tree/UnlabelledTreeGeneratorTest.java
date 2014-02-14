@@ -1,4 +1,4 @@
-package test.tree;
+package tree;
 
 import graph.model.Graph;
 
@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-
-import tree.UnlabelledTreeGenerator;
 
 public class UnlabelledTreeGeneratorTest {
 	

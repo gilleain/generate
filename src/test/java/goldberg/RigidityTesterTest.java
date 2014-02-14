@@ -1,4 +1,4 @@
-package test.goldberg;
+package goldberg;
 
 import goldberg.RigidityTester;
 import graph.model.Graph;

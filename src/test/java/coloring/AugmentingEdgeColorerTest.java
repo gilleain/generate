@@ -1,4 +1,4 @@
-package test.coloring;
+package coloring;
 
 import java.util.List;
 

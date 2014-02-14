@@ -1,4 +1,4 @@
-package test.tree;
+package tree;
 
 import graph.model.Graph;
 import graph.model.GraphSignature;
@@ -6,8 +6,6 @@ import graph.model.GraphSignature;
 import java.util.Arrays;
 
 import org.junit.Test;
-
-import tree.PruferGenerator;
 
 public class PruferGeneratorTest {
 	

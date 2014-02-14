@@ -1,4 +1,4 @@
-package test.graph;
+package graph;
 
 import generate.CanonicalChecker;
 import graph.group.GraphDiscretePartitionRefiner;

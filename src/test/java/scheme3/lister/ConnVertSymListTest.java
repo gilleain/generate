@@ -1,4 +1,4 @@
-package test.scheme3.lister;
+package scheme3.lister;
 
 import graph.model.Graph;
 
@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import scheme3.lister.ConnectedVertexSymmetryChildLister;
-import tools.GraphDuplicateChecker;
+import util.GraphDuplicateChecker;
 
 public class ConnVertSymListTest {
     

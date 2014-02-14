@@ -1,4 +1,4 @@
-package test.degreeseq;
+package degreeseq;
 
 import generate.handler.IsomorphCountingHandler;
 import graph.model.Graph;

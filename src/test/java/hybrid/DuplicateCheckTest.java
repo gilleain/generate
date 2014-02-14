@@ -1,4 +1,4 @@
-package test.hybrid;
+package hybrid;
 
 import graph.model.Graph;
 import graph.model.GraphFileReader;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import tools.GraphDuplicateChecker;
+import util.GraphDuplicateChecker;
 
 public class DuplicateCheckTest {
 	

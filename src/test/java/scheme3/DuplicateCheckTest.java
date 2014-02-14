@@ -1,4 +1,4 @@
-package test.scheme3;
+package scheme3;
 
 import graph.model.Graph;
 
@@ -11,8 +11,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import tools.GraphDuplicateChecker;
-import tools.GraphFileDiff;
+import util.GraphDuplicateChecker;
+import util.GraphFileDiff;
 
 public class DuplicateCheckTest {
 	

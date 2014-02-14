@@ -1,4 +1,4 @@
-package test.mast;
+package mast;
 
 import graph.model.Graph;
 

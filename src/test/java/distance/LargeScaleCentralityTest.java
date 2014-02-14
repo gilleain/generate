@@ -1,4 +1,4 @@
-package test.distance;
+package distance;
 
 import graph.model.Graph;
 import graph.model.GraphFileReader;
@@ -13,8 +13,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import tools.LexIntArrComparator;
-import distance.CentralityCalculator;
+import util.LexIntArrComparator;
 
 public class LargeScaleCentralityTest {
     

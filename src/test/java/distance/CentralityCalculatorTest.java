@@ -1,4 +1,4 @@
-package test.distance;
+package distance;
 
 import graph.model.Graph;
 import group.Partition;

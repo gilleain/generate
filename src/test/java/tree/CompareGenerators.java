@@ -1,4 +1,4 @@
-package test.tree;
+package tree;
 
 import graph.model.Graph;
 import graph.tree.TreeCertificateMaker;
@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-
-import tree.UnlabelledTreeGenerator;
-import tree.WROMTreeGenerator;
 
 public class CompareGenerators {
     

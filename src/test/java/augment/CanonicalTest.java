@@ -1,4 +1,4 @@
-package test.augment;
+package augment;
 
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;

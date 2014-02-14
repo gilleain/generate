@@ -1,11 +1,9 @@
-package test.tree;
+package tree;
 
 import graph.model.Graph;
-import junit.framework.Assert;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import tree.OrderlyTreeGenerator;
 
 public class OrderlyTreeGeneratorTest {
 	

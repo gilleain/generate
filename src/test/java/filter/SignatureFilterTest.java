@@ -1,4 +1,4 @@
-package test.filter;
+package filter;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

@@ -1,4 +1,4 @@
-package test.hybrid;
+package hybrid;
 
 import generate.handler.FileOutputHandler;
 import generate.handler.SystemOutHandler;
