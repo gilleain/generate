@@ -22,7 +22,7 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
         Map<Integer, Map<Integer, List<Integer>>> parentLeafMap = 
                 new HashMap<Integer, Map<Integer, List<Integer>>>();
         int maxLabel = 2;
-        System.out.println(maxLabel + "\t" + parents + "\t" + leaves + "\t" + Arrays.toString(labels));
+//        System.out.println(maxLabel + "\t" + parents + "\t" + leaves + "\t" + Arrays.toString(labels));
         while (seen.cardinality() < tree.getVertexCount() - 2) {
             for (int parent : parents) {
                 Map<Integer, List<Integer>> leafSets = getLeafSets(parent, leaves, tree, labels);
@@ -33,7 +33,7 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
                 }
                 parentLeafMap.put(parent, leafSets);
             }
-            Map<String, List<Integer>> parentLabelMap = getParentLabels(parentLeafMap);
+            Map<String, List<Integer>> parentLabelMap = getParentLabels(parentLeafMap, labels);
             for (String parentLabelString : parentLabelMap.keySet()) {
                 List<Integer> parentList = parentLabelMap.get(parentLabelString);
                 for (int parent : parentList) {
@@ -42,15 +42,33 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
                 maxLabel++;
             }
             setSeen(seen, leaves);
-            leaves = parents;
+            leaves = getLeaves(parents, tree, seen);
             parents = getParents(leaves, seen, tree);
-            System.out.println(maxLabel + "\t" + parents + "\t" + leaves + "\t" + Arrays.toString(labels));
+//            System.out.println(maxLabel + "\t" + parents + "\t" + leaves + "\t" + Arrays.toString(labels));
         }
         if (parents.size() == 2 && (labels[parents.get(0)] == labels[parents.get(1)])) {
         	return sym.multiply(BigInteger.valueOf(2));
         } else {
         	return sym;
         }
+    }
+    
+    private List<Integer> getLeaves(List<Integer> parents, Graph tree, BitSet seen) {
+    	List<Integer> leaves = new ArrayList<Integer>();
+    	for (int parent : parents) {
+    		int unseenNeighbours = 0;
+    		for (int neighbour : tree.getConnected(parent)) {
+    			if (seen.get(neighbour)) {
+    				continue;
+    			} else {
+    				unseenNeighbours++;
+    			}
+    		}
+    		if (unseenNeighbours == 1) {
+    			leaves.add(parent);
+    		}
+    	}
+    	return leaves;
     }
     
     private void setSeen(BitSet seen, List<Integer> values) {
@@ -60,7 +78,7 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
     }
 
     private Map<String, List<Integer>> getParentLabels(
-            Map<Integer, Map<Integer, List<Integer>>> parentLeafMap) {
+            Map<Integer, Map<Integer, List<Integer>>> parentLeafMap, int[] labels) {
         Map<String, List<Integer>> compositeLabelMap = new HashMap<String, List<Integer>>();
         for (int parent : parentLeafMap.keySet()) {
             List<Integer> compositeLabel = new ArrayList<Integer>();
@@ -72,7 +90,7 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
                 }
             }
             Collections.sort(compositeLabel);
-            String compositeLabelString = "";
+            String compositeLabelString = String.valueOf(labels[parent]);
             for (int label : compositeLabel) {
                 compositeLabelString += String.valueOf(label);
             }

@@ -1,11 +1,12 @@
 package mast;
 
-import java.math.BigInteger;
-
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import group.PermutationGroup;
 
+import java.math.BigInteger;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import tree.WROMTreeGenerator;
@@ -22,6 +23,7 @@ public class ComparisonRefinerVsClearer {
 	        BigInteger symClearer = algorithm.getSym(tree);
 	        
 	        System.out.println(tree + "\t" + symClearer + "\t" + symRefiner);
+	        Assert.assertEquals(symRefiner, symClearer);
 		}
 	}
 	
@@ -44,7 +46,21 @@ public class ComparisonRefinerVsClearer {
 	public void sevens() {
 		test(7);
 	}
+	
+	@Test
+	public void eights() {
+		test(8);
+	}
+	
+	@Test
+	public void nine() {
+		test(9);
+	}
 
+	@Test
+	public void ten() {
+		test(10);
+	}
 
 
 }
