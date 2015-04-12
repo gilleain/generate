@@ -1,6 +1,6 @@
 package generate.handler;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -36,7 +36,7 @@ public class FileOutputHandler implements GeneratorHandler {
 		this.rejectDisconnected = rejectDisconnected;
 	}
 
-	public void handle(Graph parent, Graph graph) {
+	public void handle(IntGraph parent, IntGraph graph) {
 		if (graph.vsize() != size) return;
 		if (degree > 0) {
 			for (int vertexIndex = 0; vertexIndex < graph.getVertexCount(); vertexIndex++) {

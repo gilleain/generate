@@ -3,7 +3,7 @@ package scheme3;
 import generate.handler.FileOutputHandler;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,12 +19,12 @@ public class FromSingleVertexTest {
     
     public void testFromSingle(
             GeneratorHandler handler, int n, boolean byVertex, boolean generateDisconnected, boolean doFilter) {
-        Graph initial = new Graph("0:1");
+        IntGraph initial = new IntGraph("0:1");
         GraphGenerator generator = new GraphGenerator(handler, byVertex, generateDisconnected, doFilter);
         generator.extend(initial, n);
     }
     
-    public void testByVertexConnectedFrom(Graph initial, int n) {
+    public void testByVertexConnectedFrom(IntGraph initial, int n) {
         SystemOutHandler handler = new SystemOutHandler();
         GraphGenerator generator = new GraphGenerator(handler, true, false);
         generator.extend(initial, n);
@@ -38,13 +38,13 @@ public class FromSingleVertexTest {
             String outputFilepath, int n, boolean byVertex, boolean generateDisconnected, boolean doFilter) {
         FileOutputHandler handler = new FileOutputHandler(outputFilepath, n);
         GraphGenerator generator = new GraphGenerator(handler, byVertex, generateDisconnected, doFilter);
-        generator.extend(new Graph("0:1"), n);
+        generator.extend(new IntGraph("0:1"), n);
         handler.finish();
     }
     
     @Test
     public void byVConn3Line() {
-        testByVertexConnectedFrom(new Graph("0:1,0:2,1:3"), 5);
+        testByVertexConnectedFrom(new IntGraph("0:1,0:2,1:3"), 5);
     }
     
     @Test

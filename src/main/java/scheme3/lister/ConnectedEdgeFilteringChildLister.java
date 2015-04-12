@@ -1,7 +1,7 @@
 package scheme3.lister;
 
-import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,9 +18,9 @@ public class ConnectedEdgeFilteringChildLister implements ChildLister {
     
     private int degMax;
     
-    public List<Graph> list(Graph g, int n) {
+    public List<IntGraph> list(IntGraph g, int n) {
         int l = g.getVertexCount();
-        Map<String, Graph> children = new HashMap<String, Graph>();
+        Map<String, IntGraph> children = new HashMap<String, IntGraph>();
         int max = Math.min(l, n - 1);
         for (int start = 0; start < l; start++) {
             int dS = (degMax < 1)? -1 : g.degree(start);
@@ -32,7 +32,7 @@ public class ConnectedEdgeFilteringChildLister implements ChildLister {
                     if (g.isConnected(start, end) || (dE > 1 && dE >= degMax)) {
                         continue;
                     } else {
-                        Graph h = g.makeNew(start, end);
+                        IntGraph h = g.makeNew(start, end);
                         GraphSignature signature = new GraphSignature(h);
                         String canonicalLabel = getCanonicalLabel(signature);
                         if (children.containsKey(canonicalLabel)) {
@@ -44,7 +44,7 @@ public class ConnectedEdgeFilteringChildLister implements ChildLister {
                 }
             }
         }
-        return new ArrayList<Graph>(children.values());
+        return new ArrayList<IntGraph>(children.values());
     }
     
     public String getCanonicalLabel(GraphSignature gSig) {

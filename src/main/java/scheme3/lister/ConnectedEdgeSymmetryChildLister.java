@@ -1,6 +1,6 @@
 package scheme3.lister;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -17,9 +17,9 @@ public class ConnectedEdgeSymmetryChildLister extends BaseSymmetryChildLister im
     
     private int degMax;
     
-    public List<Graph> list(Graph g, int n) {
+    public List<IntGraph> list(IntGraph g, int n) {
         int l = g.getVertexCount();
-        List<Graph> children = new ArrayList<Graph>();
+        List<IntGraph> children = new ArrayList<IntGraph>();
         int max = Math.min(l, n - 1);
         PermutationGroup autG = getAut(g);
         for (int start = 0; start < l; start++) {

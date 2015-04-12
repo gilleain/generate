@@ -1,6 +1,7 @@
 package degreeseq;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class RandomHHGenerator extends BaseHHGenerator {
 	
 	public Graph generate(int[] degreeSequence) {
 		if (HakimiHavelGenerator.isGraphical(degreeSequence)) {
-			Graph g = new Graph();
+		    IntGraph g = new IntGraph();
 			generate(degreeSequence, g);
 			return g;
 		} else {
@@ -43,7 +44,7 @@ public class RandomHHGenerator extends BaseHHGenerator {
 		}
 	}
 	
-	private void generate(int[] degreeSequence, Graph g) {
+	private void generate(int[] degreeSequence, IntGraph g) {
 //	    System.out.println(g + "\t" + HakimiHavelGenerator.isGraphical(reduce(degreeSequence, g)));
 	    if (isComplete(degreeSequence, g)) return;
 	    
@@ -65,7 +66,7 @@ public class RandomHHGenerator extends BaseHHGenerator {
 		}
 	}
 	
-	private boolean isComplete(int[] degreeSequence, Graph g) {
+	private boolean isComplete(int[] degreeSequence, IntGraph g) {
 	    int n = degreeSequence.length;
 	    for (int i = 0; i < n; i++) {
             if (g.degree(i) < degreeSequence[i]) {
@@ -75,7 +76,7 @@ public class RandomHHGenerator extends BaseHHGenerator {
 	    return true;
 	}
 
-	private int getRandomVertex(int[] degreeSequence, Graph g, int from) {
+	private int getRandomVertex(int[] degreeSequence, IntGraph g, int from) {
 	    int n = degreeSequence.length;
 	    List<Integer> candidates = new ArrayList<Integer>();
 	    for (int i = from; i < n; i++) {

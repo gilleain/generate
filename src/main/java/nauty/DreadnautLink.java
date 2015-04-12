@@ -1,6 +1,6 @@
 package nauty;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 import group.Permutation;
 import group.PermutationGroup;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DreadnautLink {
     
-    public static PermutationGroup getAutGroup(Graph graph, boolean useColors) throws IOException, InterruptedException {
+    public static PermutationGroup getAutGroup(IntGraph graph, boolean useColors) throws IOException, InterruptedException {
         List<Permutation> generators = new ArrayList<Permutation>();
         int size = graph.getVertexCount();
         List<String> output = getOutput(graph, useColors);
@@ -46,7 +46,7 @@ public class DreadnautLink {
         script.setExecutable(true);
     }
     
-    public static List<String> getOutput(Graph g, boolean useColors) throws IOException, InterruptedException {
+    public static List<String> getOutput(IntGraph g, boolean useColors) throws IOException, InterruptedException {
         File file = writeToDreadnautInputFile(g, useColors);
         File outfile = new File("out.txt");
         if (!outfile.exists()) { outfile.createNewFile(); }
@@ -71,7 +71,7 @@ public class DreadnautLink {
         return output;
     }
     
-    public static File writeToDreadnautInputFile(Graph g, boolean useColors) throws IOException {
+    public static File writeToDreadnautInputFile(IntGraph g, boolean useColors) throws IOException {
         File file = new File("tmp.txt");
         if (!file.exists()) { file.createNewFile(); }
         BufferedWriter in = new BufferedWriter(new FileWriter(file));

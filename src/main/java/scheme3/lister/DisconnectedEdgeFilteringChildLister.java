@@ -1,7 +1,7 @@
 package scheme3.lister;
 
-import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,9 +22,9 @@ public class DisconnectedEdgeFilteringChildLister implements ChildLister {
     
     private int degMax;
     
-    public List<Graph> list(Graph g, int n) {
+    public List<IntGraph> list(IntGraph g, int n) {
         int l = g.getVertexCount();
-        Map<String, Graph> children = new HashMap<String, Graph>();
+        Map<String, IntGraph> children = new HashMap<String, IntGraph>();
         int max = Math.min(l, n - 1);
         for (int start = 0; start < l; start++) {
             int dS = (degMax < 1)? -1 : g.degree(start);
@@ -36,20 +36,20 @@ public class DisconnectedEdgeFilteringChildLister implements ChildLister {
                     if (g.isConnected(start, end) || (dE > 1 && dE >= degMax)) {
                         continue;
                     } else {
-                        Graph h = g.makeNew(start, end);
+                        IntGraph h = g.makeNew(start, end);
                         makeChild(g, h, children);
                     }
                 }
             }
         }
         if (l < n - 2) {
-            Graph h = g.makeNew(l, l + 1);
+            IntGraph h = g.makeNew(l, l + 1);
             makeChild(g, h, children);
         }
-        return new ArrayList<Graph>(children.values());
+        return new ArrayList<IntGraph>(children.values());
     }
     
-    private void makeChild(Graph g, Graph h, Map<String, Graph> children) {
+    private void makeChild(IntGraph g, IntGraph h, Map<String, IntGraph> children) {
         GraphSignature signature = new GraphSignature(h);
         String canonicalLabel = signature.toCanonicalString();
         if (children.containsKey(canonicalLabel)) {
@@ -60,7 +60,7 @@ public class DisconnectedEdgeFilteringChildLister implements ChildLister {
     }
     
     public String getCanonicalLabel(GraphSignature signature) {
-        Graph g = signature.getGraph();
+        IntGraph g = (IntGraph) signature.getGraph();
         List<List<Integer>> components = g.getComponents();
         if (components.size() == 1) {
             return signature.toCanonicalString();

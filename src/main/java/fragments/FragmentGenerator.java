@@ -2,6 +2,7 @@ package fragments;
 
 import graph.model.Graph;
 import graph.model.GraphFactory;
+import graph.model.IntGraph;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ public class FragmentGenerator {
         // turn the remaining degree elements into forests
         int treeTotalSize = degSeq.size() - cycleSize;
         for (int treeSize = 1; treeSize <= treeTotalSize; treeSize++) {
-            List<Graph> trees = WROMTreeGenerator.generate(treeSize);
+            List<IntGraph> trees = WROMTreeGenerator.generate(treeSize);
         }
         
     }

@@ -2,6 +2,7 @@ package distance;
 
 import graph.model.Graph;
 import graph.model.GraphFileReader;
+import graph.model.IntGraph;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class LargeScaleCentralityTest {
     public void testFile(String filename) throws FileNotFoundException {
         GraphFileReader gFile = new GraphFileReader(filename);
         Map<int[], Graph> byORS = new HashMap<int[], Graph>();
-        for (Graph g : gFile) {
+        for (IntGraph g : gFile) {
             byORS.put(CentralityCalculator.getORS(g), g);
         }
         List<int[]> keys = new ArrayList<int[]>(byORS.keySet());

@@ -1,6 +1,6 @@
 package scheme3;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -13,9 +13,9 @@ import util.GraphFileDiff;
 public class DiffFiles {
     
     public void diff(String fileA, String fileB) throws IOException {
-        List<Graph> diff = GraphFileDiff.diff(fileA, fileB);
+        List<IntGraph> diff = GraphFileDiff.diff(fileA, fileB);
         int count = 0;
-        for (Graph graph : diff) {
+        for (IntGraph graph : diff) {
             String degSeq = Arrays.toString(graph.degreeSequence(true));
             System.out.println(count + "\t" + degSeq + "\t" + graph);
             count++;

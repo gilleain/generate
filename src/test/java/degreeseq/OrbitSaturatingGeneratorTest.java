@@ -2,8 +2,6 @@ package degreeseq;
 
 import org.junit.Test;
 
-import degreeseq.OrbitSaturatingGenerator;
-
 public class OrbitSaturatingGeneratorTest {
     
     @Test

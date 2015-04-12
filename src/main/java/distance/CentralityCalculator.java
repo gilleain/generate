@@ -1,7 +1,7 @@
 package distance;
 
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 import group.Partition;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.TreeSet;
 
 public class CentralityCalculator {
     
-    public static Partition getVertexPartition(Graph g) {
+    public static Partition getVertexPartition(IntGraph g) {
         int[][] cm = CentralityCalculator.getCentralityMatrix(g);
         Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
         for (int i = 0; i < g.vsize(); i++) {
@@ -53,7 +53,7 @@ public class CentralityCalculator {
      * @param g
      * @return
      */
-    public static int[][] getDistanceMatrix(Graph g) {
+    public static int[][] getDistanceMatrix(IntGraph g) {
         int v = g.vsize();
         int[][] dist = new int[v][v];
         for (int i = 0; i < v; i++) {
@@ -61,7 +61,7 @@ public class CentralityCalculator {
             dist[i][i] = 0;
         }
         
-        for (Edge e : g.edges) {
+        for (IntEdge e : g.edges) {
             dist[e.a][e.b] = 1;
             dist[e.b][e.a] = 1;
         }
@@ -78,7 +78,7 @@ public class CentralityCalculator {
         return dist;
     }
     
-    public static List<Map<Integer, Set<Integer>>> getNeighbourhoods(Graph g) {
+    public static List<Map<Integer, Set<Integer>>> getNeighbourhoods(IntGraph g) {
         int[][] dist = CentralityCalculator.getDistanceMatrix(g);
         int n = g.getVertexCount();
         List<Map<Integer, Set<Integer>>> neighbourhoods = new ArrayList<Map<Integer, Set<Integer>>>();
@@ -102,7 +102,7 @@ public class CentralityCalculator {
         return neighbourhoods;
     }
     
-    public static int[][] getCentralityMatrix(Graph g) {
+    public static int[][] getCentralityMatrix(IntGraph g) {
         int v = g.vsize();
         int[][] cent = new int[v][v];
         List<Map<Integer, Set<Integer>>> neighbourhoods = getNeighbourhoods(g);
@@ -124,7 +124,7 @@ public class CentralityCalculator {
         return cent;
     }
     
-    public static int[] getORS(Graph g) {
+    public static int[] getORS(IntGraph g) {
         int[][] c = getCentralityMatrix(g);
         int[] rowSum = new int[c.length];
         for (int i = 0; i < c.length; i++) {

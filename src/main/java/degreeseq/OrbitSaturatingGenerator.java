@@ -3,6 +3,7 @@ package degreeseq;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 
 import java.util.ArrayList;
@@ -33,15 +34,15 @@ public class OrbitSaturatingGenerator {
     public void generate(int[] degSeq) {
         originalDegSeq = degSeq;
         degreeOrbits = getOrbits(degSeq);
-        generate(0, getOrbits(degSeq), new Graph(), degSeq);
+        generate(0, getOrbits(degSeq), new IntGraph(), degSeq);
         handler.finish();
     }
     
-    public void generate(int orbit, Partition orbits, Graph parent, int[] degSeq) {
+    public void generate(int orbit, Partition orbits, IntGraph parent, int[] degSeq) {
 //        System.out.println("Orbit " + orbit + " of " + orbits + "\t" + parent);
-        List<Graph> children = new ArrayList<Graph>();
+        List<IntGraph> children = new ArrayList<IntGraph>();
         saturateOrbit(orbit, orbits, parent, children, degSeq);
-        for (Graph child : children) {
+        for (IntGraph child : children) {
             Partition nextOrbits = partitioner.getOrbitPartition(child, degSeq);
             int unsaturatedOrbit = getFirstUnsaturatedOrbit(child, nextOrbits, degSeq);
 //            System.out.println(child + "\t" + nextOrbits + "\t" + unsaturatedOrbit);
@@ -70,17 +71,17 @@ public class OrbitSaturatingGenerator {
         }
     }
     
-    public void saturateOrbit(int orbitIndex, Partition orbits, Graph g, List<Graph> children, int[] degSeq) {
+    public void saturateOrbit(int orbitIndex, Partition orbits, IntGraph g, List<IntGraph> children, int[] degSeq) {
         SortedSet<Integer> orbit = orbits.getCell(orbitIndex); 
         if (orbit.isEmpty()) {
             children.add(g);
         } else {
 //            System.out.println("Orbit " + orbitIndex + " now " + orbit);
             int v = pop(orbit);
-            List<Graph> vchildren = new ArrayList<Graph>();
+            List<IntGraph> vchildren = new ArrayList<IntGraph>();
 //            System.out.println("saturating vertex " + v);
             saturateVertex(v, v + 1, g, vchildren, orbits, degSeq);
-            for (Graph h : vchildren) {
+            for (IntGraph h : vchildren) {
                 saturateOrbit(orbitIndex, orbits, h, children, degSeq);
             }
         }
@@ -92,7 +93,7 @@ public class OrbitSaturatingGenerator {
         return item;
     }
 
-    public void saturateVertex(int v, int start, Graph g, List<Graph> children, Partition orbits, int[] degSeq) {
+    public void saturateVertex(int v, int start, IntGraph g, List<IntGraph> children, Partition orbits, int[] degSeq) {
 //        if (!isPartitionCanonical(g, degreeOrbits)) return;
         int degree = g.degree(v);
         if (degSeq[v] == degree) {
@@ -101,14 +102,14 @@ public class OrbitSaturatingGenerator {
         } else {
             for (int w = start; w < degSeq.length; w++) {
                 if (g.degree(w) < degSeq[w]) {
-                    Graph h = g.makeNew(v, w);
+                    IntGraph h = g.makeNew(v, w);
                     saturateVertex(v, w + 1, h, children, orbits, degSeq);
                 }
             }
         }
     }
     
-    private boolean isSSG(BitSet component, Graph g, int[] degSeq) {
+    private boolean isSSG(BitSet component, IntGraph g, int[] degSeq) {
         for (int i = 0; i < degSeq.length; i++) {
             if (component.get(i) && g.degree(i) < degSeq[i]) {
                 return false;
@@ -128,7 +129,7 @@ public class OrbitSaturatingGenerator {
         }
     }
     
-    private int getFirstUnsaturatedOrbit(Graph g, Partition orbits, int[] degSeq) {
+    private int getFirstUnsaturatedOrbit(IntGraph g, Partition orbits, int[] degSeq) {
         int orbitIndex = 0;
         while (orbitIndex < orbits.size()) {
             SortedSet<Integer> orbit = orbits.getCell(orbitIndex);

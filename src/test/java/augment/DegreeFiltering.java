@@ -6,8 +6,8 @@ import java.io.IOException;
 import org.junit.Test;
 
 import filter.DegreeSequenceFilter;
-import graph.model.Graph;
 import graph.model.GraphFileReader;
+import graph.model.IntGraph;
 
 public class DegreeFiltering {
 
@@ -15,7 +15,7 @@ public class DegreeFiltering {
 	public void filterSixes() throws IOException {
 		DegreeSequenceFilter filter = new DegreeSequenceFilter(3, 3, 3, 3, 3, 3);
 		GraphFileReader file = new GraphFileReader(new FileReader("output/mckay/six_4.txt"));
-		for (Graph graph : file) {
+		for (IntGraph graph : file) {
 			if (filter.filter(graph)) {
 				System.out.println(graph);
 			}
@@ -26,7 +26,7 @@ public class DegreeFiltering {
 	public void filterEights() throws IOException {
 		DegreeSequenceFilter filter = new DegreeSequenceFilter(3, 3, 3, 3, 3, 3, 3, 3);
 		GraphFileReader file = new GraphFileReader(new FileReader("output/mckay/eight_x.txt"));
-		for (Graph graph : file) {
+		for (IntGraph graph : file) {
 			if (filter.filter(graph)) {
 				System.out.println(graph);
 			}
@@ -37,7 +37,7 @@ public class DegreeFiltering {
 	public void filterTens() throws IOException {
 		DegreeSequenceFilter filter = new DegreeSequenceFilter(3, 3, 3, 3, 3, 3, 3, 3, 3, 3);
 		GraphFileReader file = new GraphFileReader(new FileReader("output/mckay/ten_3.txt"));
-		for (Graph graph : file) {
+		for (IntGraph graph : file) {
 			if (filter.filter(graph)) {
 				System.out.println(graph);
 			}
@@ -48,7 +48,7 @@ public class DegreeFiltering {
 	public void filterTwelves() throws IOException {
 		DegreeSequenceFilter filter = new DegreeSequenceFilter(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3);
 		GraphFileReader file = new GraphFileReader(new FileReader("output/mckay/twelve_3.txt"));
-		for (Graph graph : file) {
+		for (IntGraph graph : file) {
 			if (filter.filter(graph)) {
 				System.out.println(graph);
 			}

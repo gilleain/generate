@@ -1,13 +1,13 @@
 package util;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public interface GraphDifference {
-    public void add(Graph graph);
-    public void compare(Graph graph, Callback callback);
+    public void add(IntGraph graph);
+    public void compare(IntGraph graph, Callback callback);
     
     public interface Callback {
-        public void same(Graph graphA, Graph graphB);
-        public void different(Graph graphA, Graph graphB);
+        public void same(IntGraph graphA, IntGraph graphB);
+        public void different(IntGraph graphA, IntGraph graphB);
     }
 }

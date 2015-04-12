@@ -1,6 +1,7 @@
 package tree;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class RootedTreeGenerator {
 	}
 
 	public static Graph treeFromSeq(int[] depthSeq) {
-		Graph tree = new Graph();
+	    IntGraph tree = new IntGraph();
 		int p = -1;
 		for (int i = 0; i < depthSeq.length; i++) {
 			int d = depthSeq[i];

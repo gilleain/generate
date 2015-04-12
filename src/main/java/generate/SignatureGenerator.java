@@ -2,6 +2,7 @@ package generate;
 
 import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntGraph;
 import graph.model.VertexSignature;
 import group.Partition;
 
@@ -53,7 +54,7 @@ public class SignatureGenerator {
     
     private String[] hTauAsStrings;
     
-    public List<Graph> enumerate(List<String> hTauAsStrings) {
+    public List<IntGraph> enumerate(List<String> hTauAsStrings) {
         VertexSignature[] hTau = new VertexSignature[hTauAsStrings.size()];
         int i = 0;
         for (String signatureString : hTauAsStrings) {
@@ -63,23 +64,23 @@ public class SignatureGenerator {
         return enumerate(hTau);
     }
     
-    public List<Graph> enumerate(VertexSignature[] hTau) {
-        Graph initial = new Graph(hTau.length);
+    public List<IntGraph> enumerate(VertexSignature[] hTau) {
+        IntGraph initial = new IntGraph(hTau.length);
         return enumerate(initial, hTau);
     }
     
-    public List<Graph> enumerate(Graph initial, VertexSignature[] hTau) {
+    public List<IntGraph> enumerate(IntGraph initial, VertexSignature[] hTau) {
         this.hTau = hTau;
         hTauAsStrings = new String[hTau.length];
         for (int hTauIndex = 0; hTauIndex < hTau.length; hTauIndex++) {
             hTauAsStrings[hTauIndex] = hTau[hTauIndex].toCanonicalString();
         }
-        List<Graph> s = new ArrayList<Graph>();
+        List<IntGraph> s = new ArrayList<IntGraph>();
         enumerateMoleculeSig(initial, s);
         return s;
     }
     
-    public List<Graph> enumerateMoleculeSig(Graph g, List<Graph> s) {
+    public List<IntGraph> enumerateMoleculeSig(IntGraph g, List<IntGraph> s) {
         if (connected(g) && signaturesEqualTarget(g)) {
             s.add(g);
             return s;
@@ -93,34 +94,34 @@ public class SignatureGenerator {
             }
         }
         
-        List<Graph> sc = saturateOrbitSignature(o, g, new ArrayList<Graph>()); 
-        for (Graph h : sc) {
+        List<IntGraph> sc = saturateOrbitSignature(o, g, new ArrayList<IntGraph>()); 
+        for (IntGraph h : sc) {
             s.addAll(enumerateMoleculeSig(h, s));
         }
         return s;
     }
 
-    public List<Graph> saturateOrbitSignature(Orbit o, Graph g, List<Graph> s) {
+    public List<IntGraph> saturateOrbitSignature(Orbit o, IntGraph g, List<IntGraph> s) {
         if (o == null || o.vertexIndices.isEmpty()) {
             s.add(g);
             return s;
         }
         int x = o.vertexIndices.first();
-        List<Graph> sv = saturateVertexSignature(x, g, new ArrayList<Graph>());
+        List<IntGraph> sv = saturateVertexSignature(x, g, new ArrayList<IntGraph>());
         o.vertexIndices.remove(x);
-        for (Graph h : sv) {
+        for (IntGraph h : sv) {
             s.addAll(saturateOrbitSignature(o, h, s));
         }
         return s;
     }
 
-    public List<Graph> saturateVertexSignature(int x, Graph g, List<Graph> s) {
+    public List<IntGraph> saturateVertexSignature(int x, IntGraph g, List<IntGraph> s) {
         if (saturated(x, g)) {
             s.add(g);
             return s;
         }
         for (int y : getUnsaturated(g)) {
-            Graph extended = g.makeNew(x, y);
+            IntGraph extended = g.makeNew(x, y);
             boolean compatibleXY = compatibleBondSig(x, y, g);
             boolean compatibleYX = compatibleBondSig(y, x, g);
             boolean canonical = isCanonical(g);
@@ -174,12 +175,12 @@ public class SignatureGenerator {
         return numberSaturatedInCurrentSubgraph < currentSubgraphSize;
     }
 
-    public boolean isCanonical(Graph g) {
+    public boolean isCanonical(IntGraph g) {
         Partition orbits = getOrbitsAsPartition(g);
         return IntraOrbitLabeller.isCanonical(g, orbits);
     }
     
-    public Partition getOrbitsAsPartition(Graph g) {
+    public Partition getOrbitsAsPartition(IntGraph g) {
         Partition partition = new Partition();
         Map<String, Orbit> orbitMap = getOrbitMap(g);
         List<Orbit> sortedOrbits = new ArrayList<Orbit>();
@@ -235,7 +236,7 @@ public class SignatureGenerator {
         return bonded;
     }
 
-    public List<Integer> getUnsaturated(Graph g) {
+    public List<Integer> getUnsaturated(IntGraph g) {
         List<Integer> unsaturated = new ArrayList<Integer>();
         int vertexCount = g.getVertexCount();
         Map<Integer, List<Integer>> table = g.getConnectionTable();
@@ -251,7 +252,7 @@ public class SignatureGenerator {
         return g.getConnected(x).size() == maxDegree;
     }
     
-    private Map<String, Orbit> getOrbitMap(Graph g) {
+    private Map<String, Orbit> getOrbitMap(IntGraph g) {
         Map<Integer, List<Integer>> cTable = g.getConnectionTable();
         GraphSignature graphSignature = new GraphSignature(g);
         Map<String, Orbit> orbitMap = new HashMap<String, Orbit>();
@@ -275,7 +276,7 @@ public class SignatureGenerator {
         return orbitMap;
     }
 
-    public List<Orbit> partitionIntoOrbits(Graph g) {
+    public List<Orbit> partitionIntoOrbits(IntGraph g) {
         List<Orbit> orbits = new ArrayList<Orbit>();
         Map<String, Orbit> orbitMap = getOrbitMap(g);
         for (String signature : orbitMap.keySet()) {

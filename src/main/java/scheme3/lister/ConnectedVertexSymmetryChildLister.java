@@ -1,6 +1,6 @@
 package scheme3.lister;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -22,10 +22,10 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
     private int degMax;
     
     @Override
-    public List<Graph> list(Graph g, int n) {
+    public List<IntGraph> list(IntGraph g, int n) {
         int l = g.getVertexCount();
         int max = Math.min(l, n - 1);
-        List<Graph> children = new ArrayList<Graph>();
+        List<IntGraph> children = new ArrayList<IntGraph>();
         PermutationGroup autG = getAut(g);
         
         for (List<Integer> subset : getSubsetLister(l, g)) {
@@ -33,7 +33,7 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
                 continue;
             } else {
                 if (subset.size() > 0 && isMinimal(subset, autG)) {
-                    Graph h = g.makeAll(subset, max);
+                    IntGraph h = g.makeAll(subset, max);
                     children.add(h);
                 }
             }
@@ -42,7 +42,7 @@ public class ConnectedVertexSymmetryChildLister extends BaseSymmetryChildLister 
         return children;
     }
 
-    private SubsetLister<Integer> getSubsetLister(int l, Graph g) {
+    private SubsetLister<Integer> getSubsetLister(int l, IntGraph g) {
         if (degMax < 1) {
             return SubsetLister.getIndexLister(l);
         } else {

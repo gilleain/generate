@@ -1,6 +1,6 @@
 package generate;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 import group.Permutation;
 import group.PermutationGroup;
@@ -12,7 +12,7 @@ import java.util.SortedSet;
 
 public class IntraOrbitLabeller {
     
-    public static boolean isCanonical(Graph g, Partition orbits) {
+    public static boolean isCanonical(IntGraph g, Partition orbits) {
         String initialLabelling = g.getSortedEdgeString();
         PermutationGroup permGroup = colorEquivalenceClasses(orbits);
         for (Permutation p : permGroup.all()) {

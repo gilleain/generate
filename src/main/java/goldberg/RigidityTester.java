@@ -1,7 +1,7 @@
 package goldberg;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.PermutationGroup;
 
 /**
@@ -13,14 +13,14 @@ import group.PermutationGroup;
  */
 public class RigidityTester {
     
-    public static boolean isRigid(Graph g) {
+    public static boolean isRigid(IntGraph g) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         PermutationGroup autG = refiner.getAutomorphismGroup(g);
 //        System.out.println("|AUT| = " + autG.order() + " for " + g);
         return autG.order() == 1;
     }
     
-    public static int findUniqueMaxVert(Graph g) {
+    public static int findUniqueMaxVert(IntGraph g) {
         int n = g.vsize();
         int max = -1;
         int maxIndex = -1;
@@ -37,7 +37,7 @@ public class RigidityTester {
         return maxIndex;
     }
     
-    public static boolean hasVertexOfDegreeNMinusOne(Graph g) {
+    public static boolean hasVertexOfDegreeNMinusOne(IntGraph g) {
         int n = g.vsize();
         for (int i = 0; i < n; i++) {
             if (g.degree(i) == n - 1) {
@@ -47,7 +47,7 @@ public class RigidityTester {
         return false;
     }
     
-    public static boolean isEasy(Graph g) {
+    public static boolean isEasy(IntGraph g) {
         if (hasVertexOfDegreeNMinusOne(g)) {
             return true;
         } else {

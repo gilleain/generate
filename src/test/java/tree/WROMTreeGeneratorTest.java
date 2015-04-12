@@ -1,6 +1,6 @@
 package tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.Arrays;
 
@@ -11,7 +11,7 @@ public class WROMTreeGeneratorTest {
 	
 	public void generateOnN(int n, int exp) {
 		int count = 0;
-		for (Graph tree : WROMTreeGenerator.generate(n)) {
+		for (IntGraph tree : WROMTreeGenerator.generate(n)) {
 			System.out.println(count + "\t" + tree.getSortedEdgeString());
 			count++;
 		}

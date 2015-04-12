@@ -1,6 +1,6 @@
 package fusanes;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class FusaneInnerDual {
 	/**
 	 * The vertices and edges of the dual.
 	 */
-	private Graph dualGraph;
+	private IntGraph dualGraph;
 	
 	/**
 	 * Labels for the vertices of the dual, corresponding to the free edges in the cycle.
@@ -41,7 +41,7 @@ public class FusaneInnerDual {
 	 * 
 	 * @param dualGraph
 	 */
-	public FusaneInnerDual(Graph dualGraph) {
+	public FusaneInnerDual(IntGraph dualGraph) {
 		this.dualGraph = dualGraph;
 		this.labels = new HashMap<Integer, List<Integer>>();
 	}

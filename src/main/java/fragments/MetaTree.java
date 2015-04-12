@@ -1,7 +1,7 @@
 package fragments;
 
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +16,9 @@ import java.util.Map;
  */
 public class MetaTree {
     
-    private Graph tree;
+    private IntGraph tree;
     
-    private Map<Integer, Graph> partMapping;
+    private Map<Integer, IntGraph> partMapping;
     
     /**
      * Map between the lower-numbered vertex of an edge of the meta-tree 
@@ -32,14 +32,14 @@ public class MetaTree {
      */
     private Map<Integer, Integer> upperAttachments;
 
-    public MetaTree(Graph tree) {
+    public MetaTree(IntGraph tree) {
         this.tree = tree;
-        this.partMapping = new HashMap<Integer, Graph>();
+        this.partMapping = new HashMap<Integer, IntGraph>();
         this.lowerAttachments = new HashMap<Integer, Integer>();
         this.upperAttachments = new HashMap<Integer, Integer>();
     }
     
-    public void addPartMapping(int treeVertex, Graph part) {
+    public void addPartMapping(int treeVertex, IntGraph part) {
         this.partMapping.put(treeVertex, part);
     }
     
@@ -51,17 +51,17 @@ public class MetaTree {
         this.upperAttachments.put(edgeIndex, partVertexIndex);
     }
     
-    public Graph getGraph() {
-        Graph graph = new Graph();
+    public IntGraph getGraph() {
+        IntGraph graph = new IntGraph();
         for (int edgeIndex = 0; edgeIndex < tree.esize(); edgeIndex++) {
-            Edge edge = tree.edges.get(edgeIndex);
+            IntEdge edge = tree.edges.get(edgeIndex);
             int lower = (edge.a < edge.b)? edge.a : edge.b;
             int upper = (edge.a < edge.b)? edge.b : edge.a;
             
-            Graph lowerPart = partMapping.get(lower);
+            IntGraph lowerPart = partMapping.get(lower);
             add(graph, lowerPart);
             
-            Graph upperPart = partMapping.get(upper);
+            IntGraph upperPart = partMapping.get(upper);
             add(graph, upperPart);
             
             int lowerPartAttachment = lowerAttachments.get(lower);
@@ -72,9 +72,9 @@ public class MetaTree {
     }
     
     // TODO : replace with graph method?
-    private void add(Graph parent, Graph child) {
+    private void add(IntGraph parent, IntGraph child) {
         int max = parent.getVertexCount();
-        for (Edge e : child.edges) {
+        for (IntEdge e : child.edges) {
             parent.makeEdge(max + e.a, max + e.b);
         }
     }

@@ -1,6 +1,6 @@
 package generate.handler;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public class SystemOutHandler implements GeneratorHandler {
 	
@@ -32,7 +32,7 @@ public class SystemOutHandler implements GeneratorHandler {
 	    return count;
 	}
 
-	public void handle(Graph parent, Graph graph) {
+	public void handle(IntGraph parent, IntGraph graph) {
 		if (size != -1 && graph.getVertexCount() != size) {
 			return;
 		}

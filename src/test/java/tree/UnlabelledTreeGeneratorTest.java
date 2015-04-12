@@ -1,6 +1,6 @@
 package tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,19 +16,18 @@ public class UnlabelledTreeGeneratorTest {
 	public static final String OUT_DIR = "output/trees/prufer";
 	
 	public void testOnNVerticesWithCert(int n) {
-		Map<String, Graph> treeMap = UnlabelledTreeGenerator.generateWithCertificate(n);
+		Map<String, IntGraph> treeMap = UnlabelledTreeGenerator.generateWithCertificate(n);
 		int count = 0;
 		for (String cert : treeMap.keySet()) {
-			Graph tree = treeMap.get(cert);
+			IntGraph tree = treeMap.get(cert);
 			System.out.println(count + "\t" + tree.getSortedEdgeString() + "\t" + cert);
 			count++;
 		}
 	}
 	
 	public void testOnNVertices(int n) {
-		List<Graph> trees = UnlabelledTreeGenerator.generate(n);
 		int count = 0;
-		for (Graph graph : trees) {
+		for (IntGraph graph : UnlabelledTreeGenerator.generate(n)) {
 			System.out.println(count + "\t" + graph.getSortedEdgeString());
 			count++;
 		}
@@ -40,8 +39,8 @@ public class UnlabelledTreeGeneratorTest {
 			dir.mkdirs();
 		}
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(dir, filename)));
-		List<Graph> trees = UnlabelledTreeGenerator.generate(n);
-		for (Graph graph : trees) {
+		List<IntGraph> trees = UnlabelledTreeGenerator.generate(n);
+		for (IntGraph graph : trees) {
 			writer.write(graph.getSortedEdgeString());
 			writer.newLine();
 		}

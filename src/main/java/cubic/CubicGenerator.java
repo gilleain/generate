@@ -3,8 +3,8 @@ package cubic;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -28,7 +28,7 @@ public class CubicGenerator {
         
     }
     
-    public void generate(Graph prime, int n) {
+    public void generate(IntGraph prime, int n) {
         List<EdgePair> reps = getEdgePairReps(prime);
         System.out.println(reps);
         for (EdgePair pair : reps) {
@@ -36,9 +36,9 @@ public class CubicGenerator {
         }
     }
     
-    public void extend(Graph parent, EdgePair pair, int n) {
+    public void extend(IntGraph parent, EdgePair pair, int n) {
         int m = parent.vsize();
-        Graph extended = new Graph(parent);
+        IntGraph extended = new IntGraph(parent);
         extended.edges.remove(pair.f);
         extended.edges.remove(pair.s);
         extended.makeEdge(pair.f.a, m);
@@ -50,14 +50,14 @@ public class CubicGenerator {
         handler.handle(parent, extended);
     }
 
-    private List<EdgePair> getEdgePairReps(Graph prime) {
+    private List<EdgePair> getEdgePairReps(IntGraph prime) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         PermutationGroup autGroup = refiner.getAutomorphismGroup(prime);
         List<EdgePair> edgePairs = new ArrayList<EdgePair>(); 
         for (int i = 0; i < prime.esize(); i++) {
-            Edge f = prime.edges.get(i);
+            IntEdge f = prime.edges.get(i);
             for (int j = i + 1; j < prime.esize(); j++) {
-                Edge s = prime.edges.get(j);
+                IntEdge s = prime.edges.get(j);
                 edgePairs.add(new EdgePair(f, s));
             }
         }

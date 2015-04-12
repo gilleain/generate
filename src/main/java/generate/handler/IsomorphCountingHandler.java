@@ -1,8 +1,9 @@
 package generate.handler;
 
-import graph.model.Edge;
 import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 public class IsomorphCountingHandler implements GeneratorHandler {
     
-    private Map<String, Graph> signatures;
+    private Map<String, IntGraph> signatures;
     
     private Map<String, Integer> counts;
     
@@ -30,13 +31,13 @@ public class IsomorphCountingHandler implements GeneratorHandler {
     }
     
     public IsomorphCountingHandler(boolean ignoreDisconnected, boolean filterLoops) {
-        this.signatures = new HashMap<String, Graph>();
+        this.signatures = new HashMap<String, IntGraph>();
         this.counts = new HashMap<String, Integer>();
         this.ignoreDisconnected = ignoreDisconnected;
         this.filterLoops = filterLoops;
     }
     
-    public void handle(Graph parent, Graph graph) {
+    public void handle(IntGraph parent, IntGraph graph) {
         if (reset) {
             signatures.clear();
             counts.clear();
@@ -46,7 +47,7 @@ public class IsomorphCountingHandler implements GeneratorHandler {
             return;
         }
         
-        Graph h;
+        IntGraph h;
         if (this.filterLoops) {
             h = loopFilter(graph);
         } else {
@@ -62,9 +63,9 @@ public class IsomorphCountingHandler implements GeneratorHandler {
         }
     }
     
-    private Graph loopFilter(Graph g) {
-        Graph h = new Graph();
-        for (Edge e : g.edges) {
+    private IntGraph loopFilter(IntGraph g) {
+        IntGraph h = new IntGraph();
+        for (IntEdge e : g.edges) {
             if (e.a != e.b) {
                 h.makeEdge(e.a, e.b);
             }
@@ -72,7 +73,7 @@ public class IsomorphCountingHandler implements GeneratorHandler {
         return h;
     }
     
-    public Map<String, Graph> getSignatureMap() {
+    public Map<String, IntGraph> getSignatureMap() {
         return signatures;
     }
     

@@ -1,6 +1,6 @@
 package hybrid;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,9 +13,9 @@ public class DiffFiles {
 	
 	@Test
 	public void diffSixes() throws IOException {
-		List<Graph> diff = GraphFileDiff.diff("output/hybrid/six_x.txt", "output/nauty/sixes_nauty.txt");
+		List<IntGraph> diff = GraphFileDiff.diff("output/hybrid/six_x.txt", "output/nauty/sixes_nauty.txt");
 		int count = 0;
-		for (Graph graph : diff) {
+		for (IntGraph graph : diff) {
 			System.out.println(count + "\t" + graph);
 			count++;
 		}

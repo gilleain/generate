@@ -1,7 +1,7 @@
 package degreeseq;
 
-import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntGraph;
 import group.Partition;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import signature.SymmetryClass;
 public class SignatureOrbitPartitioner implements OrbitPartitioner {
     
     @Override
-    public Partition getOrbitPartition(Graph g, int[] degreeSequence) {
+    public Partition getOrbitPartition(IntGraph g, int[] degreeSequence) {
         GraphSignature graphSignature = new GraphSignature(g);
         List<SymmetryClass> symCl = graphSignature.getSymmetryClasses();
         Partition p = new Partition();

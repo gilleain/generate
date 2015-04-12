@@ -1,6 +1,6 @@
 package fusanes;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -26,7 +26,7 @@ public class SimpleFusaneLabeler {
         degreeLabelMap.put(3, d3);
     }
     
-    public static List<FusaneInnerDual> label(Graph tree) {
+    public static List<FusaneInnerDual> label(IntGraph tree) {
         List<FusaneInnerDual> duals = new ArrayList<FusaneInnerDual>();
         duals.add(new FusaneInnerDual(tree));
         BitSet visited = new BitSet(tree.getVertexCount());
@@ -35,7 +35,7 @@ public class SimpleFusaneLabeler {
     }
     
     private static List<FusaneInnerDual> recursivelyLabel(
-            Graph tree, int currentIndex, BitSet visited, List<FusaneInnerDual> parents) {
+            IntGraph tree, int currentIndex, BitSet visited, List<FusaneInnerDual> parents) {
         visited.set(currentIndex);
 		int degree = tree.degree(currentIndex);
 		List<FusaneInnerDual> children = new ArrayList<FusaneInnerDual>();

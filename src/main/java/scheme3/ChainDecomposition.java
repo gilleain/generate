@@ -1,7 +1,8 @@
 package scheme3;
 
-import graph.model.Edge;
 import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class ChainDecomposition {
     /**
      * The chains of the graph that are cycles.
      */
-    private List<List<Edge>> cycleChains;
+    private List<List<IntEdge>> cycleChains;
     
     /**
      * The number of edges that are part of a cycle-chain.
@@ -34,7 +35,7 @@ public class ChainDecomposition {
     /**
      * The chains of the graph that are paths.
      */
-    private List<List<Edge>> pathChains;
+    private List<List<IntEdge>> pathChains;
     
     /**
      * The number of edges that are part of a path-chain.
@@ -55,60 +56,62 @@ public class ChainDecomposition {
     /**
      * The non-spanning tree edges, indexed by their low point.
      */
-    private Map<Integer, List<Edge>> backEdges;
+    private Map<Integer, List<IntEdge>> backEdges;
     
     /**
      * The edges that are not part of a chain are bridges.
      */
-    private List<Edge> bridges;
+    private List<IntEdge> bridges;
     
-    public ChainDecomposition(Graph g) {
-        cycleChains = new ArrayList<List<Edge>>();
+    public ChainDecomposition(IntGraph g) {
+        int vsize = g.getVertexCount();
+        cycleChains = new ArrayList<List<IntEdge>>();
         cycleChainEdges = 0;
         
-        pathChains = new ArrayList<List<Edge>>();
+        pathChains = new ArrayList<List<IntEdge>>();
         pathChainEdges = 0;
         
-        backEdges = new HashMap<Integer, List<Edge>>();
+        backEdges = new HashMap<Integer, List<IntEdge>>();
         
-        dfi = new int[g.vsize()];
+        dfi = new int[vsize];
         Arrays.fill(dfi, -1);
         
-        parentIndex = new int[g.vsize()];
+        parentIndex = new int[vsize];
         dfiIndex = 0;
         span(0, -1, g);
         
-        findChains(g.vsize());
+        findChains(g.getVertexCount());
         findBridges(g);
     }
     
-    public List<Edge> getBridges() {
+    public List<IntEdge> getBridges() {
         return bridges;
     }
     
-    private void findBridges(Graph g) {
-        BitSet visitedEdges = new BitSet(g.esize());
-        bridges = new ArrayList<Edge>();
+    private void findBridges(IntGraph g) {
+        int esize = g.getEdgeCount();
+        BitSet visitedEdges = new BitSet(esize);
+        bridges = new ArrayList<IntEdge>();
         // if all the edges are covered, there can be no bridges
         // if there are no chains, graph is a tree
         int totalChainEdges = cycleChainEdges + pathChainEdges; 
-        if (totalChainEdges == g.esize() || totalChainEdges == 0) {
+        if (totalChainEdges == esize || totalChainEdges == 0) {
             return;
         } else {
-            for (List<Edge> cycle : cycleChains) {
+            for (List<IntEdge> cycle : cycleChains) {
                 setVisited(visitedEdges, cycle, g);
             }
-            for (List<Edge> path : pathChains) {
+            for (List<IntEdge> path : pathChains) {
                 setVisited(visitedEdges, path, g);
             }
         }
-        for (int i = visitedEdges.nextClearBit(0); i >= 0 && i < g.esize(); i = visitedEdges.nextClearBit(i + 1)) {
+        for (int i = visitedEdges.nextClearBit(0); i >= 0 && i < esize; i = visitedEdges.nextClearBit(i + 1)) {
             bridges.add(g.edges.get(i));
         }
     }
     
-    private void setVisited(BitSet visitedEdges, List<Edge> chain, Graph g) {
-        for (Edge e : chain) {
+    private void setVisited(BitSet visitedEdges, List<IntEdge> chain, IntGraph g) {
+        for (IntEdge e : chain) {
             int indexInGraph = g.edges.indexOf(e);
             visitedEdges.set(indexInGraph);
         }
@@ -123,10 +126,10 @@ public class ChainDecomposition {
             if (dfi[neighbour] == -1) { // neighbour not visited yet
                 span(neighbour, vertex, g); 
             } else {
-                Edge backedge = new Edge(neighbour, vertex);
+                IntEdge backedge = new IntEdge(neighbour, vertex);
                 // assumes that dfi[neighbour] is always lower than dfi[vertex]
                 int key = dfi[neighbour];
-                List<Edge> edgesForVertex;
+                List<IntEdge> edgesForVertex;
                 boolean addEdge = true;
                 if (backEdges.containsKey(key)) {
                     edgesForVertex = backEdges.get(key);
@@ -135,7 +138,7 @@ public class ChainDecomposition {
                         addEdge = false;
                     }
                 } else {
-                    edgesForVertex = new ArrayList<Edge>();
+                    edgesForVertex = new ArrayList<IntEdge>();
                     backEdges.put(key, edgesForVertex);
                 }
                     
@@ -157,17 +160,17 @@ public class ChainDecomposition {
         
         // run through the backedges starting with the lowest
         for (int v : backEdges.keySet()) {
-            List<Edge> edges = backEdges.get(v);
-            for (Edge e : edges) {
-                List<Edge> chain = new ArrayList<Edge>();
+            List<IntEdge> edges = backEdges.get(v);
+            for (IntEdge e : edges) {
+                List<IntEdge> chain = new ArrayList<IntEdge>();
                 // start by adding the backedge itself
                 visitedVertices.set(e.a);
-                chain.add(new Edge(e.a, e.b));
+                chain.add(new IntEdge(e.a, e.b));
                 int current = e.b;
                 while (current != e.a && !visitedVertices.get(current)) {
                     visitedVertices.set(current);
                     int next = parentIndex[current];
-                    chain.add(new Edge(current, next));
+                    chain.add(new IntEdge(current, next));
                     current = next;
                 }
                 if (current == e.a) {
@@ -181,7 +184,7 @@ public class ChainDecomposition {
         }
     }
     
-    public List<List<Edge>> getCycleChains() {
+    public List<List<IntEdge>> getCycleChains() {
         return cycleChains;
     }
     
@@ -189,7 +192,7 @@ public class ChainDecomposition {
         return cycleChainEdges;
     }
     
-    public List<List<Edge>> getPathChains() {
+    public List<List<IntEdge>> getPathChains() {
         return pathChains;
     }
     

@@ -1,10 +1,10 @@
  package mast;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ClearerAlgorithm extends AbstractAlgorithm {
     
-    public BigInteger getSym(Graph tree) {
+    public BigInteger getSym(IntGraph tree) {
         BigInteger sym = BigInteger.valueOf(1);
         int[] labels = new int[tree.getVertexCount()];
         List<Integer> leaves = getLeaves(tree, labels);
@@ -108,7 +108,7 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
     }
 
     private Map<Integer, List<Integer>> getLeafSets(
-            int parent, List<Integer> leaves, Graph tree, int[] labels) {
+            int parent, List<Integer> leaves, IntGraph tree, int[] labels) {
         Map<Integer, List<Integer>> leafSets = new HashMap<Integer, List<Integer>>();
         for (int leaf : leaves) {
             if (tree.hasEdge(parent, leaf)) {
@@ -126,7 +126,7 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
         return leafSets;
     }
     
-    private List<Integer> getParents(List<Integer> leaves, BitSet seen, Graph tree) {
+    private List<Integer> getParents(List<Integer> leaves, BitSet seen, IntGraph tree) {
         List<Integer> parents = new ArrayList<Integer>();
         Map<Integer, List<Integer>> conn = tree.getConnectionTable();
         for (int leaf : leaves) {
@@ -139,7 +139,7 @@ public class ClearerAlgorithm extends AbstractAlgorithm {
         return parents;
     }
 
-    private List<Integer> getLeaves(Graph tree, int[] labels) {
+    private List<Integer> getLeaves(IntGraph tree, int[] labels) {
         List<Integer> leaves = new ArrayList<Integer>();
         for (int i = 0; i < tree.getVertexCount(); i++) {
             if (tree.degree(i) == 1) {

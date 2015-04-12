@@ -2,7 +2,7 @@ package degreeseq;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +20,15 @@ public class GeneralizedHakimiHavelGenerator extends BaseHHGenerator {
     }
     
     public void connectAll(int[] degSeq) {
-        List<Graph> initialList = new ArrayList<Graph>();
-        Graph initialGraph = new Graph(); 
+        List<IntGraph> initialList = new ArrayList<IntGraph>();
+        IntGraph initialGraph = new IntGraph(); 
         initialList.add(initialGraph);
         connectAll(degSeq, initialGraph, initialList);
         handler.finish();
     }
     
-    public void connectAll(int[] degSeq, Graph parent, List<Graph> gParents) {
-        for (Graph g : gParents) {
+    public void connectAll(int[] degSeq, IntGraph parent, List<IntGraph> gParents) {
+        for (IntGraph g : gParents) {
             int[] reducedDegSeq = reduce(degSeq, g);
             int i = nextStart(degSeq, g);
             if (i == -1) {
@@ -36,10 +36,10 @@ public class GeneralizedHakimiHavelGenerator extends BaseHHGenerator {
                 return;
             } else {
 //                System.out.println("i " + i + "\t" + g);
-                List<Graph> gChildren = new ArrayList<Graph>();
+                List<IntGraph> gChildren = new ArrayList<IntGraph>();
                 for (int j = i; j < degSeq.length; j++) {
                     List<Integer> X = new ArrayList<Integer>();
-                    List<Graph> gList = new ArrayList<Graph>();
+                    List<IntGraph> gList = new ArrayList<IntGraph>();
                     connect(g, i, j, X, reducedDegSeq, gList);
                     gChildren.addAll(gList);
                 }
@@ -48,7 +48,7 @@ public class GeneralizedHakimiHavelGenerator extends BaseHHGenerator {
         }
     }
     
-    public int nextStart(int[] degSeq, Graph g) {
+    public int nextStart(int[] degSeq, IntGraph g) {
         for (int i = 0; i < degSeq.length; i++) {
             if (degSeq[i] - g.degree(i) > 0) {
                 return i;
@@ -57,7 +57,7 @@ public class GeneralizedHakimiHavelGenerator extends BaseHHGenerator {
         return -1;
     }
     
-    public void connect(Graph g, int i, int j, List<Integer> X, int[] degSeq, List<Graph> children) {
+    public void connect(IntGraph g, int i, int j, List<Integer> X, int[] degSeq, List<IntGraph> children) {
         if (degSeq[i] == 0) {
             children.add(g);
         } else {

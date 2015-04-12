@@ -1,16 +1,14 @@
 package fusanes;
 
-import org.junit.Test;
+import graph.model.IntGraph;
 
-import fusanes.FusaneInnerDual;
-import fusanes.SimpleFusaneLabeler;
-import graph.model.Graph;
+import org.junit.Test;
 
 public class SimpleFusaneLabelerTest {
     
     @Test
     public void branchingTest() {
-        Graph t = new Graph("0:1,1:2,1:4,2:3");
+        IntGraph t = new IntGraph("0:1,1:2,1:4,2:3");
         for (FusaneInnerDual dual : SimpleFusaneLabeler.label(t)) {
             System.out.println(dual.getLabels());
         }
@@ -18,7 +16,7 @@ public class SimpleFusaneLabelerTest {
     
     @Test
     public void fourLineTest() {
-        Graph t = new Graph("0:1,1:2,2:3,3:4");
+        IntGraph t = new IntGraph("0:1,1:2,2:3,3:4");
         for (FusaneInnerDual dual : SimpleFusaneLabeler.label(t)) {
             System.out.println(dual.getLabels());
         }
@@ -26,7 +24,7 @@ public class SimpleFusaneLabelerTest {
     
     @Test
     public void bugTest() {
-        Graph t = new Graph("0:1, 1:2, 1:3, 0:4, 4:5");
+        IntGraph t = new IntGraph("0:1, 1:2, 1:3, 0:4, 4:5");
         for (FusaneInnerDual dual : SimpleFusaneLabeler.label(t)) {
             System.out.println(dual.getLabels());
         }

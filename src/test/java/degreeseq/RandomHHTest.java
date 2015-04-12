@@ -1,18 +1,16 @@
 package degreeseq;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.Collections;
 
 import org.junit.Test;
 
-import degreeseq.RandomHHGenerator;
-
 public class RandomHHTest {
     
     public void test(int[] dgSq) {
         RandomHHGenerator generator = new RandomHHGenerator();
-        Graph g = generator.generate(dgSq);
+        IntGraph g = (IntGraph)generator.generate(dgSq);
         if (g != null) {
             Collections.sort(g.edges);
             System.out.println(g.vsize() 
@@ -24,7 +22,7 @@ public class RandomHHTest {
     
     public void test(int degreeSum, int numberOfVertices) {
         RandomHHGenerator generator = new RandomHHGenerator();
-        Graph g = generator.generate(degreeSum, numberOfVertices);
+        IntGraph g = (IntGraph)generator.generate(degreeSum, numberOfVertices);
         if (g != null) {
             Collections.sort(g.edges);
             System.out.println(g.vsize() 

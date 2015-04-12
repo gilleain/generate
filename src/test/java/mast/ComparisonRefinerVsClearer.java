@@ -1,7 +1,7 @@
 package mast;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.PermutationGroup;
 
 import java.math.BigInteger;
@@ -14,7 +14,7 @@ import tree.WROMTreeGenerator;
 public class ComparisonRefinerVsClearer {
 	
 	public void test(int n) {
-		for (Graph tree : WROMTreeGenerator.generate(n)) {
+		for (IntGraph tree : WROMTreeGenerator.generate(n)) {
 			GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 	        PermutationGroup group = refiner.getAutomorphismGroup(tree);
 	        BigInteger symRefiner = BigInteger.valueOf(group.orderAsLong());

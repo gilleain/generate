@@ -1,8 +1,8 @@
 package coloring;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -11,8 +11,8 @@ import java.util.List;
 
 public class AugmentingEdgeColorer implements EdgeColorer {
     
-    public List<Graph> color(Graph graph) {
-        List<Graph> coloredGraphs = new ArrayList<Graph>();
+    public List<IntGraph> color(IntGraph graph) {
+        List<IntGraph> coloredGraphs = new ArrayList<IntGraph>();
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         PermutationGroup vGroup = refiner.getAutomorphismGroup(graph);
         PermutationGroup eGroup = VertexToEdgePermutationConverter.convert(graph, vGroup);
@@ -20,13 +20,13 @@ public class AugmentingEdgeColorer implements EdgeColorer {
         return coloredGraphs;
     }
     
-    public void color(Graph graph, List<Graph> coloredGraphs, PermutationGroup group) {
+    public void color(IntGraph graph, List<IntGraph> coloredGraphs, PermutationGroup group) {
         if (valid(graph, group)) {
             coloredGraphs.add(graph);
             int next = getMax(graph) + 1;
             for (; next < graph.edges.size(); next++) {
                 if (allowed(graph, next)) {
-                    Graph child = new Graph(graph);
+                    IntGraph child = new IntGraph(graph);
                     child.edges.get(next).o = 2;
                     color(child, coloredGraphs, group);
                 }
@@ -34,10 +34,10 @@ public class AugmentingEdgeColorer implements EdgeColorer {
         }
     }
     
-    private boolean allowed(Graph g, int next) {
-        Edge eI = g.edges.get(next);
+    private boolean allowed(IntGraph g, int next) {
+        IntEdge eI = g.edges.get(next);
         for (int j = 0; j < g.edges.size(); j++) {
-            Edge eJ = g.edges.get(j);
+            IntEdge eJ = g.edges.get(j);
             if (eJ.o > 1 && eI.adjacent(eJ)) {
                 return false;
             }
@@ -45,10 +45,10 @@ public class AugmentingEdgeColorer implements EdgeColorer {
         return true;
     }
 
-    private int getMax(Graph graph) {
+    private int getMax(IntGraph graph) {
         int max = -1;
         int eIndex = 0;
-        for (Edge e : graph.edges) {
+        for (IntEdge e : graph.edges) {
             if (e.o > 1) {
                 max = eIndex;
             }
@@ -57,7 +57,7 @@ public class AugmentingEdgeColorer implements EdgeColorer {
         return max;
     }
 
-    public boolean valid(Graph graph, PermutationGroup group) {
+    public boolean valid(IntGraph graph, PermutationGroup group) {
         String initial = getColorString(graph, new Permutation(graph.edges.size()));
         for (Permutation p : group.all()) {
             String permStr = getColorString(graph, p);
@@ -72,10 +72,10 @@ public class AugmentingEdgeColorer implements EdgeColorer {
         return true;
     }
     
-    private String getColorString(Graph graph, Permutation p) {
+    private String getColorString(IntGraph graph, Permutation p) {
         StringBuffer buffer = new StringBuffer();
         for (int edgeIndex = 0; edgeIndex < graph.edges.size(); edgeIndex++) {
-            Edge e = graph.edges.get(p.get(edgeIndex));
+            IntEdge e = graph.edges.get(p.get(edgeIndex));
             buffer.append(e.o);
         }
         return buffer.toString();

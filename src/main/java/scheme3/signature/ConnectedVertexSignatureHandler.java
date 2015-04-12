@@ -1,7 +1,7 @@
 package scheme3.signature;
 
-import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntGraph;
 import graph.model.VertexSignature;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class ConnectedVertexSignatureHandler implements GraphSignatureHandler {
     
-    public boolean isCanonicalAugmentation(Graph child) {
+    public boolean isCanonicalAugmentation(IntGraph child) {
         GraphSignature childSig = new GraphSignature(child);
 
         // for speed reasons, find both the labels and the orbits at the same time

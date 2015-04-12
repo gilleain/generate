@@ -1,9 +1,10 @@
 package scheme3.signature;
 
-import graph.model.Edge;
 import graph.model.Graph;
 import graph.model.GraphBuilder;
 import graph.model.GraphSignature;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 import graph.model.VertexSignature;
 
 import java.util.List;
@@ -20,18 +21,18 @@ import signature.ColoredTree;
 public class ConnectedEdgeSignatureHandler implements GraphSignatureHandler {
     
     @Override
-    public boolean isCanonicalAugmentation(Graph g) {
+    public boolean isCanonicalAugmentation(IntGraph g) {
         // TODO Auto-generated method stub
         return false;
     }
 
     public boolean isCanonicalAugmentation(
-            Graph g,
-            Graph canonGPrime, GraphSignature gPrimeSig, Graph gPrime, String gCanonicalLabel) {
+            IntGraph g,
+            IntGraph canonGPrime, GraphSignature gPrimeSig, IntGraph gPrime, String gCanonicalLabel) {
         ChainDecomposition chains = new ChainDecomposition(canonGPrime);
-        List<Edge> bridges = chains.getBridges();
+        List<IntEdge> bridges = chains.getBridges();
         int lastEdgeIndex = canonGPrime.esize() - 1;
-        Edge lastEdge = null;
+        IntEdge lastEdge = null;
         while (lastEdgeIndex > 0) {
             lastEdge = canonGPrime.edges.get(lastEdgeIndex);
             if (bridges.contains(lastEdge)) {
@@ -49,27 +50,27 @@ public class ConnectedEdgeSignatureHandler implements GraphSignatureHandler {
         int[] labels = getLabels(gPrimeSig);
         int lA = labels[lastEdge.a];
         int lB = labels[lastEdge.b];
-        Graph gPrimeMinusE = gPrime.remove(gPrime.getEdge(lA, lB));
+        IntGraph gPrimeMinusE = gPrime.remove(gPrime.getEdge(lA, lB));
         String gPrimeMinusESignatureString = getCanonicalLabel(new GraphSignature(gPrimeMinusE));
         return gPrimeMinusESignatureString.equals(gCanonicalLabel);
     }
     
-    public boolean isCanonicalAugmentation(Graph parent, Graph child) {
+    public boolean isCanonicalAugmentation(IntGraph parent, IntGraph child) {
         GraphSignature childSig = new GraphSignature(child);
-        Graph canonChild = getCanonicalForm(childSig);
+        IntGraph canonChild = getCanonicalForm(childSig);
         String parentLabel = new GraphSignature(parent).toCanonicalString();
         return isCanonicalAugmentation(parent, canonChild, childSig, child, parentLabel);
     }
 
-    public Graph getCanonicalForm(Graph g) {
+    public IntGraph getCanonicalForm(Graph g) {
         return getCanonicalForm(new GraphSignature(g));
     }
     
-    public Graph getCanonicalForm(GraphSignature gSig) {
+    public IntGraph getCanonicalForm(GraphSignature gSig) {
         return reconstruct(gSig.toCanonicalString());
     }
     
-    public Graph reconstruct(String canonicalLabel) {
+    public IntGraph reconstruct(String canonicalLabel) {
         ColoredTree tree = VertexSignature.parse(canonicalLabel);
         GraphBuilder builder = new GraphBuilder();
         builder.makeFromColoredTree(tree);
@@ -77,7 +78,7 @@ public class ConnectedEdgeSignatureHandler implements GraphSignatureHandler {
     }
     
     public int[] getLabels(GraphSignature gSig) {
-        Graph g = gSig.getGraph();
+        IntGraph g = (IntGraph)gSig.getGraph();
         int[] extLabels = gSig.getCanonicalLabels();
         int[] labels = new int[g.vsize()];
         // XXX this is effectively reversing the permutation again - don't reverse in first place? 

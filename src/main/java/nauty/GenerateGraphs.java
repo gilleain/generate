@@ -1,6 +1,7 @@
 package nauty;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -48,7 +49,7 @@ public class GenerateGraphs {
         listg.waitFor();
         
         // read in the graphs
-        List<Graph> graphs = 
+        List<IntGraph> graphs = 
             GenerateGraphs.readMultigTextFormatFile(tmpMultigFilename);
         
         // write
@@ -68,13 +69,13 @@ public class GenerateGraphs {
         }
     }
     
-    public static List<Graph> readMultigTextFormatFile(String filename) throws IOException {
-        List<Graph> graphs = new ArrayList<Graph>();
+    public static List<IntGraph> readMultigTextFormatFile(String filename) throws IOException {
+        List<IntGraph> graphs = new ArrayList<IntGraph>();
         BufferedReader reader = new BufferedReader(new FileReader(filename));
         String line;
         while ((line = reader.readLine()) != null) {
             String[] bits = line.split("\\s");
-            Graph graph = new Graph();
+            IntGraph graph = new IntGraph();
             for (int i = 2; i < bits.length; i += 3) {
                 int a = Integer.parseInt(bits[i]);
                 int b = Integer.parseInt(bits[i + 1]);

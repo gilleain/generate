@@ -1,11 +1,11 @@
 package generate;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public class RegularGraphGenerator {
     
-    public Graph generate(int degree, int vertexCount) {
-        Graph graph = new Graph();
+    public IntGraph generate(int degree, int vertexCount) {
+        IntGraph graph = new IntGraph();
         // ideally, Meringer's method would be used, but it is too hard to port
         return graph;
     }

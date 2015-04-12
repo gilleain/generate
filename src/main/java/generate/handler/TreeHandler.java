@@ -1,6 +1,6 @@
 package generate.handler;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public class TreeHandler implements GeneratorHandler {
 	
@@ -13,7 +13,7 @@ public class TreeHandler implements GeneratorHandler {
 		this.count = 0;
 	}
 
-	public void handle(Graph parent, Graph graph) {
+	public void handle(IntGraph parent, IntGraph graph) {
 		if (graph.getVertexCount() == size) {
 			System.out.println(count + "\t" + parent + "\t" + graph);
 			count++;

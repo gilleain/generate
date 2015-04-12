@@ -1,6 +1,6 @@
 package scheme3.signature;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 /**
  * Canonicalize both disconnected and connected graphs, and reconstruct them from their signature strings.
@@ -13,7 +13,7 @@ public class DisconnectedEdgeSignatureHandler implements GraphSignatureHandler {
     private static final String SIG_SEPARATOR = "+";
     
     @Override
-    public boolean isCanonicalAugmentation(Graph g) {
+    public boolean isCanonicalAugmentation(IntGraph g) {
         // TODO Auto-generated method stub
         return false;
     }

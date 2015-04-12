@@ -1,12 +1,13 @@
 package augmentation;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.SortedSet;
 
 public class GraphOrbitRepresentativeGenerator extends OrbitRepresentativeGenerator<Graph> {
 
-	private Graph graph;
+	private IntGraph graph;
 	
 	private int maxDegree;
 	
@@ -18,7 +19,7 @@ public class GraphOrbitRepresentativeGenerator extends OrbitRepresentativeGenera
 		this.maxDegree = maxDegree;
 	}
 	
-	public void setGraph(Graph graph) {
+	public void setGraph(IntGraph graph) {
 		this.graph = graph;
 	}
 	

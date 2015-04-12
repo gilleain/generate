@@ -1,10 +1,10 @@
 package tree;
 
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 
 /**
- * An unranking generator that uses the Prüfer correspondence between labelled trees on n
+ * An unranking generator that uses the Pr√ºfer correspondence between labelled trees on n
  * and the set of all (n - 2)-tuples of vertices. 
  * 
  * @author maclean
@@ -12,7 +12,7 @@ import graph.model.Graph;
  */
 public class PruferGenerator {
 	
-	public static Graph rankToTree(int rank, int n) {
+	public static IntGraph rankToTree(int rank, int n) {
 		return sequenceToTree(rankToSequence(rank, n), n);
 	}
 	
@@ -38,19 +38,19 @@ public class PruferGenerator {
 		return sequence;
 	}
 	
-	public static int[] treeToSequence(Graph tree) {
+	public static int[] treeToSequence(IntGraph tree) {
 		int n = tree.getVertexCount();
 		int[] seq = new int[n];
 		int[] degrees = new int[n + 1];
 		for (int i = 1; i <= n; i++) {
 			degrees[i] = 0;
 		}
-		for (Edge edge : tree.edges) {
+		for (IntEdge edge : tree.edges) {
 			degrees[edge.a + 1]++;
 			degrees[edge.b + 1]++;
 		}
 		
-		Graph treeCopy = new Graph(tree);
+		IntGraph treeCopy = new IntGraph(tree);
 		for (int i = 1; i <= n - 2; i++) {
 			int x = n;
 			while (degrees[x] != 1) {
@@ -68,8 +68,8 @@ public class PruferGenerator {
 		return seq;
 	}
 	
-	public static Graph sequenceToTree(int[] pruferSequence, int n) {
-		Graph tree = new Graph();
+	public static IntGraph sequenceToTree(int[] pruferSequence, int n) {
+	    IntGraph tree = new IntGraph();
 		pruferSequence[n - 1] = 1;
 		int[] degrees = new int[n + 1];
 		for (int i = 1; i <= n; i++) {

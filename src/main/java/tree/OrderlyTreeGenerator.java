@@ -2,6 +2,7 @@ package tree;
 
 import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class OrderlyTreeGenerator {
 
 	public static List<Graph> generate(int n) {
 		List<Graph> trees = new ArrayList<Graph>();
-		Graph edgeTree = new Graph("0:1");
+		Graph edgeTree = new IntGraph("0:1");
 		trees.add(edgeTree);
 		int i = 2;
 		while (i < n) {
@@ -27,11 +28,11 @@ public class OrderlyTreeGenerator {
 			for (int i = 0; i < n - 1; i++) {
 				for (int j = i + 1; j < n; j++) {
 					Graph child = makeChild(parent, i, j);
-					String childAsString = child.getSortedEdgeString();
-					if (childAsString.compareTo(currentMax) > 0 && isCanonical(child)) {
-						children.add(child);
-						currentMax = childAsString;
-					}
+//					String childAsString = child.getSortedEdgeString();
+//					if (childAsString.compareTo(currentMax) > 0 && isCanonical(child)) {
+//						children.add(child);
+//						currentMax = childAsString;
+//					}
 				}
 			}
 		}
@@ -40,7 +41,7 @@ public class OrderlyTreeGenerator {
 	
 	private static Graph makeChild(Graph parent, int i, int j) {
 //		int n = parent.getVertexCount();    XXX - unused, is this code live?
-		Graph child = new Graph();
+		Graph child = new IntGraph();
 //		n++;
 		return child;
 	}

@@ -2,7 +2,7 @@ package scheme3;
 
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.List;
 
@@ -95,10 +95,10 @@ public class GraphGenerator {
         return degMax;
     }
 
-    public void extend(Graph g, int n) {
-        List<Graph> children = childLister.list(g, n);
+    public void extend(IntGraph g, int n) {
+        List<IntGraph> children = childLister.list(g, n);
         
-        for (Graph gPrime : children) {
+        for (IntGraph gPrime : children) {
             if (signatureHandler.isCanonicalAugmentation(gPrime)) {
                 if (gPrime.getVertexCount() == n && (!generateDisconnected || g.isConnected())) {
                     handler.handle(g, gPrime);

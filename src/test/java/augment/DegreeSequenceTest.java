@@ -2,6 +2,7 @@ package augment;
 
 import graph.model.Graph;
 import graph.model.GraphFileReader;
+import graph.model.IntGraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +28,7 @@ public class DegreeSequenceTest {
         return sum;
     }
     
-    public List<Integer> getDegreeSequence(Graph g) {
+    public List<Integer> getDegreeSequence(IntGraph g) {
         List<Integer> seq = new ArrayList<Integer>();
         for (int i = 0; i < g.vsize(); i++) {
             seq.add(g.degree(i));
@@ -39,7 +40,7 @@ public class DegreeSequenceTest {
     public void testFile(String filename) throws FileNotFoundException {
         GraphFileReader reader = new GraphFileReader(new FileReader(new File(IN_FILE, filename)));
         Map<List<Integer>, List<Graph>> degSeqMap = new HashMap<List<Integer>, List<Graph>>();
-        for (Graph g : reader) {
+        for (IntGraph g : reader) {
             List<Integer> degSeq = getDegreeSequence(g);
             List<Graph> values;
             if (degSeqMap.containsKey(degSeq)) {

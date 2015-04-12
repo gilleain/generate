@@ -1,6 +1,6 @@
 package degreeseq;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 
 import org.junit.Test;
@@ -9,7 +9,7 @@ public class CanonicalCheckerTest {
     
     @Test
     public void intermediateA() {
-        Graph g = new Graph("0:1, 0:2, 0:3, 1:4, 1:5, 2:4, 2:5");
+        IntGraph g = new IntGraph("0:1, 0:2, 0:3, 1:4, 1:5, 2:4, 2:5");
         Partition p = Partition.fromString("0,1|2,3,4,5");  // FIXME
         int[] degSeq = new int[] { 3, 3, 3, 3, 3, 3 };
         boolean check = degreeseq.CanonicalChecker.isPartitionCanonical(g, p, degSeq);
@@ -18,7 +18,7 @@ public class CanonicalCheckerTest {
     
     @Test
     public void intermediateB() {
-        Graph g = new Graph("0:1, 0:2, 0:5, 1:3, 1:4");
+        IntGraph g = new IntGraph("0:1, 0:2, 0:5, 1:3, 1:4");
         Partition p = new Partition();  // FIXME
         int[] degSeq = new int[] { 3, 3, 3, 3, 3, 3 };
         boolean check = degreeseq.CanonicalChecker.isPartitionCanonical(g, p, degSeq);

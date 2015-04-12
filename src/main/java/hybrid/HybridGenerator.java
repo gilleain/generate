@@ -4,6 +4,7 @@ import generate.handler.GeneratorHandler;
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -15,17 +16,17 @@ public class HybridGenerator {
 		this.handler = handler;
 	}
 	
-	public PermutationGroup getGroup(Graph g) {
+	public PermutationGroup getGroup(IntGraph g) {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		return refiner.getAutomorphismGroup(g);
 	}
 	
-	public void generate(Graph graph, int n) {
+	public void generate(IntGraph graph, int n) {
 		generate(null, graph, n);
 		handler.finish();
 	}
 	
-	public void generate(Graph parent, Graph graph, int n) {
+	public void generate(IntGraph parent, IntGraph graph, int n) {
 		handler.handle(parent, graph);
 		int l = graph.getVertexCount();
 		if (l > n) return;
@@ -40,10 +41,10 @@ public class HybridGenerator {
 				} else {
 //					System.out.println("checking " + graph + " + {" + start + ":" + end + "}");
 					if (isMinimalInOrbit(start, end, l, graph, autG)) {
-						Graph gPrime = graph.makeNew(start, end);
+					    IntGraph gPrime = graph.makeNew(start, end);
 						GraphSignature gPrimeSignature = new GraphSignature(gPrime);
-						Graph canonGPrime = gPrime.getPermutedGraph(gPrimeSignature.getCanonicalLabels());
-						Graph gPrimeMinusE = canonGPrime.removeLastEdge();
+						IntGraph canonGPrime = gPrime.getPermutedGraph(gPrimeSignature.getCanonicalLabels());
+						IntGraph gPrimeMinusE = canonGPrime.removeLastEdge();
 						GraphSignature gPrimeMinusESignature = new GraphSignature(gPrimeMinusE);
 						String gPrimeMinusESigString = gPrimeMinusESignature.toCanonicalString();
 //						System.out.println(gPrimeMinusESigString + " =? " + gCanonicalLabel 

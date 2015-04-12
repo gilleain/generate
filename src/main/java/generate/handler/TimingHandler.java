@@ -1,6 +1,6 @@
 package generate.handler;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public class TimingHandler implements GeneratorHandler {
     
@@ -18,7 +18,7 @@ public class TimingHandler implements GeneratorHandler {
     }
 
     @Override
-    public void handle(Graph parent, Graph graph) {
+    public void handle(IntGraph parent, IntGraph graph) {
         if (!started) {
             count = 0;
             startTime = System.currentTimeMillis();

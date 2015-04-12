@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import degreeseq.BipartiteGraphicalChecker;
-
 public class BipartiteGraphicalCheckerTest {
     
     @Test

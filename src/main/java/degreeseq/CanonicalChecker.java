@@ -1,13 +1,12 @@
 package degreeseq;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 
 public class CanonicalChecker {
     
-    public static boolean isPartitionCanonical(Graph g, Partition p, int[] originalDegSeq) {
+    public static boolean isPartitionCanonical(IntGraph g, Partition p, int[] originalDegSeq) {
         if (g.vsize() < 3) return true;
         
 //        System.out.println(g + "\t" + p);

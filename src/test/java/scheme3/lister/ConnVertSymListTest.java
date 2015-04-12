@@ -1,6 +1,6 @@
 package scheme3.lister;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.List;
 
@@ -12,11 +12,10 @@ public class ConnVertSymListTest {
     
     @Test
     public void fourLineChildren() {
-        Graph parent = new Graph("0:1,1:2,2:3");
+        IntGraph parent = new IntGraph("0:1,1:2,2:3");
         ConnectedVertexSymmetryChildLister lister = new ConnectedVertexSymmetryChildLister();
-        List<Graph> children = lister.list(parent, 5);
-        GraphDuplicateChecker checker = new GraphDuplicateChecker();
-        checker.checkForDuplicates(children);
+        List<IntGraph> children = lister.list(parent, 5);
+        GraphDuplicateChecker.checkForDuplicates(children);
     }
     
 }

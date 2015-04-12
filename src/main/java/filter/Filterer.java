@@ -1,6 +1,6 @@
 package filter;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ public class Filterer {
         }
     }
     
-    public List<Graph> filter(List<Graph> graphs) {
-        List<Graph> filtered = new ArrayList<Graph>();
-        for (Graph graph : graphs) {
+    public List<IntGraph> filter(List<IntGraph> graphs) {
+        List<IntGraph> filtered = new ArrayList<IntGraph>();
+        for (IntGraph graph : graphs) {
             if (accept(graph)) {
                 filtered.add(graph);
             }
@@ -26,7 +26,7 @@ public class Filterer {
         return filtered;
     }
     
-    private boolean accept(Graph g) {
+    private boolean accept(IntGraph g) {
         for (Filter filter : filters) {
             if (filter.filter(g)) {
                 continue;

@@ -1,6 +1,6 @@
 package generate;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +15,14 @@ import java.util.List;
  */
 public class EdgewiseGenerator {
     
-    public List<Graph> graphs;
+    public List<IntGraph> graphs;
     
     public int maxLength;
     
     public int maxDegree;
     
     public EdgewiseGenerator(int maxLength, int maxDegree) {
-        this.graphs = new ArrayList<Graph>();
+        this.graphs = new ArrayList<IntGraph>();
         this.maxLength = maxLength;
         this.maxDegree = maxDegree;
     }
@@ -33,11 +33,11 @@ public class EdgewiseGenerator {
     }
     
     public void generate(boolean checkEdgeOrder) {
-        Graph initialGraph = new Graph();
+        IntGraph initialGraph = new IntGraph();
         this.generate(null, initialGraph, checkEdgeOrder);
     }
     
-    public void generate(Graph parent, Graph g, boolean checkEdgeOrder) {
+    public void generate(IntGraph parent, IntGraph g, boolean checkEdgeOrder) {
         if (g.getVertexCount() >= this.maxLength) return;
         
 //        if (g.getVertexCount() < 2 || CanonicalChecker.isCanonical3(g, checkEdgeOrder)) {
@@ -68,7 +68,7 @@ public class EdgewiseGenerator {
         }
     }
     
-    public boolean canAddBond(int i, int j, Graph g) {
+    public boolean canAddBond(int i, int j, IntGraph g) {
         return     i != j 
                 && !g.isConnected(i, j)
                 && !g.saturated(i, maxDegree)

@@ -1,7 +1,7 @@
 package generate.handler;
 
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 
 public class DegreeFilterHandler implements GeneratorHandler {
 	
@@ -28,7 +28,7 @@ public class DegreeFilterHandler implements GeneratorHandler {
 		this.rejectDisconnected = rejectDisconnected;
 	}
 
-	public void handle(Graph parent, Graph graph) {
+	public void handle(IntGraph parent, IntGraph graph) {
 		if (graph.getVertexCount() != size) return;	// TODO : factor out into class
 		for (int vertexIndex = 0; vertexIndex < graph.getVertexCount(); vertexIndex++) {
 			if (graph.degree(vertexIndex) > maxDegree) {
@@ -36,7 +36,7 @@ public class DegreeFilterHandler implements GeneratorHandler {
 			}
 		}
 		if (rejectDisconnected) {
-			for (Edge e : graph.edges) {
+			for (IntEdge e : graph.edges) {
 				if (e.a == e.b) return;
 			}
 			if (!graph.isConnected()) {

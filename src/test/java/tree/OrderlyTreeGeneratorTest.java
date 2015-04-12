@@ -1,6 +1,7 @@
 package tree;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +11,7 @@ public class OrderlyTreeGeneratorTest {
 	public void testN(int n, int expected) {
 		int count = 0;
 		for (Graph tree : OrderlyTreeGenerator.generate(n))  {
-			System.out.println(count + "\t" + tree.getSortedEdgeString());
+			System.out.println(count + "\t" + ((IntGraph)tree).getSortedEdgeString());
 			count++;
 		}
 		Assert.assertEquals(expected, count);

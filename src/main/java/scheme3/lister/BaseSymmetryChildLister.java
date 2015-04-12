@@ -1,7 +1,7 @@
 package scheme3.lister;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.PermutationGroup;
 
 public abstract class BaseSymmetryChildLister {
@@ -12,7 +12,7 @@ public abstract class BaseSymmetryChildLister {
         refiner = new GraphDiscretePartitionRefiner();
     }
     
-    protected PermutationGroup getAut(Graph g) {
+    protected PermutationGroup getAut(IntGraph g) {
         return refiner.getAutomorphismGroup(g);
     }
 

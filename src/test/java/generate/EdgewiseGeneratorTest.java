@@ -1,7 +1,7 @@
 package generate;
 
-import generate.EdgewiseGenerator;
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,16 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class EdgewiseGeneratorTest {
     
-    public Map<String, Integer> getAutMap(List<Graph> graphs) {
+    public Map<String, Integer> getAutMap(List<IntGraph> graphs) {
         Map<String, Integer> autMap = new HashMap<String, Integer>();
-        for (Graph g : graphs) {
+        for (IntGraph g : graphs) {
             String edgeString = g.getSortedEdgeString();
             if (autMap.containsKey(edgeString)) {
                 autMap.put(edgeString, autMap.get(edgeString) + 1);
@@ -31,7 +31,7 @@ public class EdgewiseGeneratorTest {
         return autMap;
     }
     
-    public void testForUniqueness(List<Graph> graphs) {
+    public void testForUniqueness(List<IntGraph> graphs) {
         Map<String, Integer> autMap = getAutMap(graphs);
         int index = 0;
         for (String edgeString : autMap.keySet()) {
@@ -41,16 +41,16 @@ public class EdgewiseGeneratorTest {
         } 
     }
     
-    public List<Graph> filter(List<Graph> graphs) {
+    public List<IntGraph> filter(List<IntGraph> graphs) {
         Map<String, Integer> autMap = getAutMap(graphs);
-        List<Graph> uniq = new ArrayList<Graph>();
+        List<IntGraph> uniq = new ArrayList<IntGraph>();
         for (String string : autMap.keySet()) {
-            uniq.add(new Graph(string));
+            uniq.add(new IntGraph(string));
         }
         return uniq;
     }
     
-    public void toFile(List<Graph> graphs, File file) {
+    public void toFile(List<IntGraph> graphs, File file) {
         try {
             PrintWriter writer = new PrintWriter(file);
             for (Graph graph : graphs) {
@@ -139,11 +139,10 @@ public class EdgewiseGeneratorTest {
     
     @Test
     public void testGraphRoundtrip() {
-        Graph graph = new Graph("0:1,2:3");
+        IntGraph graph = new IntGraph("0:1,2:3");
         String gstring = graph.toString();
-        Graph newGraph = new Graph(gstring);
-        Assert.assertEquals(
-                graph.getSortedEdgeString(), newGraph.getSortedEdgeString());
+        IntGraph newGraph = new IntGraph(gstring);
+        assertEquals(graph.getSortedEdgeString(), newGraph.getSortedEdgeString());
     }
     
     public static void main(String[] args) {

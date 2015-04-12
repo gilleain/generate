@@ -1,30 +1,30 @@
 package generate;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VertexwiseGenerator {
     
-    public List<Graph> graphs;
+    public List<IntGraph> graphs;
     
     public int maxLength;
     
     public int maxDegree;
     
     public VertexwiseGenerator(int maxLength, int maxDegree) {
-        this.graphs = new ArrayList<Graph>();
+        this.graphs = new ArrayList<IntGraph>();
         this.maxLength = maxLength;
         this.maxDegree = maxDegree;
     }
     
     public void generate() {
-        Graph initialGraph = new Graph();
+        IntGraph initialGraph = new IntGraph();
         this.generate(initialGraph);
     }
     
-    public void generate(Graph g) {
+    public void generate(IntGraph g) {
         if (g.getVertexCount() >= this.maxLength) return;
         if (!CanonicalChecker.isCanonical3(g)) return;
         if (g.getVertexCount() < 2 || CanonicalChecker.isCanonical3(g)) {

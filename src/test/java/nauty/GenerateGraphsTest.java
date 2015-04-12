@@ -1,6 +1,6 @@
 package nauty;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,8 +13,8 @@ public class GenerateGraphsTest {
     @Test
     public void readGraphs() throws IOException {
         String filename = "fours_multig.txt";
-        List<Graph> graphs = GenerateGraphs.readMultigTextFormatFile(filename);
-        for (Graph g : graphs) {
+        List<IntGraph> graphs = GenerateGraphs.readMultigTextFormatFile(filename);
+        for (IntGraph g : graphs) {
             System.out.println(g);
         }
         Assert.assertEquals(6, graphs.size());

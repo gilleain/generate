@@ -1,7 +1,7 @@
 package coloring;
 
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -13,7 +13,7 @@ import group.PermutationGroup;
  */
 public class VertexToEdgePermutationConverter {
     
-    public static PermutationGroup convert(Graph graph, PermutationGroup vertexGroup) {
+    public static PermutationGroup convert(IntGraph graph, PermutationGroup vertexGroup) {
         int e = graph.edges.size();
         PermutationGroup edgeGroup = new PermutationGroup(e);
         
@@ -21,7 +21,7 @@ public class VertexToEdgePermutationConverter {
         for (Permutation pV : vertexGroup.all()) {
             int[] pE = new int[e];
             int eIndex = 0;
-            for (Edge edge : graph.edges) {
+            for (IntEdge edge : graph.edges) {
                 int pVA = pV.get(edge.a);
                 int pVB = pV.get(edge.b);
                 int pIndex = graph.getEdgeIndex(pVA, pVB);

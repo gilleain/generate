@@ -1,6 +1,6 @@
 package tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import graph.tree.TreeCertificateMaker;
 
 import java.util.ArrayList;
@@ -10,12 +10,12 @@ import java.util.Map;
 
 public class UnlabelledTreeGenerator {
 	
-	public static List<Graph> generate(int n) {
-		List<Graph> unlabelledTrees = new ArrayList<Graph>();
+	public static List<IntGraph> generate(int n) {
+		List<IntGraph> unlabelledTrees = new ArrayList<IntGraph>();
 		int maxRank = (int) Math.pow(n, n - 2);
 		List<String> certificates = new ArrayList<String>();
 		for (int rank = 0; rank < maxRank; rank++) {
-			Graph labelledTree = PruferGenerator.rankToTree(rank, n);
+		    IntGraph labelledTree = PruferGenerator.rankToTree(rank, n);
 			String certificate = TreeCertificateMaker.treeToCertificate(labelledTree);
 			if (certificates.contains(certificate)) {
 				continue;
@@ -27,11 +27,11 @@ public class UnlabelledTreeGenerator {
 		return unlabelledTrees;
 	}
 	
-	public static Map<String, Graph> generateWithCertificate(int n) {
-		Map<String, Graph> unlabelledTrees = new HashMap<String, Graph>();
+	public static Map<String, IntGraph> generateWithCertificate(int n) {
+		Map<String, IntGraph> unlabelledTrees = new HashMap<String, IntGraph>();
 		int maxRank = (int) Math.pow(n, n - 2);
 		for (int rank = 0; rank < maxRank; rank++) {
-			Graph labelledTree = PruferGenerator.rankToTree(rank, n);
+		    IntGraph labelledTree = PruferGenerator.rankToTree(rank, n);
 			String certificate = TreeCertificateMaker.treeToCertificate(labelledTree);
 			if (unlabelledTrees.containsKey(certificate)) {
 				continue;

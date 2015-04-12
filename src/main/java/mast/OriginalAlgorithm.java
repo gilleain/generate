@@ -1,10 +1,10 @@
 package mast;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.math.BigInteger;
-import java.util.TreeSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class OriginalAlgorithm extends AbstractAlgorithm {
     
@@ -67,7 +67,7 @@ public class OriginalAlgorithm extends AbstractAlgorithm {
         this.maxID = 1;
     }
     
-    public BigInteger getSym(Graph tree) {
+    public BigInteger getSym(IntGraph tree) {
         BigInteger SYM = BigInteger.valueOf(1);
         Set<Vertex> vertices = makeVertices(tree);
         Set<Edge> edges = makeEdges(tree);
@@ -175,7 +175,7 @@ public class OriginalAlgorithm extends AbstractAlgorithm {
         }
     }
     
-    private Set<Vertex> makeVertices(Graph tree) {
+    private Set<Vertex> makeVertices(IntGraph tree) {
         Set<Vertex> vertices = new TreeSet<Vertex>();
         for (int i = 0; i < tree.vsize(); i++) {
             vertices.add(new Vertex(i, tree.degree(i)));
@@ -193,9 +193,9 @@ public class OriginalAlgorithm extends AbstractAlgorithm {
         return leaves;
     }
     
-    private Set<Edge> makeEdges(Graph tree) {
+    private Set<Edge> makeEdges(IntGraph tree) {
         Set<Edge> edges = new TreeSet<Edge>();
-        for (graph.model.Edge graphEdge : tree.edges) {
+        for (graph.model.IntEdge graphEdge : tree.edges) {
             edges.add(new Edge(graphEdge.a, graphEdge.b));
         }
         return edges;

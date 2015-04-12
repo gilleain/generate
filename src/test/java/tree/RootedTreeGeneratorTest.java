@@ -1,6 +1,7 @@
 package tree;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 import graph.tree.TreeCertificateMaker;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class RootedTreeGeneratorTest {
 	public void treeFromSeqSingleTest() {
 		int [] seq = new int[] { 0, 1, 2, 3, 3};
 		Graph tree = RootedTreeGenerator.treeFromSeq(seq);
-		System.out.println(Arrays.toString(seq) + "\t" + tree.getSortedEdgeString());
+		System.out.println(Arrays.toString(seq) + "\t" + tree);
 	}
 	
 	@Test
@@ -33,7 +34,7 @@ public class RootedTreeGeneratorTest {
 		for (int i = 0; i < seqs.length; i++) {
 			int[] seq = seqs[i];
 			Graph tree = RootedTreeGenerator.treeFromSeq(seq);
-			System.out.println(i + "\t" + Arrays.toString(seq) + "\t" + tree.getSortedEdgeString());
+			System.out.println(i + "\t" + Arrays.toString(seq) + "\t" + tree);
 		}
 	}
 	
@@ -50,7 +51,7 @@ public class RootedTreeGeneratorTest {
 		int count = 0;
 		List<String> certs = new ArrayList<String>();
 		for (Graph tree : RootedTreeGenerator.generate(n)) {
-			String cert = TreeCertificateMaker.treeToCertificate(tree);
+			String cert = TreeCertificateMaker.treeToCertificate((IntGraph)tree);    // XXX
 			if (certs.contains(cert)) {
 				continue;
 			} else {

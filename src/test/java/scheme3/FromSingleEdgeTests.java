@@ -5,6 +5,7 @@ import generate.handler.GeneratorHandler;
 import generate.handler.IsomorphCountingHandler;
 import generate.handler.SystemOutHandler;
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class FromSingleEdgeTests {
     
     public void testFromSingle(
             GeneratorHandler handler, int n, boolean byVertex, boolean generateDisconnected) {
-        Graph initial = new Graph("0:1");
+        IntGraph initial = new IntGraph("0:1");
         GraphGenerator generator = new GraphGenerator(handler, byVertex, generateDisconnected);
         generator.extend(initial, n);
     }
@@ -30,7 +31,8 @@ public class FromSingleEdgeTests {
     public void printIsomorphCounts(IsomorphCountingHandler handler) {
         Map<Graph, Integer> map = handler.getNonIsomorphicGraphCount(); 
         int i = 0;
-        for (Graph g : map.keySet()) {
+        for (Graph graph : map.keySet()) {
+            IntGraph g = (IntGraph) graph;  // XXX
             String gS = g.getSortedEdgeString();
             String gDetails = g.vsize() + "\t" + g.esize() + "\t" + Arrays.toString(g.degreeSequence(true));
             System.out.println(i + "\t" + gDetails + "\t" + map.get(g) + "\t" + gS);

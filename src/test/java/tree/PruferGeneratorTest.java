@@ -1,7 +1,7 @@
 package tree;
 
-import graph.model.Graph;
 import graph.model.GraphSignature;
+import graph.model.IntGraph;
 
 import java.util.Arrays;
 
@@ -9,13 +9,13 @@ import org.junit.Test;
 
 public class PruferGeneratorTest {
 	
-	public void testTree(Graph tree) {
+	public void testTree(IntGraph tree) {
 		int[] seq = PruferGenerator.treeToSequence(tree);
 		System.out.println(Arrays.toString(seq) + " " + tree);
 	}
 	
 	public void testSequence(int[] seq, int n) {
-		Graph tree = PruferGenerator.sequenceToTree(seq, n);
+	    IntGraph tree = PruferGenerator.sequenceToTree(seq, n);
 		System.out.println(Arrays.toString(seq) + " " + tree.getSortedEdgeString());
 	}
 	
@@ -27,7 +27,7 @@ public class PruferGeneratorTest {
 	
 	@Test
 	public void cages_page_93_test_treeToSeq() {
-		Graph tree = new Graph("1:2,2:6,3:8,4:6,4:8,5:6,7:8");
+	    IntGraph tree = new IntGraph("1:2,2:6,3:8,4:6,4:8,5:6,7:8");
 		testTree(tree);
 	}
 	
@@ -55,7 +55,7 @@ public class PruferGeneratorTest {
 		int max = (int) Math.pow(n, n - 2);
 		for (int rank = 0; rank < max; rank++) {
 			int[] seq = PruferGenerator.rankToSequence(rank, n);
-			Graph tree = PruferGenerator.sequenceToTree(seq, n);
+			IntGraph tree = PruferGenerator.sequenceToTree(seq, n);
 			System.out.println(rank + "\t" 
 							+ Arrays.toString(seq) + "\t" 
 							+ tree.getSortedEdgeString());
@@ -66,7 +66,7 @@ public class PruferGeneratorTest {
 		int max = (int) Math.pow(n, n - 2);
 		for (int rank = 0; rank < max; rank++) {
 			int[] seq = PruferGenerator.rankToSequence(rank, n);
-			Graph tree = PruferGenerator.sequenceToTree(seq, n);
+			IntGraph tree = PruferGenerator.sequenceToTree(seq, n);
 			if (new GraphSignature(tree).isCanonicallyLabelled()) {
 				System.out.println(rank + "\t" + tree.getSortedEdgeString());
 			}

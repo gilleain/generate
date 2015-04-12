@@ -1,13 +1,13 @@
 package cubic;
 
-import graph.model.Edge;
+import graph.model.IntEdge;
 import group.Permutation;
 
 public class EdgePair implements Comparable<EdgePair> {
-    public Edge f;
-    public Edge s;
+    public IntEdge f;
+    public IntEdge s;
     
-    public EdgePair(Edge f, Edge s) {
+    public EdgePair(IntEdge f, IntEdge s) {
         this.f = f;
         this.s = s;
     }
@@ -19,10 +19,10 @@ public class EdgePair implements Comparable<EdgePair> {
     public EdgePair permute(Permutation pi) {
         int pfA = pi.get(f.a);
         int pfB = pi.get(f.b);
-        Edge pF = (pfA < pfB)? new Edge(pfA, pfB) : new Edge(pfB, pfA);
+        IntEdge pF = (pfA < pfB)? new IntEdge(pfA, pfB) : new IntEdge(pfB, pfA);
         int psA = pi.get(s.a);
         int psB = pi.get(s.b);
-        Edge pS = (psA < psB)? new Edge(psA, psB) : new Edge(psB, psA);
+        IntEdge pS = (psA < psB)? new IntEdge(psA, psB) : new IntEdge(psB, psA);
         return new EdgePair(pF, pS);
     }
 

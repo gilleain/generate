@@ -1,6 +1,6 @@
 package degreeseq;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.TreeSet;
 public class MorganNumberPartitioner implements OrbitPartitioner {
     
     @Override
-    public Partition getOrbitPartition(Graph g, int[] degSeq) {
+    public Partition getOrbitPartition(IntGraph g, int[] degSeq) {
         int n = g.vsize();
         
         // use Morgan numbers to partition vertices

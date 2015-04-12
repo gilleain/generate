@@ -1,15 +1,14 @@
 package filter;
 
+import graph.model.Graph;
+import graph.model.GraphFileReader;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-
-import filter.SignatureFilter;
-import graph.model.Graph;
-import graph.model.GraphFileReader;
 
 public class SignatureFilterTest {
     

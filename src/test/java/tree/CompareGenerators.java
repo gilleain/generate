@@ -1,6 +1,6 @@
 package tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import graph.tree.TreeCertificateMaker;
 
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import org.junit.Test;
 public class CompareGenerators {
     
     public void compareWROMAndFiltering(int n) {
-        List<Graph> wromTrees = WROMTreeGenerator.generate(n);
-        List<Graph> filteredTrees = UnlabelledTreeGenerator.generate(n);
+        List<IntGraph> wromTrees = WROMTreeGenerator.generate(n);
+        List<IntGraph> filteredTrees = UnlabelledTreeGenerator.generate(n);
         if (wromTrees.size() < filteredTrees.size()) {
             System.out.println("WROM smaller");
             diff(wromTrees, filteredTrees);
@@ -26,15 +26,15 @@ public class CompareGenerators {
         }
     }
     
-    public void diff(List<Graph> smallerList, List<Graph> largerList) {
-        Map<String, Graph> largerCerts = new HashMap<String, Graph>();
-        for (Graph lTree : largerList) {
+    public void diff(List<IntGraph> smallerList, List<IntGraph> largerList) {
+        Map<String, IntGraph> largerCerts = new HashMap<String, IntGraph>();
+        for (IntGraph lTree : largerList) {
             // some bug here where the cert can't be generated on the same graph twice!
-            String cert = TreeCertificateMaker.treeToCertificate(new Graph(lTree));
+            String cert = TreeCertificateMaker.treeToCertificate(new IntGraph(lTree));
             largerCerts.put(cert, lTree);
         }
         List<String> remainingCerts = new ArrayList<String>(largerCerts.keySet());
-        for (Graph sTree : smallerList) {
+        for (IntGraph sTree : smallerList) {
             String cert = TreeCertificateMaker.treeToCertificate(sTree);
             if (largerCerts.containsKey(cert)) {
                 remainingCerts.remove(cert);

@@ -1,6 +1,6 @@
 package augment;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class CombineTest {
 	
 	@Test
 	public void combineFromPawGraph() {
-		Graph g = new Graph("0:1,0:2,0:3,1:2");
+	    IntGraph g = new IntGraph("0:1,0:2,0:3,1:2");
 		AugmentingGenerator generator = new AugmentingGenerator();
 		List<SortedSet<Integer>> combs = generator.getOrbitCombinations(g);
 		System.out.println(combs);
@@ -66,7 +66,7 @@ public class CombineTest {
 	
 	@Test
 	public void combineFrom2LineGraph() {
-		Graph g = new Graph("0:1");
+	    IntGraph g = new IntGraph("0:1");
 		AugmentingGenerator generator = new AugmentingGenerator();
 		List<SortedSet<Integer>> combs = generator.getOrbitCombinations(g);
 		System.out.println(combs);

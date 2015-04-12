@@ -1,7 +1,7 @@
 package fusanes;
 
 import filter.MaxDegreeFilter;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import graph.tree.TreeCertificateMaker;
 
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ import tree.WROMTreeGenerator;
 
 public class FusaneGenerator {
     
-    public static List<Graph> generate(int n) {
+    public static List<IntGraph> generate(int n) {
         MaxDegreeFilter filter = new MaxDegreeFilter(3);
         List<String> certs = new ArrayList<String>();
-        Map<String, Graph> fusanes = new HashMap<String, Graph>();
-        for (Graph tree : WROMTreeGenerator.generate(n)) {
+        Map<String, IntGraph> fusanes = new HashMap<String, IntGraph>();
+        for (IntGraph tree : WROMTreeGenerator.generate(n)) {
             // certificate destroys graph, so we need to clone it
-            String cert = TreeCertificateMaker.treeToCertificate(new Graph(tree));  
+            String cert = TreeCertificateMaker.treeToCertificate(new IntGraph(tree));  
             if (certs.contains(cert)) {
                 continue;
             } else {
@@ -27,13 +27,13 @@ public class FusaneGenerator {
             }
             if (filter.filter(tree)) {
                 for (FusaneInnerDual dual : SimpleFusaneLabeler.label(tree)) {
-                    Graph g = FusaneDualExpander.expand(dual);
+                    IntGraph g = FusaneDualExpander.expand(dual);
                     String es = g.getSortedEdgeString();
                     fusanes.put(es, g);
                 }
             }
         }
-        return new ArrayList<Graph>(fusanes.values());
+        return new ArrayList<IntGraph>(fusanes.values());
     }
     
 }

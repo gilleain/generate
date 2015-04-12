@@ -1,19 +1,19 @@
 package augmentation;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public class LowerObject {
 	
-	private Graph graph;
+	private IntGraph graph;
 	
 	private int vertex;
 	
-	public LowerObject(Graph graph, int vertex) {
+	public LowerObject(IntGraph graph, int vertex) {
 		this.graph = graph;
 		this.vertex = vertex;
 	}
 	
-	public Graph getGraph() {
+	public IntGraph getGraph() {
 		return this.graph;
 	}
 	

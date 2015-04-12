@@ -1,7 +1,7 @@
 package util;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -9,26 +9,26 @@ import java.util.Map;
 
 public class RefinerGraphDifference implements GraphDifference {
     
-    private Map<BigInteger, Graph> graphs;
+    private Map<BigInteger, IntGraph> graphs;
     
     public RefinerGraphDifference() {
-        this.graphs = new HashMap<BigInteger, Graph>();
+        this.graphs = new HashMap<BigInteger, IntGraph>();
     }
 
     @Override
-    public void add(Graph graph) {
+    public void add(IntGraph graph) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         refiner.getAutomorphismGroup(graph);
         graphs.put(refiner.getCertificate(), graph);
     }
 
     @Override
-    public void compare(Graph otherGraph, GraphDifference.Callback callback) {
+    public void compare(IntGraph otherGraph, GraphDifference.Callback callback) {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         refiner.getAutomorphismGroup(otherGraph);
         BigInteger cert = refiner.calculateCertificate(refiner.getBest());
         if (graphs.containsKey(cert)) {
-            Graph graph = graphs.get(cert);
+            IntGraph graph = graphs.get(cert);
 //            System.out.println(cert + " " + graph + " = " + otherGraph);
             callback.same(graph, otherGraph);
         } else {

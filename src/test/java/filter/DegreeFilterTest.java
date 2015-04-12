@@ -3,6 +3,7 @@ package filter;
 import generate.CanonicalChecker;
 import graph.model.Graph;
 import graph.model.GraphFileReader;
+import graph.model.IntGraph;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -40,7 +41,7 @@ public class DegreeFilterTest {
     
     @Test
     public void filterGraph() {
-        Graph graph = new Graph("0:1,0:2,0:4,1:3,1:5,2:3");
+        IntGraph graph = new IntGraph("0:1,0:2,0:4,1:3,1:5,2:3");
         Assert.assertTrue(graph.edgesInOrder());
         Assert.assertTrue(CanonicalChecker.isCanonical3(graph));
         Assert.assertTrue(new DegreeSequenceFilter(3, 3, 2, 2, 1, 1).filter(graph));

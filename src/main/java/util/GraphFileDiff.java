@@ -2,6 +2,7 @@ package util;
 
 import graph.model.Graph;
 import graph.model.GraphFileReader;
+import graph.model.IntGraph;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,32 +10,32 @@ import java.util.List;
 
 public class GraphFileDiff {
     
-    public static List<Graph> diff(String pathA, String pathB) throws IOException {
+    public static List<IntGraph> diff(String pathA, String pathB) throws IOException {
         return GraphFileDiff.diff(pathA, pathB, new RefinerGraphDifference());
     }
     
-	public static List<Graph> diff(String pathA, String pathB, GraphDifference differ) throws IOException {
-		List<Graph> difference = new ArrayList<Graph>();
+	public static List<IntGraph> diff(String pathA, String pathB, GraphDifference differ) throws IOException {
+		List<IntGraph> difference = new ArrayList<IntGraph>();
 		GraphFileReader readerA = new GraphFileReader(pathA);
-		for (Graph graphA : readerA) {
+		for (IntGraph graphA : readerA) {
 			differ.add(graphA);
 		}
 		readerA.close();
 		GraphDifference.Callback callback = new GraphDifference.Callback() {
             
             @Override
-            public void same(Graph graphA, Graph graphB) {
+            public void same(IntGraph graphA, IntGraph graphB) {
 //                System.out.println(dupCount + "\t" + graphB);
 //                dupCount++;
             }
             
             @Override
-            public void different(Graph graphA, Graph graphB) {
+            public void different(IntGraph graphA, IntGraph graphB) {
                 System.out.println(graphB);
             }
         };
 		GraphFileReader readerB = new GraphFileReader(pathB);
-		for (Graph graphB : readerB) {
+		for (IntGraph graphB : readerB) {
 			differ.compare(graphB, callback);
 		}
 		readerB.close();

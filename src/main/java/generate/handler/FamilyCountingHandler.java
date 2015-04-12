@@ -1,6 +1,6 @@
 package generate.handler;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,20 +8,20 @@ import java.util.Map;
 
 public class FamilyCountingHandler implements GeneratorHandler {
 	
-	private Map<Graph, List<Graph>> families;
+	private Map<IntGraph, List<IntGraph>> families;
 	
 	private boolean rejectDisconnected;
 	
-	public FamilyCountingHandler(Map<Graph, List<Graph>> families) {
+	public FamilyCountingHandler(Map<IntGraph, List<IntGraph>> families) {
 		this.families = families;
 	}
 	
-	public FamilyCountingHandler(Map<Graph, List<Graph>> families, boolean rejectDisconnected) {
+	public FamilyCountingHandler(Map<IntGraph, List<IntGraph>> families, boolean rejectDisconnected) {
 		this(families);
 		this.rejectDisconnected = rejectDisconnected;
 	}
 
-	public void handle(Graph parent, Graph child) {
+	public void handle(IntGraph parent, IntGraph child) {
 		if (parent == null || (rejectDisconnected && !child.isConnected())) {
 //			List<Graph> newFamily = new ArrayList<Graph>();
 //			families.put(child, newFamily);
@@ -31,15 +31,15 @@ public class FamilyCountingHandler implements GeneratorHandler {
 			families.get(parent).add(child);
 			return;
 		} else {
-			for (Graph existingParent : families.keySet()) {
-				List<Graph> family = families.get(existingParent);
+			for (IntGraph existingParent : families.keySet()) {
+				List<IntGraph> family = families.get(existingParent);
 				if (family.contains(parent)) {
 					family.add(child);
 					return;
 				}
 			}
 		}
-		List<Graph> newFamily = new ArrayList<Graph>();
+		List<IntGraph> newFamily = new ArrayList<IntGraph>();
 		newFamily.add(child);
 		families.put(parent, newFamily);
 	}

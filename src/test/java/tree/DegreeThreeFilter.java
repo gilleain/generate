@@ -7,8 +7,8 @@ import java.io.FileReader;
 import org.junit.Test;
 
 import filter.MaxDegreeFilter;
-import graph.model.Graph;
 import graph.model.GraphFileReader;
+import graph.model.IntGraph;
 
 public class DegreeThreeFilter {
 	
@@ -17,7 +17,7 @@ public class DegreeThreeFilter {
 	public void filter(String filename) throws FileNotFoundException {
 		MaxDegreeFilter filter = new MaxDegreeFilter(3);
 		GraphFileReader file = new GraphFileReader(new FileReader(new File(IN_DIR, filename)));
-		for (Graph tree : file) {
+		for (IntGraph tree : file) {
 			System.out.println(filter.filter(tree) + "\t" + tree.getSortedEdgeString());
 		}
 	}

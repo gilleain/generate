@@ -1,6 +1,7 @@
 package fusanes;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -8,13 +9,13 @@ import java.util.List;
 
 public class FusaneDualExpander {
     
-    public static Graph expand(FusaneInnerDual dual) {
-        Graph g = new Graph();
+    public static IntGraph expand(FusaneInnerDual dual) {
+        IntGraph g = new IntGraph();
         expand(0, dual, g, new BitSet(g.getVertexCount()), -1);
         return g;
     }
     
-    private static void expand(int v, FusaneInnerDual dual, Graph g, BitSet visited, int bondIndex) {
+    private static void expand(int v, FusaneInnerDual dual, IntGraph g, BitSet visited, int bondIndex) {
 //        System.out.println("expanding " + v  + " @ " + bondIndex + " " + dual.getLabelsFor(v) + " " + visited + " " + g);
         int nV = g.getVertexCount();
         
@@ -41,7 +42,7 @@ public class FusaneDualExpander {
         }
     }
 
-    public static List<Integer> makeLoop(Graph g, int attachmentBondIndex, List<Integer> labels) {
+    public static List<Integer> makeLoop(IntGraph g, int attachmentBondIndex, List<Integer> labels) {
         int a     = g.edges.get(attachmentBondIndex).a;
         int b     = g.edges.get(attachmentBondIndex).b;
         int start = Math.min(a, b);

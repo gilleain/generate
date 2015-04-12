@@ -1,6 +1,7 @@
 package degreeseq;
 
 import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,8 +9,8 @@ import java.util.List;
 
 public class HakimiHavelGenerator {
     
-    public static Graph generate(int[] degSeq) {
-        Graph g = new Graph();
+    public static IntGraph generate(int[] degSeq) {
+        IntGraph g = new IntGraph();
         int n = degSeq.length;
         List<Integer> currentSeq = asList(degSeq);
         int i = 0;
@@ -25,7 +26,7 @@ public class HakimiHavelGenerator {
         return g;
     }
     
-    private static int getNext(int i, Graph g, int[] degSeq) {
+    private static int getNext(int i, IntGraph g, int[] degSeq) {
         for (int v = 0; v < degSeq.length; v++) {
             if (degSeq[v] - g.degree(v) > 0) {
                 return v;

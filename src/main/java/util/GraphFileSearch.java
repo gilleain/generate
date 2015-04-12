@@ -3,6 +3,7 @@ package util;
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import graph.model.GraphFileReader;
+import graph.model.IntGraph;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -12,17 +13,17 @@ import java.util.List;
 
 public class GraphFileSearch {
 	
-	public static boolean contains(Graph g, String filename) throws IOException {
+	public static boolean contains(IntGraph g, String filename) throws IOException {
 		return GraphFileSearch.get(g, filename) != null;
 	}
 	
-	public static Graph get(Graph g, String filename) throws IOException {
+	public static IntGraph get(IntGraph g, String filename) throws IOException {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		refiner.getAutomorphismGroup(g);
 		BigInteger cert = refiner.getCertificate();
 //		System.out.println("getting " + cert);
 		GraphFileReader fileReader = new GraphFileReader(filename);
-        for (Graph other : fileReader) {
+        for (IntGraph other : fileReader) {
 			refiner = new GraphDiscretePartitionRefiner();
 			refiner.getAutomorphismGroup(other);
 			if (refiner.getCertificate() == cert) {
@@ -37,7 +38,7 @@ public class GraphFileSearch {
 	public static List<Graph> get(int[] degreeSequence, String filename) throws IOException {
 	    List<Graph> hits = new ArrayList<Graph>();
         GraphFileReader fileReader = new GraphFileReader(filename);
-        for (Graph graph : fileReader) {
+        for (IntGraph graph : fileReader) {
             int[] otherDegreeSeq = graph.degreeSequence(true);
             if (Arrays.equals(degreeSequence, otherDegreeSeq)) {
                 hits.add(graph);
@@ -63,7 +64,7 @@ public class GraphFileSearch {
 	public static void main(String[] args) {
 	    try {
 	        if (args[1].equals("-g")) {
-	            Graph g = new Graph(args[2]);
+	            IntGraph g = new IntGraph(args[2]);
 	            System.out.println(GraphFileSearch.get(g, args[0]));
 	        } else if (args[1].equals("-d")) {
 	            int[] degreeSequence = GraphFileSearch.parse(args[2]);

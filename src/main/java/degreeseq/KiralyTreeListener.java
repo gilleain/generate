@@ -1,9 +1,9 @@
 package degreeseq;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public interface KiralyTreeListener {
 
-    public void handle(int[] degreeSequence, Graph g);
+    public void handle(int[] degreeSequence, IntGraph g);
     
 }

@@ -1,7 +1,7 @@
 package degreeseq;
 
-import graph.model.Edge;
-import graph.model.Graph;
+import graph.model.IntEdge;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,7 +103,7 @@ public class KiralyTree {
         }
     }
     
-    private void handleLeaf(int[] degreeSequence, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
+    private void handleLeaf(int[] degreeSequence, TreeNode current, BitSet chiP, IntGraph g, int n, int degree) {
         if (chiP.cardinality() == degree) {
             listener.handle(reduce(degreeSequence, chiP, n - 1), g);
         }
@@ -114,7 +114,7 @@ public class KiralyTree {
         }
     }
     
-    public void traverse(int[] degreeSequence, Graph g, int n, int degree) {
+    public void traverse(int[] degreeSequence, IntGraph g, int n, int degree) {
         TreeNode startLeaf = this.getLeftmostLeaf(degree);
         BitSet chiP = new BitSet();
         for (int i = 0; i < degree; i++) {
@@ -126,7 +126,7 @@ public class KiralyTree {
         handleLeaf(degreeSequence, startLeaf, chiP, g, n, degree);
     }
     
-    private void traverseTreeDown(int[] degreeSequence, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
+    private void traverseTreeDown(int[] degreeSequence, TreeNode current, BitSet chiP, IntGraph g, int n, int degree) {
         // System.out.println("DDD " + String.format("%5s", n + ":" +
         // current.id) + " " + Arrays.toString(degreeSequence) + " " + degree +
         // " " + chiP + " " + g);
@@ -143,7 +143,7 @@ public class KiralyTree {
         }
     }
     
-    private void upFromLeft(int[] degreeSequence, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
+    private void upFromLeft(int[] degreeSequence, TreeNode current, BitSet chiP, IntGraph g, int n, int degree) {
         chiP.clear(current.r);
         removeLast(g);
         // System.out.println("UFL " + String.format("%5s", n + ":" +
@@ -160,7 +160,7 @@ public class KiralyTree {
         }
     }
     
-    private void upFromRight(int[] degreeSequence, TreeNode current, BitSet chiP, Graph g, int n, int degree) {
+    private void upFromRight(int[] degreeSequence, TreeNode current, BitSet chiP, IntGraph g, int n, int degree) {
         // System.out.println("UFR " + String.format("%5s", n + ":" +
         // current.id) + " " + Arrays.toString(degreeSequence) + " " + degree +
         // " " + chiP + " " + g);
@@ -176,7 +176,7 @@ public class KiralyTree {
         }
     }
     
-    private void setEdges(Graph g, BitSet chiP, int n) {
+    private void setEdges(IntGraph g, BitSet chiP, int n) {
         for (int i = chiP.nextSetBit(0); i >= 0; i = chiP.nextSetBit(i + 1)) {
             if (g.hasEdge(i, n)) {
                 continue;
@@ -186,8 +186,8 @@ public class KiralyTree {
         }
     }
     
-    public Graph connectRemaining(int[] degreeSequence, Graph p) {
-        Graph g = new Graph(p);
+    public IntGraph connectRemaining(int[] degreeSequence, IntGraph p) {
+        IntGraph g = new IntGraph(p);
         // XXX - there must be a better way...
         // System.out.print("LEAF " + Arrays.toString(degreeSequence));
         boolean complete = false;
@@ -238,8 +238,8 @@ public class KiralyTree {
                 && degreeSequence[2] == i2;
     }
     
-    private void removeLast(Graph g) {
-        List<Edge> edges = new ArrayList<Edge>();
+    private void removeLast(IntGraph g) {
+        List<IntEdge> edges = new ArrayList<IntEdge>();
         for (int i = 0; i < g.esize() - 1; i++) {
             edges.add(g.edges.get(i));
         }

@@ -1,6 +1,6 @@
 package tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class WROMTreeGenerator {
 	
-	public static List<Graph> generate(int n) {
-		List<Graph> trees = new ArrayList<Graph>();
+	public static List<IntGraph> generate(int n) {
+		List<IntGraph> trees = new ArrayList<IntGraph>();
 		int[] initialSeq = makeInitialSeq(n);
 		
 		int[] currentSeq = initialSeq;
@@ -132,8 +132,8 @@ public class WROMTreeGenerator {
 		return seq;
 	}
 	
-	public static Graph treeFromSeq(int[] depthSeq) {
-		Graph tree = new Graph();
+	public static IntGraph treeFromSeq(int[] depthSeq) {
+	    IntGraph tree = new IntGraph();
 		int p = -1;
 		for (int i = 0; i < depthSeq.length; i++) {
 			int d = depthSeq[i];

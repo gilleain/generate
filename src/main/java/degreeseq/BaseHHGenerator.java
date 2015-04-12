@@ -1,6 +1,6 @@
 package degreeseq;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +35,7 @@ public class BaseHHGenerator {
         return L;
     }
     
-    protected int[] reduce(int[] degSeq, Graph g) {
+    protected int[] reduce(int[] degSeq, IntGraph g) {
         int[] reducedSeq = new int[degSeq.length];
         for (int k = 0; k < degSeq.length; k++) {
             reducedSeq[k] = Math.max(degSeq[k] - g.degree(k), 0);

@@ -8,8 +8,6 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import degreeseq.GeneralizedHakimiHavelGenerator;
-
 public class GeneralizedHHGeneratorTest {
     
     public void testSeq(int[] seq) {
@@ -21,7 +19,7 @@ public class GeneralizedHHGeneratorTest {
         int index = 0;
         for (Graph g : nonIsomorphCounts.keySet()) {
             int count = nonIsomorphCounts.get(g);
-            int eSize = g.esize();
+            int eSize = g.getEdgeCount();
             boolean isRightDegree = filter.filter(g);
             System.out.println(index + "\t" + count + "\t" + eSize + "\t" + isRightDegree + "\t" + g);
             index++;

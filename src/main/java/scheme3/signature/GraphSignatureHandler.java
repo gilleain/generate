@@ -1,9 +1,9 @@
 package scheme3.signature;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public interface GraphSignatureHandler {
     
-    public boolean isCanonicalAugmentation(Graph g);
+    public boolean isCanonicalAugmentation(IntGraph g);
 
 }

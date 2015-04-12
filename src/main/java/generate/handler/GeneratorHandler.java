@@ -1,10 +1,10 @@
 package generate.handler;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 public interface GeneratorHandler {
 	
-	public void handle(Graph parent, Graph graph);
+	public void handle(IntGraph parent, IntGraph graph);
 
 	public void finish();
 

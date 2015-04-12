@@ -3,7 +3,7 @@ package augmentation;
 import generate.handler.GeneratorHandler;
 import generate.handler.SystemOutHandler;
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -31,11 +31,11 @@ public class AugmentingGenerator {
 		this.representativeGenerator = new GraphOrbitRepresentativeGenerator(maxDegree);
 	}
 	
-	public void output(Graph parent, Graph g) {
+	public void output(IntGraph parent, IntGraph g) {
 		handler.handle(parent, g);
 	}
 	
-	public PermutationGroup getGroup(Graph g) {
+	public PermutationGroup getGroup(IntGraph g) {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 //		System.out.println("getting group for " + g.toStringIncludingSize());
 		return refiner.getAutomorphismGroup(g);
@@ -54,17 +54,17 @@ public class AugmentingGenerator {
 		return orbit;
 	}
 	
-	public List<SortedSet<Integer>> getOrbitCombinations(Graph g) {
+	public List<SortedSet<Integer>> getOrbitCombinations(IntGraph g) {
 		representativeGenerator.setGraph(g);
 		return representativeGenerator.getOrbitCombinations(getGroup(g), g.getVertexCount());
 	}
 	
 	
-	public List<UpperObject> getUpperObjects(Graph g) {
+	public List<UpperObject> getUpperObjects(IntGraph g) {
 		return getUpperObjects(g, getGroup(g));
 	}
 	
-	public List<UpperObject> getUpperObjects(Graph g, PermutationGroup autG) {
+	public List<UpperObject> getUpperObjects(IntGraph g, PermutationGroup autG) {
 		List<UpperObject> upperObjects = new ArrayList<UpperObject>();
 		representativeGenerator.setGraph(g);
 		for (SortedSet<Integer> combination : representativeGenerator.getOrbitCombinations(autG, g.getVertexCount())) {
@@ -73,12 +73,12 @@ public class AugmentingGenerator {
 		return upperObjects;
 	}
 	
-	public void scan(Graph g, int n) {
+	public void scan(IntGraph g, int n) {
 		recursive_scan(null, g, n);
 		handler.finish();
 	}
 
-	private void recursive_scan(Graph parent, Graph g, int n) {
+	private void recursive_scan(IntGraph parent, IntGraph g, int n) {
 		output(parent, g);
 		if (g.getVertexCount() == n) return;
 		PermutationGroup autG = getGroup(g);
@@ -94,7 +94,7 @@ public class AugmentingGenerator {
 	}
 
 	public boolean isCanonical(LowerObject y) {
-		Graph g = y.getGraph();
+		IntGraph g = y.getGraph();
 		int n = g.getVertexCount();
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		PermutationGroup autG = refiner.getAutomorphismGroup(g);
@@ -110,17 +110,17 @@ public class AugmentingGenerator {
 	public List<LowerObject> invF(UpperObject orbitRep) {
 		List<LowerObject> lowerObjects = new ArrayList<LowerObject>();
 		// er, for now just make a simple extension
-		Graph graph = new Graph(orbitRep.getGraph());
-		int n = graph.getVertexCount();
+		IntGraph IntGraph = new IntGraph(orbitRep.getGraph());
+		int n = IntGraph.getVertexCount();
 		// special case
 		if (orbitRep.getVertices().isEmpty()) {
-//			graph.makeEdge(n, n);
-			graph.makeIsolatedVertex();	// note that this only works if we only add to the end...
+//			IntGraph.makeEdge(n, n);
+			IntGraph.makeIsolatedVertex();	// note that this only works if we only add to the end...
 		}
 		for (int connectionPoint : orbitRep.getVertices()) {
-			graph.makeEdge(connectionPoint, n);
+			IntGraph.makeEdge(connectionPoint, n);
 		}
-		lowerObjects.add(new LowerObject(graph, n));
+		lowerObjects.add(new LowerObject(IntGraph, n));
 		return lowerObjects;
 	}
 

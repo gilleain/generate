@@ -9,8 +9,6 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import degreeseq.KiralyHHGenerator;
-
 public class KiralyHHGeneratorTest {
     
     public void test(int[] degSeq) {
@@ -24,13 +22,13 @@ public class KiralyHHGeneratorTest {
 //        }
         Map<Graph, Integer> dups = duplicateHandler.getNonIsomorphicGraphCount();
         for (Graph g : dups.keySet()) {
-            System.out.println(dups.get(g) + "\t" + toDegreeSeq(g) + g + "\t" + g.esize());
+            System.out.println(dups.get(g) + "\t" + toDegreeSeq(g) + g + "\t" + g.getEdgeCount());
         }
     }
     
     public List<Integer> toDegreeSeq(Graph g) {
         List<Integer> degSeq = new ArrayList<Integer>();
-        for (int i = 0; i < g.vsize(); i++) {
+        for (int i = 0; i < g.getVertexCount(); i++) {
             degSeq.add(g.degree(i));
         }
         return degSeq;
