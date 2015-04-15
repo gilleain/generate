@@ -15,7 +15,7 @@ public class OrbitsTest {
 		generator.setGraph(g);
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		PermutationGroup autG = refiner.getAutomorphismGroup(g);
-		System.out.println(generator.getOrbitPartition(autG, g.getVertexCount()));
+//		System.out.println(generator.getOrbitPartition(autG, g.getVertexCount()));
 	}
 
 	@Test

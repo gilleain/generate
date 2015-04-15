@@ -1,12 +1,12 @@
 package augmentation;
 
+import group.AutomorphismPartitioner;
 import group.Partition;
 import group.Permutation;
 import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -19,7 +19,7 @@ import java.util.TreeSet;
 public abstract class OrbitRepresentativeGenerator<T> {
 	
 	public List<SortedSet<Integer>> getOrbitCombinations(PermutationGroup autG, int n) {
-		Partition orbitPartition = getOrbitPartition(autG, n);
+	    Partition orbitPartition = AutomorphismPartitioner.getAutomorphismPartition(autG);
 		SortedSet<Integer> singletonSet = new TreeSet<Integer>();
 		SortedSet<Integer> candidateSet = new TreeSet<Integer>();
 		for (int i = 0; i < orbitPartition.size(); i++) {
@@ -51,47 +51,6 @@ public abstract class OrbitRepresentativeGenerator<T> {
 	 * @return true if this rep (and the members of its orbit) should be considered
 	 */
 	public abstract boolean representativeIsCandidate(int orbitRep);
-	
-	/**
-	 * Construct an orbit partition from an automorphism group. 
-	 * 
-	 * @param autG the automorphism group
-	 * @param n the size of the object the group permutes
-	 * @return an orbit partition
-	 */
-	public Partition getOrbitPartition(PermutationGroup autG, int n) {
-		// needed for checking which elements have been assigned to an orbit 
-		int[] orbits = new int[n];
-		
-		Partition orbitPartition = new Partition();
-		int assignedCount = 0;
-		SortedSet<Integer> currentOrbit = null;
-		for (int i = 0; i < n; i++) {
-			if (orbits[i] != 0) continue;
-			if (currentOrbit == null) {
-				currentOrbit = new TreeSet<Integer>();
-				currentOrbit.add(i);
-				orbitPartition.addCell(currentOrbit);
-				orbits[i] = orbitPartition.size();
-				assignedCount++;
-			}
-			for (Permutation permutation : autG.all()) {
-				Set<Integer> toAdd = new TreeSet<Integer>();
-				for (int element : currentOrbit) {
-					int partner = permutation.get(element);
-					if (!currentOrbit.contains(partner)) {
-						toAdd.add(partner);
-						orbits[partner] = orbitPartition.size();
-						assignedCount++;
-					}
-				}
-				currentOrbit.addAll(toAdd);	// XXX can this fail?
-			}
-			currentOrbit = null;
-			if (assignedCount == n) break;
-		}
-		return orbitPartition;
-	}
 	
 	private void combine(
 			SortedSet<Integer> candidateSet,
