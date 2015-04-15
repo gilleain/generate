@@ -26,6 +26,7 @@ public class GraphVertexAugmentation implements Augmentation<IntGraph> {
     private Set<Integer> verticesToAddTo;
     
     public GraphVertexAugmentation(IntGraph graph, int... verticesToAddToArray) {
+        System.out.println("Constructor B");
         this.verticesToAddTo = new HashSet<Integer>();
         for (int vertexIndex : verticesToAddToArray) {
             this.verticesToAddTo.add(vertexIndex);

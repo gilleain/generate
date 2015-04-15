@@ -17,6 +17,4 @@ public class TestGraphVertexAugmentation {
         System.out.println(a1.getAugmentedObject() + " " + a1.isCanonical());
         System.out.println(a2.getAugmentedObject() + " " + a2.isCanonical());
     }
-    
-
 }
