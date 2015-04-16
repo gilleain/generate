@@ -1,7 +1,6 @@
 package cpa;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
 import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
@@ -56,18 +55,14 @@ public class GraphVertexAugmentation implements Augmentation<IntGraph> {
     public boolean isCanonical() {
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         PermutationGroup autH = refiner.getAutomorphismGroup(augmentedGraph);
-        List<Integer> connected = getConnected(augmentedGraph, refiner.getBest().invert());
-        return inOrbit(connected, autH);
+        Permutation best = refiner.getBest();
+        int chosen = best.get(augmentedGraph.getVertexCount() - 1);
+        List<Integer> connected = augmentedGraph.getConnected(chosen);
+        return connected.size() == verticesToAddTo.size() && inOrbit(connected, autH);
     }
     
     private boolean inOrbit(List<Integer> set, PermutationGroup autH) {
         SetOrbit orbit = new BruteForcer().getInOrbit(set, autH);
         return orbit.contains(verticesToAddTo);
     }
-    
-    private List<Integer> getConnected(Graph graph, Permutation labelling) {
-        int chosen = labelling.get(graph.getVertexCount() - 1);
-        return graph.getConnected(chosen);
-    }
-
 }
