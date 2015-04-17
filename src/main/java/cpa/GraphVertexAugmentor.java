@@ -46,4 +46,8 @@ public class GraphVertexAugmentor implements Augmentor<IntGraph>{
         return setList;
     }
 
+    public Augmentation<IntGraph> getInitial() {
+        return new GraphVertexAugmentation(new IntGraph("0:1"));
+    }
+
 }
