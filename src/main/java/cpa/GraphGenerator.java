@@ -20,6 +20,10 @@ public class GraphGenerator {
         augment(graphVertexAugmentor.getInitial());
     }
     
+    public void generateFrom(IntGraph start) {
+        augment(new GraphVertexAugmentation(start));
+    }
+    
     public void augment(Augmentation<IntGraph> parent) {
         IntGraph graph = parent.getAugmentedObject(); 
         if (graph.getVertexCount() == max) {
