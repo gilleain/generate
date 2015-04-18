@@ -10,10 +10,15 @@ import org.junit.Test;
 public class TestGraphGenerator {
     
     private void testN(int n) {
-        GraphGenerator generator = 
-                new GraphGenerator(
-                        new PrintstreamHandler(System.out, true), n);
+        long start = System.nanoTime();
+//        GenerationHandler handler = new PrintstreamHandler(System.out, true); 
+        CountingHandler handler = new CountingHandler();
+        GraphGenerator generator = new GraphGenerator(handler, n);
         generator.generate();
+        long end = System.nanoTime();
+        long t = (end - start) / 1000000L;  // time in ms
+//        System.out.println("T = " + t);
+        System.out.println(handler.getCount() + " in " + t + " ms ");
     }
     
     private void testG(int n, String gString) {
@@ -64,6 +69,11 @@ public class TestGraphGenerator {
     @Test
     public void testEights() {
         testN(8);
+    }
+    
+    @Test
+    public void testNines() {
+        testN(9);
     }
 
 }
