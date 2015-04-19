@@ -1,5 +1,6 @@
 package cpa;
 
+import cpa.handler.GenerationHandler;
 import graph.model.IntGraph;
 
 public class GraphGenerator {

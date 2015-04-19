@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import cpa.handler.CountingHandler;
+import cpa.handler.IsomorphismHandler;
+
 public class TestGraphGenerator {
     
     private void testN(int n) {

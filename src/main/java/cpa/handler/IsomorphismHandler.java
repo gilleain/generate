@@ -1,4 +1,4 @@
-package cpa;
+package cpa.handler;
 
 import graph.model.GraphSignature;
 import graph.model.IntGraph;
