@@ -53,7 +53,7 @@ public class GenerateGraphsTest {
     @Test
     public void generateGraphsOnNines() throws IOException, InterruptedException {
         String outputFilename = "nines_nauty.txt";
-        GenerateGraphs.writeGraphsToFile(9, outputFilename);
+        GenerateGraphs.writeGraphsToFile(9, 9, outputFilename);
     }
     
     @Test
