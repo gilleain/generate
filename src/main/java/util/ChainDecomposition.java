@@ -1,4 +1,4 @@
-package scheme3;
+package util;
 
 import graph.model.Graph;
 import graph.model.IntEdge;

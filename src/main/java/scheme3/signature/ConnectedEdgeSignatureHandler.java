@@ -9,8 +9,8 @@ import graph.model.VertexSignature;
 
 import java.util.List;
 
-import scheme3.ChainDecomposition;
 import signature.ColoredTree;
+import util.ChainDecomposition;
 
 /**
  * Canonicalize only connected graphs, which is much simpler.

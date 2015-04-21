@@ -1,4 +1,4 @@
-package scheme3;
+package util;
 
 import graph.model.GraphFileReader;
 import graph.model.IntEdge;
@@ -10,7 +10,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ChainDecompositionTest {
+import util.ChainDecomposition;
+
+public class TestChainDecomposition {
     
     public void test(String gString, int expPaths, int expCycles, int expBridges) {
         test(new IntGraph(gString), expPaths, expCycles, expBridges);

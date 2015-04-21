@@ -10,9 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import scheme3.ChainDecomposition;
 import setorbit.BruteForcer;
 import setorbit.SetOrbit;
+import util.ChainDecomposition;
 
 /**
  * Augment a graph by a vertex, added to a set of existing vertices. 
