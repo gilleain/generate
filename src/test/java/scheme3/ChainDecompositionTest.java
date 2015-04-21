@@ -12,6 +12,10 @@ import org.junit.Test;
 
 public class ChainDecompositionTest {
     
+    public void test(String gString, int expPaths, int expCycles, int expBridges) {
+        test(new IntGraph(gString), expPaths, expCycles, expBridges);
+    }
+    
     public void test(IntGraph g, int expPaths, int expCycles, int expBridges) {
         ChainDecomposition decomposition = new ChainDecomposition(g);
         List<List<IntEdge>> cycles = decomposition.getCycleChains();
@@ -26,18 +30,28 @@ public class ChainDecompositionTest {
     }
     
     @Test
+    public void testSpiroFusedCycle() {
+        test("0:1,0:2,0:3,0:4,1:2,3:4", 0, 2, 0);
+    }
+    
+    @Test
     public void fusedCycleTest() {
-        test(new IntGraph("0:1,0:5,1:2,1:4,2:3,3:4,4:5"), 1, 1, 0);
+        test("0:1,0:5,1:2,1:4,2:3,3:4,4:5", 1, 1, 0);
     }
     
     @Test
     public void biStalkedFourCycleTest() {
-        test(new IntGraph("0:1,0:2,1:3,2:3,2:4,3:5"), 0, 1, 2);
+        test("0:1,0:2,1:3,2:3,2:4,3:5", 0, 1, 2);
     }
     
     @Test
     public void paperTest() {
-        test(new IntGraph("0:1,0:2,0:3,0:4,0:5,1:2,1:6,2:6,2:7,3:4,5:8,5:9,6:7,8:9"), 2, 3, 1);
+        test("0:1,0:2,0:3,0:4,0:5,1:2,1:6,2:6,2:7,3:4,5:8,5:9,6:7,8:9", 2, 3, 1);
+    }
+    
+    @Test
+    public void failingNineTest() {
+        test("0:4, 0:7, 1:5, 1:8, 2:6, 2:7, 3:6, 3:8, 4:7, 5:8", 0, 2, 4);
     }
     
     public void test(String file) throws FileNotFoundException {
