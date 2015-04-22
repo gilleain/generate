@@ -12,7 +12,7 @@ import java.util.Set;
 
 import setorbit.BruteForcer;
 import setorbit.SetOrbit;
-import util.ChainDecomposition;
+import util.CutVertexCalculator;
 
 /**
  * Augment a graph by a vertex, added to a set of existing vertices. 
@@ -90,14 +90,13 @@ public class GraphVertexAugmentation implements Augmentation<IntGraph> {
     private int getChosen(IntGraph graph, Permutation p) {
 //        Permutation inv = p.invert();
         Permutation inv = p;
-        ChainDecomposition chains = new ChainDecomposition(graph);
-        List<IntEdge> bridges = chains.getBridges();
+        List<Integer> cutVertices = CutVertexCalculator.getCutVertices(graph);
         
         int n = graph.getVertexCount() - 1;
         int choice;
         for (choice = n; choice >= 0; choice--) {
             int pChoice = inv.get(choice);
-            if (containedIn(pChoice, bridges)) {
+            if (cutVertices.contains(pChoice)) {
                 continue;
             } else {
                 return pChoice;
@@ -106,15 +105,6 @@ public class GraphVertexAugmentation implements Augmentation<IntGraph> {
         System.out.println("hobson for " + graph);
         // TODO : should never happen? only graph with all bridge edges is 2-line?
         return inv.get(choice);
-    }
-    
-    private boolean containedIn(int vertex, List<IntEdge> edges) {
-        for (IntEdge e : edges) {
-            if (e.contains(vertex)) {
-                return true;
-            }
-        }
-        return false;
     }
     
     private boolean inOrbit(List<Integer> set, Set<Integer> toFind,  PermutationGroup autH) {

@@ -59,7 +59,7 @@ public class GenerateGraphsTest {
     @Test
     public void generateGraphsOnTens() throws IOException, InterruptedException {
         String outputFilename = "tens_nauty.txt";
-        GenerateGraphs.writeGraphsToFile(10, outputFilename);
+        GenerateGraphs.writeGraphsToFile(10, 10, outputFilename);
     }
     
     @Test

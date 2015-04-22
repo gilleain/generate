@@ -92,7 +92,7 @@ public class TestGraphGenerator {
     
     @Test
     public void testSevens() {
-        testN(7);
+        testNExpectM(7, 853);
     }
     
     @Test
@@ -107,12 +107,12 @@ public class TestGraphGenerator {
     
     @Test
     public void testEights() {
-        testN(8);
+        testNExpectM(8, 11117);
     }
     
     @Test
     public void testNines() {
-        testN(9);
+        testNExpectM(9, 261080);
     }
     
     @Test
@@ -123,6 +123,11 @@ public class TestGraphGenerator {
     @Test
     public void printNines() throws IOException {
         toFileN(9, "output/cpa/nines_x.txt");
+    }
+    
+    @Test
+    public void printTens() throws IOException {
+        toFileN(10, "output/cpa/tens_x.txt");
     }
 
 }
