@@ -59,8 +59,12 @@ public class GraphVertexAugmentation implements Augmentation<IntGraph> {
         Permutation best = refiner.getBest();
         int chosen = getChosen(new IntGraph(augmentedGraph), best);
         List<Integer> connected = augmentedGraph.getConnected(chosen);
-        return connected.size() == verticesToAddTo.size() && 
-               inOrbit(connected, verticesToAddTo, autH);
+        boolean isCanonical = connected.size() == verticesToAddTo.size() && 
+                              inOrbit(connected, verticesToAddTo, autH);
+        if (isCanonical) {
+            augmentedGraph = augmentedGraph.getPermutedGraph(best.invert());
+        }
+        return isCanonical;
     }
    
     private int getChosen(IntGraph graph, Permutation p) {
