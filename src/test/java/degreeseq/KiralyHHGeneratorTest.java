@@ -1,6 +1,7 @@
 package degreeseq;
 
 import generate.handler.IsomorphCountingHandler;
+import generate.handler.SystemOutHandler;
 import graph.model.Graph;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import org.junit.Test;
 public class KiralyHHGeneratorTest {
     
     public void test(int[] degSeq) {
-//        KiralyHHGenerator generator = new KiralyHHGenerator(new SystemOutHandler(-1, false, true));
         IsomorphCountingHandler duplicateHandler = new IsomorphCountingHandler();
         KiralyHHGenerator generator = new KiralyHHGenerator(duplicateHandler);
         generator.generate(degSeq);
@@ -24,6 +24,12 @@ public class KiralyHHGeneratorTest {
         for (Graph g : dups.keySet()) {
             System.out.println(dups.get(g) + "\t" + toDegreeSeq(g) + g + "\t" + g.getEdgeCount());
         }
+    }
+    
+    
+    public void nonIsomorphismTest(int[] degSeq) {
+        KiralyHHGenerator generator = new KiralyHHGenerator(new SystemOutHandler(-1, false, true));
+        generator.generate(degSeq);
     }
     
     public List<Integer> toDegreeSeq(Graph g) {
@@ -61,7 +67,8 @@ public class KiralyHHGeneratorTest {
     
     @Test
     public void three_To_Six_Test() {
-        test(new int[] { 3, 3, 3, 3, 3, 3 });
+//        test(new int[] { 3, 3, 3, 3, 3, 3 });
+        nonIsomorphismTest(new int[] { 3, 3, 3, 3, 3, 3 });
     }
     
     @Test

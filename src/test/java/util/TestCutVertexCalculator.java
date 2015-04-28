@@ -13,6 +13,7 @@ public class TestCutVertexCalculator {
     private void testGraph(String graphString, int... expectedVertices) {
         IntGraph graph = new IntGraph(graphString);
         List<Integer> cutVertices = CutVertexCalculator.getCutVertices(graph);
+        System.out.println(cutVertices);
         for (int expectedVertex : expectedVertices) {
             assertTrue("Missing " + expectedVertex, cutVertices.contains(expectedVertex));
         }
@@ -36,6 +37,11 @@ public class TestCutVertexCalculator {
     @Test
     public void testTree() {
         testGraph("0:1,0:2,1:3,1:4,4:5", 0, 1, 4);
+    }
+    
+    @Test
+    public void testFailedNine() {
+        testGraph("0:3, 0:5, 0:7, 1:4, 1:6, 1:8, 2:7, 2:8, 3:5, 3:7, 4:6, 4:8, 5:7, 6:8", 1, 1, 1);
     }
 
 }

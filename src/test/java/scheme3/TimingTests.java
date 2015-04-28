@@ -51,7 +51,7 @@ public class TimingTests {
 //        testEdgeFilteringTime(n);
 //        testEdgeSymmetryTime(n);
         testVertexFilteringTime(n);
-        testVertexSymmetryTime(n);
+//        testVertexSymmetryTime(n);
 //        testEdgeFilteringDiscTime(n);
     }
     
