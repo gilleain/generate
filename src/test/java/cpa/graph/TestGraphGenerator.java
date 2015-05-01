@@ -1,4 +1,4 @@
-package cpa;
+package cpa.graph;
 
 import graph.model.IntGraph;
 
@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import cpa.graph.GraphGenerator;
 import cpa.handler.CountingHandler;
 import cpa.handler.GenerationHandler;
 import cpa.handler.IsomorphismHandler;

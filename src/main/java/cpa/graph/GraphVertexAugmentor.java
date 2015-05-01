@@ -1,4 +1,4 @@
-package cpa;
+package cpa.graph;
 
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.IntGraph;
@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
+import cpa.Augmentation;
+import cpa.Augmentor;
 import augmentation.GraphOrbitRepresentativeGenerator;
 
 /**

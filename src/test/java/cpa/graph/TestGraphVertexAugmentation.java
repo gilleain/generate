@@ -1,8 +1,10 @@
-package cpa;
+package cpa.graph;
 
 import graph.model.IntGraph;
 
 import org.junit.Test;
+
+import cpa.graph.GraphVertexAugmentation;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

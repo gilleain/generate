@@ -1,4 +1,4 @@
-package cpa;
+package cpa.graph;
 
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.IntGraph;
@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cpa.Augmentation;
 import setorbit.BruteForcer;
 import setorbit.SetOrbit;
 import util.CutVertexCalculator;

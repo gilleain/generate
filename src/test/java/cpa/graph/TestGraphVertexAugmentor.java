@@ -1,8 +1,12 @@
-package cpa;
+package cpa.graph;
 
 import graph.model.IntGraph;
 
 import org.junit.Test;
+
+import cpa.Augmentation;
+import cpa.graph.GraphVertexAugmentation;
+import cpa.graph.GraphVertexAugmentor;
 
 public class TestGraphVertexAugmentor {
     

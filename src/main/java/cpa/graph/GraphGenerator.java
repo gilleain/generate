@@ -1,5 +1,6 @@
-package cpa;
+package cpa.graph;
 
+import cpa.Augmentation;
 import cpa.handler.GenerationHandler;
 import graph.model.IntGraph;
 
