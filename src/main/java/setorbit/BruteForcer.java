@@ -5,6 +5,7 @@ import group.PermutationGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import combinatorics.KSubsetLister;
 
@@ -21,7 +22,7 @@ public class BruteForcer {
         SetOrbit orbits = new SetOrbit();
         KSubsetLister<Integer> lister = KSubsetLister.getIndexLister(s.size(), g.getSize());
         List<Permutation> all = g.all();
-        for (List<Integer> subset : lister) {
+        for (Set<Integer> subset : lister) {
             for (Permutation p : all) {
                 List<Integer> permuted = permute(p, subset);
                 if (permuted.equals(s) && !orbits.contains(subset)) {
@@ -32,7 +33,7 @@ public class BruteForcer {
         return orbits;
     }
     
-    private List<Integer> permute(Permutation p, List<Integer> subset) {
+    private List<Integer> permute(Permutation p, Set<Integer> subset) {
         List<Integer> permuted = new ArrayList<Integer>();
         for (int i : subset) {
             permuted.add(p.get(i));
