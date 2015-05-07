@@ -34,6 +34,8 @@ public class DegreeSequenceAugmentation implements Augmentation<ResidualDegreeGr
             if (verticesToAddTo.contains(i)) {
                 h.makeEdge(vertexToConnect, i);
                 residuals[i] = parentResiduals[i] - 1;
+            } else if (i == vertexToConnect) {
+                residuals[i] = 0;
             } else {
                 residuals[i] = parentResiduals[i];
             }

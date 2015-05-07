@@ -28,7 +28,7 @@ public class DegreeSequenceAugmentor implements Augmentor<ResidualDegreeGraphPai
         int[] residuals = parentObj.getResiduals();
         int vertexToConnect = getVertexToConnect(parentGraph, residuals);
         
-        for (Set<Integer> verticesToConnectTo : getSets(vertexToConnect, residuals)) {
+        for (Set<Integer> verticesToConnectTo : getSets(parentGraph, vertexToConnect, residuals)) {
             augmentations.add(
                     new DegreeSequenceAugmentation(
                             parentGraph, residuals, vertexToConnect, verticesToConnectTo));
@@ -51,11 +51,15 @@ public class DegreeSequenceAugmentor implements Augmentor<ResidualDegreeGraphPai
     /**
      * @return sets of a particular size 
      */
-    private KSubsetLister<Integer> getSets(int start, int[] residuals) {
+    private Iterable<Set<Integer>> getSets(IntGraph parentGraph, int start, int[] residuals) {
         // XXX - can we always do this?
         int size = residuals[start];
         
         List<Integer> elements = getElements(start, residuals);
+        if (size > elements.size()) {
+//            System.err.println("No subsets of size " + size + " in " + elements + " from " + parentGraph);
+            return new ArrayList<Set<Integer>>();
+        }
         return new KSubsetLister<>(size, elements);
     }
 
@@ -69,7 +73,7 @@ public class DegreeSequenceAugmentor implements Augmentor<ResidualDegreeGraphPai
                 connectables.add(index);
             }
         }
-        System.out.println("connect set " + connectables);
+//        System.out.println("connect set " + connectables);
         return connectables;
     }
 
