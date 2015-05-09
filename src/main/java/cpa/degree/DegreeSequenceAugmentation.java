@@ -1,9 +1,16 @@
 package cpa.degree;
 
+import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.IntGraph;
+import group.Permutation;
+import group.PermutationGroup;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import setorbit.BruteForcer;
+import setorbit.SetOrbit;
 import cpa.Augmentation;
 
 public class DegreeSequenceAugmentation implements Augmentation<ResidualDegreeGraphPair> {
@@ -23,6 +30,7 @@ public class DegreeSequenceAugmentation implements Augmentation<ResidualDegreeGr
     }
     
     public DegreeSequenceAugmentation(IntGraph graph, int[] parentResiduals, Integer vertexToConnect, Set<Integer> verticesToAddTo) {
+        this.vertexToConnect = vertexToConnect;
         this.verticesToAddTo = verticesToAddTo;
         augmentedObject = make(graph, parentResiduals, vertexToConnect, verticesToAddTo);
     }
@@ -50,8 +58,33 @@ public class DegreeSequenceAugmentation implements Augmentation<ResidualDegreeGr
 
     @Override
     public boolean isCanonical() {
-        // TODO Auto-generated method stub
-        return true;
+        if (vertexToConnect == null) {
+            return true;    // XXX ?
+        }
+        IntGraph augmentedGraph = augmentedObject.getGraph();
+        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
+        PermutationGroup autH = refiner.getAutomorphismGroup(augmentedGraph);
+        Permutation best = refiner.getBest();
+        int chosen = best.get(vertexToConnect);
+        List<Integer> connected = getConnectedDownstream(chosen, augmentedGraph);
+        boolean isCanonical = connected.size() == verticesToAddTo.size() && 
+                inOrbit(connected, verticesToAddTo, autH);
+        return isCanonical;
+    }
+    
+    private List<Integer> getConnectedDownstream(int chosen, IntGraph graph) {
+        List<Integer> filtered = new ArrayList<Integer>();
+        for (int i : graph.getConnected(chosen)) {
+            if (i > chosen) {
+                filtered.add(i);
+            }
+        }
+        return filtered;
+    }
+    
+    private boolean inOrbit(List<Integer> set, Set<Integer> toFind, PermutationGroup autH) {
+        SetOrbit orbit = new BruteForcer().getInOrbit(set, autH);
+        return orbit.contains(toFind);
     }
 
 }

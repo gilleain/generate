@@ -15,7 +15,7 @@ import cpa.handler.PrintstreamHandler;
 
 public class TestDegreeSequenceGenerator {
     
-    private void all(int[] sequence) {
+    private void all(int[] sequence, int expected) {
         GenerationHandler handler = new PrintstreamHandler(System.out, true, true);
         DegreeSequenceGenerator gen = new DegreeSequenceGenerator(handler, sequence);
         gen.generate();
@@ -33,6 +33,13 @@ public class TestDegreeSequenceGenerator {
             counter++;
         }
         assertEquals("Connected non-isomorphic count incorrect", expected, counter - 1);
+    }
+    
+    
+    
+    @Test
+    public void test5_4_4_3_2_2() {
+        all(new int[] { 5, 4, 4, 3, 2, 2 }, 1);
     }
     
     @Test
