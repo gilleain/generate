@@ -66,17 +66,17 @@ public class DegreeSequenceAugmentation implements Augmentation<ResidualDegreeGr
         PermutationGroup autH = refiner.getAutomorphismGroup(augmentedGraph);
         Permutation best = refiner.getBest();
         int chosen = best.get(vertexToConnect);
-        List<Integer> connected = getConnectedDownstream(chosen, augmentedGraph);
+        List<Integer> connected = getConnectedDownstream(chosen, augmentedGraph, best);
         boolean isCanonical = connected.size() == verticesToAddTo.size() && 
                 inOrbit(connected, verticesToAddTo, autH);
         return isCanonical;
     }
     
-    private List<Integer> getConnectedDownstream(int chosen, IntGraph graph) {
+    private List<Integer> getConnectedDownstream(int connectionPoint, IntGraph graph, Permutation best) {
         List<Integer> filtered = new ArrayList<Integer>();
-        for (int i : graph.getConnected(chosen)) {
-            if (i > chosen) {
-                filtered.add(i);
+        for (int i : graph.getConnected(connectionPoint)) {
+            if (i > connectionPoint) {
+                filtered.add(best.get(i));
             }
         }
         return filtered;

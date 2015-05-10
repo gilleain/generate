@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+import cpa.Augmentation;
+import cpa.handler.AugmentationHandler;
 import cpa.handler.GenerationHandler;
 import cpa.handler.IsomorphismHandler;
 import cpa.handler.PrintstreamHandler;
@@ -17,7 +19,20 @@ public class TestDegreeSequenceGenerator {
     
     private void all(int[] sequence, int expected) {
         GenerationHandler handler = new PrintstreamHandler(System.out, true, true);
-        DegreeSequenceGenerator gen = new DegreeSequenceGenerator(handler, sequence);
+        AugmentationHandler<ResidualDegreeGraphPair> augmentationHandler = 
+                new AugmentationHandler<ResidualDegreeGraphPair>() {
+
+                    @Override
+                    public void handleCanonical(Augmentation<ResidualDegreeGraphPair> augmentation) {
+                        System.out.println("Canonical " + augmentation.getAugmentedObject());
+                    }
+
+                    @Override
+                    public void handleNonCanonical(Augmentation<ResidualDegreeGraphPair> augmentation) {
+                        System.out.println("Non Canonical " + augmentation.getAugmentedObject());
+                    }
+        };
+        DegreeSequenceGenerator gen = new DegreeSequenceGenerator(handler, augmentationHandler, sequence);
         gen.generate();
     }
     
@@ -35,7 +50,15 @@ public class TestDegreeSequenceGenerator {
         assertEquals("Connected non-isomorphic count incorrect", expected, counter - 1);
     }
     
+    @Test
+    public void test3_2_2_2_1() {
+        all(new int[] { 3, 2, 2, 2, 1 }, 2);
+    }
     
+    @Test
+    public void test3_2_2_1_1_1() {
+        all(new int[] { 3, 2, 2, 1, 1, 1 }, 1);
+    }
     
     @Test
     public void test5_4_4_3_2_2() {

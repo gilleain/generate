@@ -33,8 +33,10 @@ public class TestAllSplits {
             int count = generate(degSeq);
             if (expected == count) {
                 System.out.println("Passed " + filename);
+            } else if (expected > count) {
+                System.out.println("Too few! " + filename + " " + expected + " > " + count);
             } else {
-                System.out.println("Failed " + filename + " " + expected + " != " + count);
+                System.out.println("Too many! " + filename + " " + expected + " < " + count);
             }
 //            assertEquals("Failed for " + filename, expected, count);
         }
@@ -75,6 +77,11 @@ public class TestAllSplits {
         gen.generate();
         Map<String, List<IntGraph>> m = handler.getMap();
         return m.size();
+    }
+    
+    @Test
+    public void testFives() throws IOException {
+        test("output/degsplit/five");
     }
     
     @Test

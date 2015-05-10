@@ -3,16 +3,27 @@ package cpa.degree;
 import graph.model.IntGraph;
 import cpa.Augmentation;
 import cpa.Augmentor;
+import cpa.handler.AugmentationHandler;
 import cpa.handler.GenerationHandler;
 
 public class DegreeSequenceGenerator {
     
     private final GenerationHandler handler;
     
+    private AugmentationHandler<ResidualDegreeGraphPair> partialHandler;
+    
     private int[] degreeSequence;
     
     public DegreeSequenceGenerator(GenerationHandler handler, int[] degreeSequence) {
+        this(handler, null, degreeSequence);
+    }
+    
+    public DegreeSequenceGenerator(
+            GenerationHandler handler, 
+            AugmentationHandler<ResidualDegreeGraphPair> augmentationHandler, 
+            int[] degreeSequence) {
         this.handler = handler;
+        this.partialHandler = augmentationHandler;
         this.degreeSequence = degreeSequence;
     }
     
@@ -32,7 +43,14 @@ public class DegreeSequenceGenerator {
             Augmentor<ResidualDegreeGraphPair> augmentor = new DegreeSequenceAugmentor(residuals);
             for (Augmentation<ResidualDegreeGraphPair> augmentation : augmentor.augment(parent)) {
                 if (augmentation.isCanonical()) {
+                    if (partialHandler != null) {
+                        partialHandler.handleCanonical(augmentation);
+                    }
                     augment(augmentation);
+                } else {
+                    if (partialHandler != null) {
+                        partialHandler.handleNonCanonical(augmentation);
+                    }
                 }
             }
         }

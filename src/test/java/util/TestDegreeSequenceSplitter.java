@@ -5,6 +5,15 @@ import java.io.IOException;
 import org.junit.Test;
 
 public class TestDegreeSequenceSplitter {
+    
+    @Test
+    public void splitFives() throws IOException {
+        String inputFilename = "output/mckay/five_x.txt";
+        String outputDir = "output/degsplit/five";
+        
+        DegreeSequenceSplitter splitter = new DegreeSequenceSplitter();
+        splitter.split(inputFilename, outputDir);
+    }
 
     @Test
     public void splitSixes() throws IOException {

@@ -1,5 +1,7 @@
 package cpa.degree;
 
+import java.util.Arrays;
+
 import graph.model.IntGraph;
 
 /**
@@ -30,6 +32,10 @@ public class ResidualDegreeGraphPair {
     
     public int[] getResiduals() {
         return residuals;
+    }
+    
+    public String toString() {
+        return graph.toString() + "\t" + Arrays.toString(residuals);
     }
 
 }
